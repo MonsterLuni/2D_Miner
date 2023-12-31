@@ -19,8 +19,14 @@ public class Map {
     }
     public void drawMap(Graphics g){
         for (Block block : ui.blocks) {
-            g.setColor(Color.blue);
-            block.drawBlock(g);
+            int positionPlayer = Math.round((float) (ui.p.X - (30 * 25)) /25);
+            if(block.X / 25 < positionPlayer || block.X / 25 > positionPlayer + 59) {
+               // hier gibt es nichts zu sehen
+            }
+            else{
+                g.setColor(Color.blue);
+                block.drawBlock(g);
+            }
         }
     }
 }
