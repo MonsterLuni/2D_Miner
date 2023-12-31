@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Block.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +70,7 @@
       <updated>1703958244763</updated>
       <workItem from="1703958245786" duration="6091000" />
       <workItem from="1703969960394" duration="739000" />
-      <workItem from="1704014120728" duration="19385000" />
+      <workItem from="1704014120728" duration="20731000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -87,7 +88,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704037371084</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="blocks disappear when to far away">
+      <option name="closed" value="true" />
+      <created>1704039688844</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1704039688844</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,7 +105,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Stopped the Flickering of the background :D &#10;+ everything else" />
     <MESSAGE value="added fullscreen" />
-    <option name="LAST_COMMIT_MESSAGE" value="added fullscreen" />
+    <MESSAGE value="blocks disappear when to far away" />
+    <option name="LAST_COMMIT_MESSAGE" value="blocks disappear when to far away" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

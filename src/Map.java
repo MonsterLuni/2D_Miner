@@ -19,13 +19,13 @@ public class Map {
     }
     public void drawMap(Graphics g){
         for (Block block : ui.blocks) {
-            int positionPlayer = Math.round((float) (ui.p.X - (30 * 25)) /25);
-            if(block.X / 25 < positionPlayer || block.X / 25 > positionPlayer + 59) {
-               // hier gibt es nichts zu sehen
+            int positionPlayer = Math.round(((ui.p.X - (float) ui.p.offset) - (30 * 25)) /25);
+            if(block.X / 25 < positionPlayer || block.X / 25 > positionPlayer + 59 ) {
+               // hier gibt es nichts zu sehens
             }
             else{
                 g.setColor(Color.blue);
-                block.drawBlock(g);
+                block.drawBlock(g, ui.p);
             }
         }
     }

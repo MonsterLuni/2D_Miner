@@ -9,7 +9,7 @@ public class Block {
         this.X = i*25;
         this.Y = l*25;
     }
-    public void drawBlock(Graphics g){
-        g.drawRect(X, Y, width, height);
+    public void drawBlock(Graphics g, Player p){
+        g.drawRect(X + p.offset, Y, width, height);
     }
 }

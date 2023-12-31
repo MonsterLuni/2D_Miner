@@ -1,6 +1,7 @@
 public class Player {
     public int X;
     public int Y;
+    public int offset = 0;
     public int speed = 5;
     public int defaultHeight = 50;
     public int height = defaultHeight;
@@ -13,11 +14,11 @@ public class Player {
         Y = 300 - defaultHeight;
     }
     public void gravity(){
-        if(Y + 5 <  ui.map.mapHeightPerColumn[Math.round((float) X /25)] - height){
+        if(Y + 5 <  ui.map.mapHeightPerColumn[Math.round((X - (float) offset) /25)] - height){
             Y += 5;
         }
         else{
-            Y = ui.map.mapHeightPerColumn[Math.round((float) X /25)] - height;
+            Y = ui.map.mapHeightPerColumn[Math.round((X - (float) offset) /25)] - height;
         }
     }
     public void jump(){
@@ -27,9 +28,9 @@ public class Player {
     }
     public void walk(){
         if(kh.aPressed){
-                X -= speed;
+            offset += speed;
         } else if (kh.dPressed) {
-                X += speed;
+            offset -= speed;
         }
     }
 }
