@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class UI extends JFrame {
     public long lastTime;
@@ -9,11 +10,16 @@ public class UI extends JFrame {
     public Map map;
     public KeyListener kh;
     public boolean running = true;
-    public int screenHeight = 1000;
-    public int screenWidth = 1000;
+    public int defaultHeight = 720;
+    public int defaultWidth = 1280;
+    public int screenHeight = defaultHeight;
+    public int screenWidth = defaultWidth;
     public ArrayList<Block> blocks;
     public BufferedImage bufferedImage = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
+
+    public BufferedImage fullscreenBuffer;
     public Graphics imageG = bufferedImage.getGraphics();
+    public boolean fullscreen = false;
 
 
     public UI(){
@@ -24,6 +30,9 @@ public class UI extends JFrame {
         p = new Player(this,kh);
         map = new Map(this);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setUndecorated(true);
         setVisible(true);
         addKeyListener(kh);
         addMouseListener(ml);
@@ -54,7 +63,12 @@ public class UI extends JFrame {
         drawPlayer(imageG);
         updatePlayer();
         map.drawMap(imageG);
-        g.drawImage(bufferedImage,0,0,null);
+        if(fullscreen){
+            g.drawImage(fullscreenBuffer,0,0,null);
+        }
+        else{
+            g.drawImage(bufferedImage,0,0,null);
+        }
     }
     public void drawPlayer(Graphics g){
         g.setColor(Color.blue);
@@ -64,5 +78,28 @@ public class UI extends JFrame {
         p.jump();
         p.walk();
         p.gravity();
+    }
+
+    public void toggleFullscreen() {
+        if(fullscreen){
+            screenHeight = defaultHeight;
+            screenWidth = defaultWidth;
+            setSize(screenWidth, screenHeight);
+            setExtendedState(JFrame.NORMAL);
+            setLocationRelativeTo(null);
+            imageG = bufferedImage.getGraphics();
+            fullscreen = false;
+        }
+        else{
+            GraphicsDevice currentMonitor = MouseInfo.getPointerInfo().getDevice();
+            screenWidth = currentMonitor.getDisplayMode().getWidth();
+            screenHeight = currentMonitor.getDisplayMode().getHeight();
+            fullscreenBuffer = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
+            imageG = fullscreenBuffer.getGraphics();
+            setSize(screenWidth, screenHeight);
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+            map.loadMap();
+            fullscreen = true;
+        }
     }
 }
