@@ -15,6 +15,7 @@ public class KeyListener implements java.awt.event.KeyListener {
         switch (e.getKeyCode()){
             case KeyEvent.VK_A -> aPressed = true;
             case KeyEvent.VK_D -> dPressed = true;
+            case KeyEvent.VK_F3 -> ui.debug = !ui.debug;
             case KeyEvent.VK_F11 -> ui.toggleFullscreen();
             case KeyEvent.VK_SPACE -> spacePressed = true;
             case KeyEvent.VK_S -> {
