@@ -1,3 +1,9 @@
+package game;
+
+import listener.KeyListener;
+import listener.MouseListener;
+import listener.MouseMotionListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,12 +29,13 @@ public class UI extends JFrame {
     public boolean fullscreen = false;
     public boolean debug = false;
     public double fps = 0;
-
+    public MouseListener ml;
 
     public UI(){
         setSize(screenWidth, screenHeight);
         KeyListener kh = new KeyListener(this);
-        MouseListener ml = new MouseListener(this);
+        ml = new MouseListener(this);
+        MouseMotionListener mml = new MouseMotionListener(this);
         this.kh = kh;
         p = new Player(this,kh);
         map = new Map(this);
@@ -39,10 +46,10 @@ public class UI extends JFrame {
         setVisible(true);
         addKeyListener(kh);
         addMouseListener(ml);
+        addMouseMotionListener(mml);
         lastTime = System.currentTimeMillis();
         map.loadMap();
-        toggleFullscreen();
-        toggleFullscreen();
+        map.loadHitBoxes();
         fpsLimiter(60);
     }
 
@@ -65,13 +72,11 @@ public class UI extends JFrame {
         imageG.clearRect(0,0,screenWidth,screenHeight);
         imageG.setColor(Color.white);
         imageG.fillRect(0,0,screenWidth,screenHeight);
-        drawPlayer(imageG);
+        p.drawPlayer(imageG);
         updatePlayer();
         map.drawMap(imageG);
         if(debug){
-            imageG.setColor(Color.black);
-            imageG.setFont(getFont().deriveFont(Font.ITALIC,32f));
-            imageG.drawString(df.format(fps),10,50);
+            drawDebug();
         }
         if(fullscreen){
             g.drawImage(fullscreenBuffer,0,0,null);
@@ -80,10 +85,12 @@ public class UI extends JFrame {
             g.drawImage(bufferedImage,0,0,null);
         }
     }
-    public void drawPlayer(Graphics g){
-        g.setColor(Color.blue);
-        g.fillRect(p.X,p.Y,20,p.height);
+    private void drawDebug(){
+        imageG.setColor(Color.black);
+        imageG.setFont(getFont().deriveFont(Font.ITALIC,32f));
+        imageG.drawString(df.format(fps),10,50);
     }
+
     private void updatePlayer() {
         p.jump();
         p.walk();
@@ -98,7 +105,6 @@ public class UI extends JFrame {
             setExtendedState(JFrame.NORMAL);
             setLocationRelativeTo(null);
             imageG = bufferedImage.getGraphics();
-            fullscreen = false;
         }
         else{
             GraphicsDevice currentMonitor = MouseInfo.getPointerInfo().getDevice();
@@ -109,7 +115,7 @@ public class UI extends JFrame {
             setSize(screenWidth, screenHeight);
             setExtendedState(JFrame.MAXIMIZED_BOTH);
             map.loadMap();
-            fullscreen = true;
         }
+        fullscreen = !fullscreen;
     }
 }

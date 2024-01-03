@@ -1,3 +1,7 @@
+package listener;
+
+import game.UI;
+
 import java.awt.event.KeyEvent;
 
 public class KeyListener implements java.awt.event.KeyListener {
@@ -20,8 +24,8 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_SPACE -> spacePressed = true;
             case KeyEvent.VK_S -> {
                 if(ui.p.height == ui.p.defaultHeight) {
-                    ui.p.Y += 20;
-                    ui.p.height = 30;
+                    ui.p.Y += 25;
+                    ui.p.height = 25;
                 }
             }
         }
@@ -33,7 +37,7 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_D -> dPressed = false;
             case KeyEvent.VK_SPACE -> spacePressed = false;
             case KeyEvent.VK_S -> {
-                ui.p.Y -= 20;
+                ui.p.Y -= 25;
                 ui.p.height = ui.p.defaultHeight;
             }
         }
