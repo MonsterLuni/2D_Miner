@@ -61,7 +61,7 @@ public class Block {
         hitLeft = false;
         air = true;
         sprite = image;
-        map.loadHitBoxes();
+        map.updateHitBoxes();
     }
 
     public boolean breakable() {

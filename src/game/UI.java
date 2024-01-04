@@ -11,26 +11,24 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class UI extends JFrame {
-    public long lastTime;
+    long lastTime;
     public Player p;
     public Map map;
     public KeyListener kh;
-    public boolean running = true;
-    public int defaultHeight = 720;
-    public int defaultWidth = 1280;
+    boolean running = true;
+    int defaultHeight = 720;
+    int defaultWidth = 1280;
     public int screenHeight = defaultHeight;
     public int screenWidth = defaultWidth;
     public ArrayList<Block> blocks;
     public BufferedImage bufferedImage = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
     private static final DecimalFormat df = new DecimalFormat("0.00");
-
     public BufferedImage fullscreenBuffer;
     public Graphics imageG = bufferedImage.getGraphics();
     public boolean fullscreen = false;
     public boolean debug = false;
     public double fps = 0;
     public MouseListener ml;
-
     public UI(){
         setSize(screenWidth, screenHeight);
         KeyListener kh = new KeyListener(this);
@@ -52,7 +50,6 @@ public class UI extends JFrame {
         map.loadHitBoxes();
         fpsLimiter(60);
     }
-
     public void fpsLimiter(int limit){
         long now = System.currentTimeMillis();
         long last = lastTime;
@@ -87,16 +84,24 @@ public class UI extends JFrame {
     }
     private void drawDebug(){
         imageG.setColor(Color.black);
-        imageG.setFont(getFont().deriveFont(Font.ITALIC,32f));
-        imageG.drawString(df.format(fps),10,50);
+        imageG.setFont(getFont().deriveFont(Font.ITALIC,20f));
+        imageG.drawString("FPS: " + df.format(fps),10,50);
+        imageG.drawString("Loaded Blocks: " + blocks.size(),10,75);
+        int number = 0;
+        for (int i = 0 ; i < blocks.size(); i++){
+            if(map.getOnlyVisibleBlocks(i)){
+                number++;
+            }
+        }
+        imageG.drawString("Updated Blocks: " + number,10,100);
+        imageG.drawString("Player Coordinates: [X:" + (p.X - p.offsetX) + " Y:" + (p.Y + p.offsetY) + "]" ,10,125);
+        imageG.drawString("Draw Grid [F2]: " + map.vertices,10,150);
     }
-
     private void updatePlayer() {
         p.jump();
         p.walk();
         p.gravity();
     }
-
     public void toggleFullscreen() {
         if(fullscreen){
             screenHeight = defaultHeight;

@@ -40,16 +40,33 @@ public class Player {
     }
     public void walk(){
         if(kh.aPressed){
-            int index = ui.map.getBlockFromPlayerX((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + 25);
-            if(index == -10 || X + offsetX + speed > ui.blocks.get(index).X + 25){
-                offsetX += speed;
+            int index = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25));
+            int index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25) - 25,(((Y + offsetY) / 25) * 25) + (height - 25));
+            if(ui.blocks.get(index2).hitRight){
+                if(X - offsetX - 1 <= ui.blocks.get(index).X){
+                    System.out.println("left");
+                }
+                else {
+                    offsetX += speed;
+                }
             }
             else {
-                System.out.println(index);
-                offsetX = ui.blocks.get(index).X + 25 + offsetX;
+                offsetX += speed;
             }
         } else if (kh.dPressed) {
-            offsetX -= speed;
+            int index = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25));
+            int index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25) + 25,(((Y + offsetY) / 25) * 25) + (height - 25));
+            if(ui.blocks.get(index2).hitLeft){
+                if(X - offsetX - 5 >= ui.blocks.get(index).X){
+                    System.out.println("right");
+                }
+                else {
+                    offsetX -= speed;
+                }
+            }
+            else {
+                offsetX -= speed;
+            }
         }
     }
 }
