@@ -1,5 +1,6 @@
-package game;
+package game.Entity;
 
+import game.UI;
 import listener.KeyListener;
 
 import java.awt.*;

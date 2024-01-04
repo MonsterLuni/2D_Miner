@@ -1,4 +1,6 @@
-package game;
+package game.Entity;
+
+import game.Map;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

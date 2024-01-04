@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Block.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +86,7 @@
       <workItem from="1704186794652" duration="24958000" />
       <workItem from="1704272551703" duration="14403000" />
       <workItem from="1704357559018" duration="11274000" />
-      <workItem from="1704376532395" duration="4922000" />
+      <workItem from="1704376532395" duration="7331000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -141,7 +144,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704388467614</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="All Hitboxes now work. (top is a bit buggy)">
+      <option name="closed" value="true" />
+      <created>1704389828972</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1704389828972</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,7 +166,8 @@
     <MESSAGE value="change in y axis now works as intended, add debug menu with (F3)" />
     <MESSAGE value="hitboxes now show properly to all sides. hitbox top works fine&#10;every other not." />
     <MESSAGE value="hitbox top, left and right work fine now. Only bottom one is left." />
-    <option name="LAST_COMMIT_MESSAGE" value="hitbox top, left and right work fine now. Only bottom one is left." />
+    <MESSAGE value="All Hitboxes now work. (top is a bit buggy)" />
+    <option name="LAST_COMMIT_MESSAGE" value="All Hitboxes now work. (top is a bit buggy)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
