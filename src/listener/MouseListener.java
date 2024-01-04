@@ -14,7 +14,6 @@ public class MouseListener implements java.awt.event.MouseListener {
     public void mouseClicked(MouseEvent e) {
 
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()){
@@ -33,7 +32,6 @@ public class MouseListener implements java.awt.event.MouseListener {
     public void mouseEntered(MouseEvent e) {
 
     }
-
     @Override
     public void mouseExited(MouseEvent e) {
 

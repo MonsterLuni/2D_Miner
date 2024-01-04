@@ -65,7 +65,6 @@ public class Block {
         sprite = image;
         map.updateHitBoxes();
     }
-
     public boolean breakable() {
         //Todo: Add statement that states if a block is breakable or not
         return true;

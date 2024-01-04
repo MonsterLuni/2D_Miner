@@ -22,7 +22,7 @@ public class Map {
     public Map(UI ui) {
         this.ui = ui;
         worldWidth = ui.screenWidth*10;
-        worldHeight = ui.screenHeight*5;
+        worldHeight = ui.screenHeight*2;
         ui.blocks = new ArrayList<>((worldWidth / 25) * (worldHeight / 25));
         try {
             grass = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\grass.png"));

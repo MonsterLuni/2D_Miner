@@ -37,7 +37,6 @@ public class UI extends JFrame {
         ml = new MouseListener(this);
         MouseMotionListener mml = new MouseMotionListener(this);
         this.kh = kh;
-        p = new Player(this,kh);
         map = new Map(this);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -48,10 +47,20 @@ public class UI extends JFrame {
         addMouseListener(ml);
         addMouseMotionListener(mml);
         lastTime = System.currentTimeMillis();
+        p = new Player(this,kh);
         map.loadMap();
         map.loadHitBoxes();
         fpsLimiter(60);
     }
+    /*public void drawLoadingScreen() {
+        imageG.setFont(getFont().deriveFont(Font.ITALIC, 32f));
+        imageG.setColor(Color.black);
+        int percent = blocks.size() / (map.worldWidth / 25) * (map.worldHeight / 25);
+        imageG.drawString("Loading: " + percent + "%",screenWidth/2,screenHeight/2);
+        if(blocks.size() == (map.worldWidth / 25) * (map.worldHeight / 25)){
+            loadingEnd = true;
+        }
+    }*/
     public void fpsLimiter(int limit){
         long now = System.currentTimeMillis();
         long last = lastTime;
@@ -71,12 +80,12 @@ public class UI extends JFrame {
         imageG.clearRect(0,0,screenWidth,screenHeight);
         imageG.setColor(Color.white);
         imageG.fillRect(0,0,screenWidth,screenHeight);
-        p.drawPlayer(imageG);
-        updatePlayer();
-        map.drawMap(imageG);
-        if(debug){
-            drawDebug();
-        }
+            p.drawPlayer(imageG);
+            updatePlayer();
+            map.drawMap(imageG);
+            if(debug){
+                drawDebug();
+            }
         if(fullscreen){
             g.drawImage(fullscreenBuffer,0,0,null);
         }
