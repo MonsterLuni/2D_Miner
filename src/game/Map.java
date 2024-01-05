@@ -13,22 +13,22 @@ public class Map {
     public UI ui;
     boolean first;
     public boolean vertices;
-    boolean stoneB = false;
     public int worldWidth;
     public int worldHeight;
-    int j = 0;
-    BufferedImage grass, dirt, stone, air;
+    BufferedImage grass, dirt, stone, air, bedrock, barrier;
     int[] mapHeightPerColumn = {100, 125, 150, 175, 200, 225, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300,300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300};
     public Map(UI ui) {
         this.ui = ui;
-        worldWidth = ui.screenWidth*10;
-        worldHeight = ui.screenHeight*2;
+        worldWidth = ui.screenWidth*5;
+        worldHeight = ui.screenHeight*4;
         ui.blocks = new ArrayList<>((worldWidth / 25) * (worldHeight / 25));
         try {
             grass = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\grass.png"));
             dirt = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\dirt.png"));
             stone = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\stone.png"));
             air = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\air.png"));
+            bedrock = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\bedrock.png"));
+            barrier = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\barrier.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -37,35 +37,26 @@ public class Map {
         for (int i = 0; i < worldWidth / 25; i++) {
             first = true;
             for (int l = 0; l < worldHeight / 25; l++) {
-                if (l * 25 >= mapHeightPerColumn[i]) {
+                if(i + 1 == worldWidth / 25 || i == 0){
+                    ui.blocks.add(new Block(25, 25, i, l, barrier, false, false));
+                }
+                else if (l * 25 >= mapHeightPerColumn[i] + 1000) {
                     if (first) {
                         ui.blocks.add(new Block(25, 25, i, l, grass));
                         first = false;
-                    } else {
-                        double rand = Math.random();
-                        if (j < 3) {
-                            ui.blocks.add(new Block(25, 25, i, l, dirt));
-                            j++;
-                        } else {
-                            if (!stoneB && j < 5) {
-                                if (rand > 0.6) {
-                                    ui.blocks.add(new Block(25, 25, i, l, stone));
-                                    stoneB = true;
-                                } else {
-                                    ui.blocks.add(new Block(25, 25, i, l, dirt));
-                                    j++;
-                                }
-                            } else {
-                                ui.blocks.add(new Block(25, 25, i, l, stone));
-                            }
-                        }
                     }
-                } else {
-                    ui.blocks.add(new Block(25, 25, i, l, air, true));
+                    else if(l + 1 == worldHeight / 25){
+                        ui.blocks.add(new Block(25, 25, i, l, bedrock, false, false));
+                    }
+                    else{
+                        ui.blocks.add(new Block(25, 25, i, l, dirt));
+                    }
+
+                }
+                else {
+                    ui.blocks.add(new Block(25, 25, i, l, air, true, false));
                 }
             }
-            stoneB = false;
-            j = 0;
         }
     }
     public void loadHitBoxes() {
@@ -81,16 +72,16 @@ public class Map {
         }
     }
     public void checkHitBoxFromBlock(int i){
-        if(!ui.blocks.get(i).air && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X,ui.blocks.get(i).Y - 25)).air){
+        if(!ui.blocks.get(i).deactivateHitBox && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X,ui.blocks.get(i).Y - 25)).deactivateHitBox){
             ui.blocks.get(i).hitTop = true;
         }
-        if(!ui.blocks.get(i).air && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X,ui.blocks.get(i).Y + 25)).air){
+        if(!ui.blocks.get(i).deactivateHitBox && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X,ui.blocks.get(i).Y + 25)).deactivateHitBox){
             ui.blocks.get(i).hitBottom = true;
         }
-        if(!ui.blocks.get(i).air && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X + 25,ui.blocks.get(i).Y)).air){
+        if(!ui.blocks.get(i).deactivateHitBox && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X + 25,ui.blocks.get(i).Y)).deactivateHitBox){
             ui.blocks.get(i).hitRight = true;
         }
-        if(!ui.blocks.get(i).air && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X - 25,ui.blocks.get(i).Y)).air){
+        if(!ui.blocks.get(i).deactivateHitBox && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X - 25,ui.blocks.get(i).Y)).deactivateHitBox){
             ui.blocks.get(i).hitLeft = true;
         }
     }
@@ -146,7 +137,7 @@ public class Map {
                         ui.blocks.get(i).breakBlock(this, air);
                     }
                     else{
-                        System.out.println("You can't break this block");
+                        System.out.println("You can't break " + ui.blocks.get(i).sprite);
                         //TODO: Add Particle System that shows, that you can't break the current block.
                     }
                 }

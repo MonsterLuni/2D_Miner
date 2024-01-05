@@ -1,0 +1,123 @@
+@startuml
+class listener.KeyListener {
++ UI ui
++ boolean aPressed
++ void keyTyped(KeyEvent)
++ void keyPressed(KeyEvent)
++ void keyReleased(KeyEvent)
+}
+class listener.MouseListener {
++ UI ui
++ boolean leftButtonPressed
++ void mouseClicked(MouseEvent)
++ void mousePressed(MouseEvent)
++ void mouseReleased(MouseEvent)
++ void mouseEntered(MouseEvent)
++ void mouseExited(MouseEvent)
+}
+class game.Entity.Player {
++ int X
++ int Y
++ int offsetX
++ int offsetY
++ int walkSpeed
++ int jumpSpeed
++ int gravitySpeed
++ int defaultHeight
++ int defaultWidth
++ int width
++ int height
+~ KeyListener kh
+~ UI ui
++ void drawPlayer(Graphics)
++ void gravity()
++ void jump()
++ boolean checkOverlapX(int,int,boolean)
++ void walk()
+}
+class game.UI {
+~ long lastTime
+~ boolean running
+~ int defaultHeight
+~ int defaultWidth
++ int screenHeight
++ int screenWidth
++ Player p
++ Map map
++ ArrayList<Block> blocks
++ BufferedImage bufferedImage
++ BufferedImage fullscreenBuffer
++ Graphics imageG
+- {static} DecimalFormat df
++ boolean fullscreen
++ boolean debug
++ double fps
++ int maxFps
++ MouseListener ml
++ MouseMotionListener mml
++ KeyListener kl
++ int gameState
++ int inventoryState
++ int currentState
++ void fpsLimiter()
++ void update()
+- void clearWindow()
+- void drawGameState()
+- void drawInventoryState()
+- void drawToImage()
+- void drawDebug()
+- void updatePlayer()
++ void toggleFullscreen()
+}
+class game.Map {
++ UI ui
+~ boolean first
++ boolean vertices
++ int worldWidth
++ int worldHeight
+~ BufferedImage grass
+~ int[] mapHeightPerColumn
++ void loadMap()
++ void loadHitBoxes()
++ void updateHitBoxes()
++ void checkHitBoxFromBlock(int)
++ int getBlockFromCoordinates(int,int)
++ int getBlockFromPlayerY(int,int)
++ void drawMap(Graphics)
++ boolean getOnlyVisibleBlocks(int)
++ void findBlock(Point)
+}
+class listener.MouseMotionListener {
+~ UI ui
++ void mouseDragged(MouseEvent)
++ void mouseMoved(MouseEvent)
+}
+class game.Entity.Block {
++ int height
++ int X
++ Point point
++ Image sprite
++ Color color
++ boolean hitLeft
++ boolean hitRight
++ boolean hitTop
++ boolean hitBottom
++ boolean breakable
++ boolean deactivateHitBox
++ void drawBlockVertices(Graphics,Player)
++ void drawHitBox(Graphics,Player)
++ void drawBlock(Graphics,Player)
++ void breakBlock(Map,Image)
++ boolean breakable()
+}
+class game.Main {
++ {static} void main(String[])
+}
+
+
+listener.KeyListener <|.. listener.KeyListener
+listener.MouseListener <|.. listener.MouseListener
+game.JFrame <|-- game.UI
+listener.MouseMotionListener <|.. listener.MouseMotionListener
+game.JFrame <|-- game.Main
+@enduml

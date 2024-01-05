@@ -15,7 +15,8 @@ public class Block {
     public boolean hitRight = false;
     public boolean hitTop = false;
     public boolean hitBottom = false;
-    public boolean air = false;
+    public boolean breakable = true;
+    public boolean deactivateHitBox = false;
     public Block(int h, int w, int i, int l,BufferedImage sprite){
         this.height = h;
         this.width = w;
@@ -25,10 +26,11 @@ public class Block {
         color = Color.blue;
         this.sprite = sprite.getScaledInstance(width,height, Image.SCALE_DEFAULT);
     }
-    public Block(int h, int w, int i, int l,BufferedImage sprite, boolean air){
+    public Block(int h, int w, int i, int l,BufferedImage sprite, boolean deactivateHitBox, boolean breakable){
         this.height = h;
-        this.air = air;
+        this.deactivateHitBox = deactivateHitBox;
         this.width = w;
+        this.breakable = breakable;
         this.X = i*25;
         this.Y = l*25;
         point = new Point(this.X,this.Y);
@@ -61,12 +63,12 @@ public class Block {
         hitBottom = false;
         hitRight = false;
         hitLeft = false;
-        air = true;
+        deactivateHitBox = true;
         sprite = image;
         map.updateHitBoxes();
     }
     public boolean breakable() {
+        return breakable;
         //Todo: Add statement that states if a block is breakable or not
-        return true;
     }
 }

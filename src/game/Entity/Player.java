@@ -8,8 +8,8 @@ import java.awt.*;
 public class Player {
     public int X;
     public int Y;
-    public int offsetX = 0;
-    public int offsetY = 0;
+    public int offsetX;
+    public int offsetY = 900;
     public int walkSpeed = 5;
     public int jumpSpeed = 10;
     public int gravitySpeed = 5;
@@ -23,7 +23,7 @@ public class Player {
         this.kh = kh;
         this.ui = ui;
         X = ui.screenWidth/2;
-        Y = 250 - defaultHeight;
+        Y = ui.screenHeight/2 - defaultHeight;
     }
     public void drawPlayer(Graphics g){
         g.setColor(Color.blue);

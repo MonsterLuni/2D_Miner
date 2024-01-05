@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/tiles/barrier.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/tiles/bedrock.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Block.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,7 +90,8 @@
       <workItem from="1704186794652" duration="24958000" />
       <workItem from="1704272551703" duration="14403000" />
       <workItem from="1704357559018" duration="11274000" />
-      <workItem from="1704376532395" duration="10367000" />
+      <workItem from="1704376532395" duration="10477000" />
+      <workItem from="1704444896186" duration="4235000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -162,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704393259357</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Made Code Prettier">
+      <option name="closed" value="true" />
+      <created>1704396309126</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1704396309126</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,7 +189,8 @@
     <MESSAGE value="hitbox top, left and right work fine now. Only bottom one is left." />
     <MESSAGE value="All Hitboxes now work. (top is a bit buggy)" />
     <MESSAGE value="Not Drawing stuff that's out of screen is now working in X and Y axis" />
-    <option name="LAST_COMMIT_MESSAGE" value="Not Drawing stuff that's out of screen is now working in X and Y axis" />
+    <MESSAGE value="Made Code Prettier" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made Code Prettier" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

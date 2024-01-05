@@ -14,83 +14,94 @@ import java.util.ArrayList;
 
 public class UI extends JFrame {
     long lastTime;
-    public Player p;
-    public Map map;
-    public KeyListener kh;
     boolean running = true;
     int defaultHeight = 720;
     int defaultWidth = 1280;
     public int screenHeight = defaultHeight;
     public int screenWidth = defaultWidth;
+    public Player p;
+    public Map map;
     public ArrayList<Block> blocks;
     public BufferedImage bufferedImage = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
-    private static final DecimalFormat df = new DecimalFormat("0.00");
     public BufferedImage fullscreenBuffer;
     public Graphics imageG = bufferedImage.getGraphics();
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     public boolean fullscreen = false;
     public boolean debug = false;
     public double fps = 0;
+    public int maxFps = 60;
     public MouseListener ml;
+    public MouseMotionListener mml;
+    public KeyListener kl;
+    public final int gameState = 0;
+    public final int inventoryState = 1;
+    public int currentState = gameState;
     public UI(){
-        setSize(screenWidth, screenHeight);
-        KeyListener kh = new KeyListener(this);
-        ml = new MouseListener(this);
-        MouseMotionListener mml = new MouseMotionListener(this);
-        this.kh = kh;
+        kl  = new KeyListener(this);
+        ml  = new MouseListener(this);
+        mml = new MouseMotionListener(this);
         map = new Map(this);
+        setSize(screenWidth, screenHeight);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         setUndecorated(true);
         setVisible(true);
-        addKeyListener(kh);
+        addKeyListener(kl);
         addMouseListener(ml);
         addMouseMotionListener(mml);
-        lastTime = System.currentTimeMillis();
-        p = new Player(this,kh);
+        p = new Player(this,kl);
         map.loadMap();
         map.loadHitBoxes();
-        fpsLimiter(60);
+        lastTime = System.currentTimeMillis();
+        fpsLimiter();
     }
-    /*public void drawLoadingScreen() {
-        imageG.setFont(getFont().deriveFont(Font.ITALIC, 32f));
-        imageG.setColor(Color.black);
-        int percent = blocks.size() / (map.worldWidth / 25) * (map.worldHeight / 25);
-        imageG.drawString("Loading: " + percent + "%",screenWidth/2,screenHeight/2);
-        if(blocks.size() == (map.worldWidth / 25) * (map.worldHeight / 25)){
-            loadingEnd = true;
-        }
-    }*/
-    public void fpsLimiter(int limit){
+    public void fpsLimiter(){
         long now = System.currentTimeMillis();
         long last = lastTime;
         fps = 1000 / (double)(now - last);
-        while (fps >= limit){
+        while (fps >= maxFps){
             now = System.currentTimeMillis();
             fps = 1000 / (double)(now - last);
         }
         // Here comes the Code that actually gets run
-        update(super.getGraphics());
+        update();
         lastTime = now;
         if(running){
-            fpsLimiter(limit);
+            fpsLimiter();
         }
     }
-    public void update(Graphics g){
+    public void update(){
+        clearWindow();
+        switch (currentState){
+            case gameState -> drawGameState();
+            case inventoryState -> drawInventoryState();
+        }
+    }
+    private void clearWindow(){
         imageG.clearRect(0,0,screenWidth,screenHeight);
         imageG.setColor(Color.white);
         imageG.fillRect(0,0,screenWidth,screenHeight);
-            p.drawPlayer(imageG);
-            updatePlayer();
-            map.drawMap(imageG);
-            if(debug){
-                drawDebug();
-            }
+    }
+    private void drawGameState(){
+        updatePlayer();
+        map.drawMap(imageG);
+        if(debug){
+            drawDebug();
+        }
+        drawToImage();
+    }
+    private void drawInventoryState(){
+        imageG.setColor(Color.black);
+        imageG.drawString("Inventory", 100, 100);
+        drawToImage();
+    }
+    private void drawToImage(){
         if(fullscreen){
-            g.drawImage(fullscreenBuffer,0,0,null);
+            super.getGraphics().drawImage(fullscreenBuffer,0,0,null);
         }
         else{
-            g.drawImage(bufferedImage,0,0,null);
+            super.getGraphics().drawImage(bufferedImage,0,0,null);
         }
     }
     private void drawDebug(){
@@ -109,6 +120,7 @@ public class UI extends JFrame {
         imageG.drawString("Draw Grid [F2]: " + map.vertices,10,150);
     }
     private void updatePlayer() {
+        p.drawPlayer(imageG);
         p.jump();
         p.walk();
         p.gravity();
