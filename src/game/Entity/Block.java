@@ -5,37 +5,38 @@ import game.Map;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Block {
-    public int height, width;
-    public int X,Y;
+public class Block extends Entity{
     public Point point;
-    public Image sprite;
     public Color color;
     public boolean hitLeft = false;
     public boolean hitRight = false;
     public boolean hitTop = false;
     public boolean hitBottom = false;
-    public boolean breakable = true;
-    public boolean deactivateHitBox = false;
-    public Block(int h, int w, int i, int l,BufferedImage sprite){
-        this.height = h;
-        this.width = w;
-        this.X = i*25;
-        this.Y = l*25;
-        point = new Point(this.X,this.Y);
-        color = Color.blue;
-        this.sprite = sprite.getScaledInstance(width,height, Image.SCALE_DEFAULT);
-    }
-    public Block(int h, int w, int i, int l,BufferedImage sprite, boolean deactivateHitBox, boolean breakable){
+    public boolean breakable;
+    public boolean deactivateHitBox;
+    public String name;
+    public BufferedImage image;
+    public Block(int h, int w, int i, int l,BufferedImage spriteUnscaled, boolean deactivateHitBox, boolean breakable, String name){
         this.height = h;
         this.deactivateHitBox = deactivateHitBox;
         this.width = w;
+        this.name = name;
         this.breakable = breakable;
-        this.X = i*25;
-        this.Y = l*25;
+        image = spriteUnscaled;
+        X = i*25;
+        Y = l*25;
         point = new Point(this.X,this.Y);
         color = Color.blue;
-        this.sprite = sprite.getScaledInstance(width,height, Image.SCALE_DEFAULT);
+        sprite = spriteUnscaled.getScaledInstance(width,height, Image.SCALE_DEFAULT);
+    }
+    public Block(int h, int w,BufferedImage spriteUnscaled, String name){
+        this.height = h;
+        this.width = w;
+        this.name = name;
+        image = spriteUnscaled;
+        point = new Point(this.X,this.Y);
+        color = Color.blue;
+        sprite = spriteUnscaled.getScaledInstance(width,height, Image.SCALE_DEFAULT);
     }
     public void drawBlockVertices(Graphics g, Player p){
         g.setColor(color);
@@ -70,5 +71,9 @@ public class Block {
     public boolean breakable() {
         return breakable;
         //Todo: Add statement that states if a block is breakable or not
+    }
+    @Override
+    public String getName() {
+        return name;
     }
 }

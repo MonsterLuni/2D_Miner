@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/tiles/barrier.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/tiles/bedrock.png" afterDir="false" />
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Made Code Prettier">
+      <change afterPath="$PROJECT_DIR$/assets/tiles/iron_ore.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/game/Entity/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Block.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +91,11 @@
       <workItem from="1704272551703" duration="14403000" />
       <workItem from="1704357559018" duration="11274000" />
       <workItem from="1704376532395" duration="10477000" />
-      <workItem from="1704444896186" duration="4235000" />
+      <workItem from="1704444896186" duration="5277000" />
+      <workItem from="1704477835208" duration="6731000" />
+      <workItem from="1704532272056" duration="7166000" />
+      <workItem from="1704539952127" duration="1219000" />
+      <workItem from="1704644203746" duration="8000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -173,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704396309126</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Made Code Prettier">
+      <option name="closed" value="true" />
+      <created>1704449196183</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1704449196183</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

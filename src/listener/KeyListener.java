@@ -30,6 +30,7 @@ public class KeyListener implements java.awt.event.KeyListener {
                     ui.currentState = ui.gameState;
                 }
             }
+            case KeyEvent.VK_F5 -> ui.p.sortInventory();
             case KeyEvent.VK_D -> dPressed = true;
             case KeyEvent.VK_F3 -> ui.debug = !ui.debug;
             case KeyEvent.VK_F11 -> ui.toggleFullscreen();

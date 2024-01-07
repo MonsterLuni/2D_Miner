@@ -4,10 +4,9 @@ import game.UI;
 import listener.KeyListener;
 
 import java.awt.*;
+import java.util.ArrayList;
 
-public class Player {
-    public int X;
-    public int Y;
+public class Player extends Entity{
     public int offsetX;
     public int offsetY = 900;
     public int walkSpeed = 5;
@@ -15,15 +14,19 @@ public class Player {
     public int gravitySpeed = 5;
     public int defaultHeight = 50;
     public int defaultWidth = 20;
-    public int width = defaultWidth;
-    public int height = defaultHeight;
-    KeyListener kh;
+    public KeyListener kh;
+    public int grass = 0, dirt = 0, stone = 0, iron_ore = 0;
+    public String[] types = {"grass","dirt","stone","iron_ore"};
     UI ui;
+    public ArrayList<Entity> inventory;
     public Player(UI ui,KeyListener kh){
         this.kh = kh;
         this.ui = ui;
+        width = defaultWidth;
+        height = defaultHeight;
         X = ui.screenWidth/2;
         Y = ui.screenHeight/2 - defaultHeight;
+        inventory = new ArrayList<>((ui.inventoryWidth/25) * (ui.inventoryHeight/25));
     }
     public void drawPlayer(Graphics g){
         g.setColor(Color.blue);
@@ -88,5 +91,45 @@ public class Player {
                 offsetX -= walkSpeed;
             }
         }
+    }
+    public void sortInventory() {
+        countInventoryEntities();
+        inventory.clear();
+        for (String type : types){
+            switch (type){
+                case "grass" -> {
+                    if(grass != 0){
+                        inventory.add(new Block(25, 25, ui.map.grass, type));}
+                    }
+                case "dirt" -> {
+                    if(dirt != 0){
+                        inventory.add(new Block(25, 25, ui.map.dirt, type));}
+                    }
+                case "stone" -> {
+                    if(stone != 0){
+                        inventory.add(new Block(25, 25, ui.map.stone, type));}
+                    }
+                case "iron_ore" -> {
+                    if(iron_ore != 0){
+                        inventory.add(new Block(25, 25, ui.map.iron_ore, type));}
+                    }
+            }
+
+        }
+    }
+    public void countInventoryEntities(){
+        //TODO: Help?
+        for (int i = 0; i < ui.p.inventory.size(); i++){
+            switch (ui.p.inventory.get(i).getName()){
+                case "grass" -> grass++;
+                case "dirt" -> dirt++;
+                case "stone" -> stone++;
+                case "iron_ore" -> iron_ore++;
+            }
+        }
+    }
+    @Override
+    public String getName() {
+        return "Player";
     }
 }

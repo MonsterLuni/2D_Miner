@@ -5,6 +5,7 @@ import game.Entity.Player;
 import listener.KeyListener;
 import listener.MouseListener;
 import listener.MouseMotionListener;
+import org.w3c.dom.css.RGBColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,6 +37,9 @@ public class UI extends JFrame {
     public final int gameState = 0;
     public final int inventoryState = 1;
     public int currentState = gameState;
+    public int inventoryWidth = 500;
+    public int inventoryHeight = 500;
+    Color background = new Color(211, 244, 244);
     public UI(){
         kl  = new KeyListener(this);
         ml  = new MouseListener(this);
@@ -72,15 +76,15 @@ public class UI extends JFrame {
         }
     }
     public void update(){
-        clearWindow();
+        clearWindow(background);
         switch (currentState){
             case gameState -> drawGameState();
             case inventoryState -> drawInventoryState();
         }
     }
-    private void clearWindow(){
+    private void clearWindow(Color col){
         imageG.clearRect(0,0,screenWidth,screenHeight);
-        imageG.setColor(Color.white);
+        imageG.setColor(col);
         imageG.fillRect(0,0,screenWidth,screenHeight);
     }
     private void drawGameState(){
@@ -94,6 +98,23 @@ public class UI extends JFrame {
     private void drawInventoryState(){
         imageG.setColor(Color.black);
         imageG.drawString("Inventory", 100, 100);
+        imageG.setColor(Color.gray);
+        imageG.fillRect(100,(screenHeight - inventoryWidth)/2,inventoryWidth,inventoryHeight);
+        imageG.setColor(Color.black);
+        for (int i = 0; i < inventoryWidth / 25; i++){
+            for (int l = 0; l < inventoryHeight/25; l++){
+                imageG.drawRect(100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25),25,25);
+                if((i*25)+l < p.inventory.size()){
+                    switch (p.inventory.get((i*25)+l).getName()){
+                        case "grass" -> imageG.drawString(String.valueOf(p.grass),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
+                        case "dirt" -> imageG.drawString(String.valueOf(p.dirt),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
+                        case "stone" -> imageG.drawString(String.valueOf(p.stone),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
+                        case "iron_ore" -> imageG.drawString(String.valueOf(p.iron_ore),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
+                    }
+                    imageG.drawImage(p.inventory.get((i*25)+l).sprite,100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25),null);
+                }
+            }
+        }
         drawToImage();
     }
     private void drawToImage(){
