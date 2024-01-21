@@ -190,9 +190,7 @@ public class Map {
         return ui.blocks.get(index).X / 25 >= positionPlayer && ui.blocks.get(index).X / 25 <= positionPlayer + 59 && ui.blocks.get(index).Y / 25 <= positionPlayerY + 54 && ui.blocks.get(index).Y / 25 >= positionPlayerY + 15;
     }
     public void findBlock(Point mouseCoordinates) {
-        int x = Math.round((float) mouseCoordinates.x / 25) * 25 - (ui.p.offsetX/25)*25 - 650;
-        int y = Math.round((float) mouseCoordinates.y / 25) * 25 + (ui.p.offsetY/25)*25 - 350;
-        Point mouseC = new Point(x,y);
+        Point mouseC = ui.mml.getMouseBlockHover(mouseCoordinates);
         for(int i=0; i< ui.blocks.size(); i++){
             if(getOnlyVisibleBlocks(i)){
                 if(mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y){
@@ -209,6 +207,4 @@ public class Map {
         }
 
     }
-
-
 }

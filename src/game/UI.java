@@ -20,6 +20,8 @@ public class UI extends JFrame {
     int defaultWidth = 1280;
     public int screenHeight = defaultHeight;
     public int screenWidth = defaultWidth;
+    public int screenHeightDivideTwo = screenHeight/2;
+    public int screenWidthDivideTwo = screenWidth/2;
     public Player p;
     public Map map;
     public ArrayList<Block> blocks;
