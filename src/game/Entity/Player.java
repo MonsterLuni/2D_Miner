@@ -13,7 +13,8 @@ public class Player extends Entity{
     public int jumpSpeed = 10;
     public int gravitySpeed = 5;
     public int defaultHeight = 50;
-    public int defaultWidth = 20;
+    public int defaultWidth = 25;
+    public int IndexBlockRight, IndexBlockMiddle, IndexBlockLeft;
     public KeyListener kh;
     public int grass = 0, dirt = 0, stone = 0, iron_ore = 0;
     public String[] types = {"grass","dirt","stone","iron_ore"};
@@ -32,13 +33,22 @@ public class Player extends Entity{
         g.setColor(Color.blue);
         g.fillRect(X,Y,width,height);
     }
+    public void updateIndex(){
+        IndexBlockRight = ui.map.getBlockFromPlayerY((((X - offsetX) / 25) * 25) + 25,(((Y + offsetY) / 25) * 25));
+        IndexBlockMiddle = ui.map.getBlockFromPlayerY((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25));
+    }
     public void gravity(){
-        int index = ui.map.getBlockFromPlayerY((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25));
-        if (index == -10 || Y + offsetY + 5 < ui.blocks.get(index).Y - (height + Y) ) {
-            offsetY += gravitySpeed;
+        updateIndex();
+        if(IndexBlockMiddle != -10 || IndexBlockRight != -10){
+            if(IndexBlockMiddle != -10){
+                offsetY = ui.blocks.get(IndexBlockMiddle).Y - (height + Y);
+            }
+            else{
+                offsetY = ui.blocks.get(IndexBlockRight).Y - (height + Y);
+            }
         }
-        else {
-            offsetY = ui.blocks.get(ui.map.getBlockFromPlayerY((((X - offsetX) / 25) * 25), (((Y + offsetY) / 25) * 25))).Y - (height + Y);
+        else{
+            offsetY += gravitySpeed;
         }
     }
     public void jump(){
@@ -60,16 +70,15 @@ public class Player extends Entity{
     }
     public boolean checkOverlapX(int index, int overlap, boolean right){
         if(right){
-            return X - offsetX - overlap <= ui.blocks.get(index).X;
+            return X - offsetX - overlap + 5 <= ui.blocks.get(index).X;
         }
         else {
             return X - offsetX - overlap >= ui.blocks.get(index).X;
         }
-
     }
     public void walk(){
+        int index = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25));
         if(kh.aPressed){
-            int index = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25));
             int index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25) - 25,(((Y + offsetY) / 25) * 25) + (height - 25));
             if(ui.blocks.get(index2).hitRight){
                 if(checkOverlapX(index,1,false)){
@@ -80,7 +89,6 @@ public class Player extends Entity{
                 offsetX += walkSpeed;
             }
         } else if (kh.dPressed) {
-            int index = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25));
             int index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25) + 25,(((Y + offsetY) / 25) * 25) + (height - 25));
             if(ui.blocks.get(index2).hitLeft){
                 if(checkOverlapX(index,0,true)){

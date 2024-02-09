@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class Map {
     public UI ui;
+    public boolean specificBlockShown = true;
     boolean first;
     public boolean vertices;
     public int worldWidth;
@@ -180,6 +181,19 @@ public class Map {
                     if(vertices){
                         ui.blocks.get(i).drawBlockVertices(g, ui.p);
                     }
+                    if(specificBlockShown){
+                        try {
+                            ui.blocks.get(ui.map.getBlockFromPlayerY((((ui.p.X - ui.p.offsetX) / 25) * 25), (((ui.p.Y + ui.p.offsetY) / 25) * 25))).drawBlockSpecial(g, ui.p);
+                        }
+                        catch (Exception e){
+                            System.out.println("Out of Bounds");
+                        }
+                        try{
+                            ui.blocks.get(ui.map.getBlockFromPlayerY((((ui.p.X - ui.p.offsetX) / 25) * 25) + 25,(((ui.p.Y + ui.p.offsetY) / 25) * 25))).drawBlockSpecial(g, ui.p);
+                        }catch (Exception e){
+                            System.out.println("Out of Bounds");
+                        }
+                    }
                 }
             }
         }
@@ -199,7 +213,7 @@ public class Map {
                         ui.blocks.get(i).breakBlock(this, air);
                     }
                     else{
-                        System.out.println("You can't break " + ui.blocks.get(i).getName());
+                        //System.out.println("You can't break " + ui.blocks.get(i).getName());
                         //TODO: Add Particle System that shows, that you can't break the current block.
                     }
                 }

@@ -59,6 +59,9 @@ public class Block extends Entity{
     public void drawBlock(Graphics g, Player p){
         g.drawImage(sprite,X + p.offsetX,Y - p.offsetY,null);
     }
+    public void drawBlockSpecial(Graphics g, Player p){
+        g.drawRect(X + p.offsetX, Y - p.offsetY, 25, 25);
+    }
     public void breakBlock(Map map, Image image){
         hitTop = false;
         hitBottom = false;

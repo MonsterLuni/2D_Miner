@@ -1,7 +1,9 @@
 package game.Entity;
 
+import java.awt.*;
+
 public class Item extends Entity{
-    public Item(){
+    public Item() {
 
     }
     @Override

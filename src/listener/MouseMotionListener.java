@@ -19,7 +19,7 @@ public class MouseMotionListener implements java.awt.event.MouseMotionListener {
     public Point getMouseBlockHover(Point coordinates){
         int x = Math.round(((float) coordinates.x / 25) * 25 - ((float) ui.p.offsetX /25)*25) - ui.screenWidthDivideTwo;
         x = Math.round((float) x / 25) * 25;
-        int y = Math.round(((float) coordinates.y / 25) * 25 + ((float) ui.p.offsetY /25)*25) - ui.screenHeightDivideTwo;;
+        int y = Math.round(((float) coordinates.y / 25) * 25 + ((float) ui.p.offsetY /25)*25) - ui.screenHeightDivideTwo;
         y = Math.round((float) y / 25) * 25;
         return new Point(x,y);
     }

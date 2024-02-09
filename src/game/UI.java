@@ -5,7 +5,6 @@ import game.Entity.Player;
 import listener.KeyListener;
 import listener.MouseListener;
 import listener.MouseMotionListener;
-import org.w3c.dom.css.RGBColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -107,12 +106,14 @@ public class UI extends JFrame {
             for (int l = 0; l < inventoryHeight/25; l++){
                 imageG.drawRect(100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25),25,25);
                 if((i*25)+l < p.inventory.size()){
+                    /*
                     switch (p.inventory.get((i*25)+l).getName()){
                         case "grass" -> imageG.drawString(String.valueOf(p.grass),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
                         case "dirt" -> imageG.drawString(String.valueOf(p.dirt),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
                         case "stone" -> imageG.drawString(String.valueOf(p.stone),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
                         case "iron_ore" -> imageG.drawString(String.valueOf(p.iron_ore),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
                     }
+                    */
                     imageG.drawImage(p.inventory.get((i*25)+l).sprite,100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25),null);
                 }
             }
@@ -141,6 +142,7 @@ public class UI extends JFrame {
         imageG.drawString("Updated Blocks: " + number,10,100);
         imageG.drawString("Player Coordinates: [X:" + (p.X - p.offsetX) + " Y:" + (p.Y + p.offsetY) + "]" ,10,125);
         imageG.drawString("Draw Grid [F2]: " + map.vertices,10,150);
+        imageG.drawString("Specific Block [F4]" + map.specificBlockShown, 10, 175);
     }
     private void updatePlayer() {
         p.drawPlayer(imageG);
