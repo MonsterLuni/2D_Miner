@@ -54,10 +54,13 @@ public class Player extends Entity{
     public void jump(){
         if(kh.spacePressed){
             int index = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 50));
-            int index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25));
-            if(ui.blocks.get(index2).hitBottom){
-                if(Y - offsetY + 5 <= ui.blocks.get(index).Y){
-                    System.out.println("left");
+            if(ui.blocks.get(index).hitBottom){
+                if(Y - offsetY + 1 + height <= ui.blocks.get(index).Y){
+                    if(height == defaultHeight){
+                        offsetY = ui.blocks.get(ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25))).Y - Y - 6;
+                    }else {
+                        offsetY = ui.blocks.get(ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25))).Y - Y - 5;
+                    }
                 }
                 else {
                     offsetY -= jumpSpeed;

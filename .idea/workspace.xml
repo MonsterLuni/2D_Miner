@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Improved the mouse block finding system">
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="fix: Issue #2 hitbox with gravity now works as expected">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +98,9 @@
       <workItem from="1705248688654" duration="3000" />
       <workItem from="1705848989632" duration="3319000" />
       <workItem from="1706536313324" duration="594000" />
-      <workItem from="1707506306514" duration="5630000" />
+      <workItem from="1707506306514" duration="6588000" />
+      <workItem from="1707575482657" duration="5000" />
+      <workItem from="1707580536152" duration="2947000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -209,7 +206,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705851347314</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fix: Issue #2 hitbox with gravity now works as expected">
+      <option name="closed" value="true" />
+      <created>1707512096048</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1707512096048</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,7 +233,8 @@
     <MESSAGE value="Made Code Prettier" />
     <MESSAGE value="Add Iron_ore (not spawning at the moment) + try to add an Inventory System (very bad at the moment)" />
     <MESSAGE value="Improved the mouse block finding system" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved the mouse block finding system" />
+    <MESSAGE value="fix: Issue #2 hitbox with gravity now works as expected" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Issue #2 hitbox with gravity now works as expected" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
