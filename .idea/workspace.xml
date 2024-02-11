@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="fix: Issue #2 hitbox with gravity now works as expected">
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="fix: Issue #1 hitbox with head of the player now works">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Block.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +103,9 @@
       <workItem from="1706536313324" duration="594000" />
       <workItem from="1707506306514" duration="6588000" />
       <workItem from="1707575482657" duration="5000" />
-      <workItem from="1707580536152" duration="2947000" />
+      <workItem from="1707580536152" duration="3983000" />
+      <workItem from="1707666285997" duration="1592000" />
+      <workItem from="1707677904144" duration="443000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -214,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707512096048</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="fix: Issue #1 hitbox with head of the player now works">
+      <option name="closed" value="true" />
+      <created>1707589468555</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1707589468555</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,7 +247,8 @@
     <MESSAGE value="Add Iron_ore (not spawning at the moment) + try to add an Inventory System (very bad at the moment)" />
     <MESSAGE value="Improved the mouse block finding system" />
     <MESSAGE value="fix: Issue #2 hitbox with gravity now works as expected" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Issue #2 hitbox with gravity now works as expected" />
+    <MESSAGE value="fix: Issue #1 hitbox with head of the player now works" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Issue #1 hitbox with head of the player now works" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

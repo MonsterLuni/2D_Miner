@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Map {
     public UI ui;
-    public boolean specificBlockShown = true;
+    public boolean specificBlockShown;
     boolean first;
     public boolean vertices;
     public int worldWidth;
@@ -183,14 +183,9 @@ public class Map {
                     }
                     if(specificBlockShown){
                         try {
-                            ui.blocks.get(ui.map.getBlockFromPlayerY((((ui.p.X - ui.p.offsetX) / 25) * 25), (((ui.p.Y + ui.p.offsetY) / 25) * 25))).drawBlockSpecial(g, ui.p);
+                            ui.blocks.get(ui.map.getBlockFromCoordinates((((ui.p.X - ui.p.offsetX) / 25) * 25),(((ui.p.Y + ui.p.offsetY) / 25) * 25) + (ui.p.height - 25))).drawBlockSpecial(g, ui.p);
                         }
                         catch (Exception e){
-                            System.out.println("Out of Bounds");
-                        }
-                        try{
-                            ui.blocks.get(ui.map.getBlockFromPlayerY((((ui.p.X - ui.p.offsetX) / 25) * 25) + 25,(((ui.p.Y + ui.p.offsetY) / 25) * 25))).drawBlockSpecial(g, ui.p);
-                        }catch (Exception e){
                             System.out.println("Out of Bounds");
                         }
                     }
@@ -210,11 +205,11 @@ public class Map {
                 if(mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y){
                     if(ui.blocks.get(i).breakable()){
                         ui.p.inventory.add(new Block(ui.blocks.get(i).height,ui.blocks.get(i).width,ui.blocks.get(i).X/25,ui.blocks.get(i).Y/25,ui.blocks.get(i).image,ui.blocks.get(i).deactivateHitBox,ui.blocks.get(i).breakable,ui.blocks.get(i).getName()));
-                        ui.blocks.get(i).breakBlock(this, air);
+                        ui.blocks.get(i).breakBlock(this, air, "air");
+                        System.out.println("Abgebaut");
                     }
                     else{
-                        //System.out.println("You can't break " + ui.blocks.get(i).getName());
-                        //TODO: Add Particle System that shows, that you can't break the current block.
+                        System.out.println("You can't break " + ui.blocks.get(i).getName());
                     }
                 }
             }

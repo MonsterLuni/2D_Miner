@@ -17,9 +17,18 @@ public class KeyListener implements java.awt.event.KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()){
-            case KeyEvent.VK_F2 -> {if(ui.debug){
-                ui.map.vertices = !ui.map.vertices;
+            case KeyEvent.VK_F2 -> {
+                if(ui.debug){
+                    ui.map.vertices = !ui.map.vertices;
+                }
             }
+            case KeyEvent.VK_F5 -> {
+                if(ui.debug){
+                    ui.map.specificBlockShown = !ui.map.specificBlockShown;
+                }
+                else {
+                    ui.p.sortInventory();
+                }
             }
             case KeyEvent.VK_A -> aPressed = true;
             case KeyEvent.VK_E -> {
@@ -30,7 +39,6 @@ public class KeyListener implements java.awt.event.KeyListener {
                     ui.currentState = ui.gameState;
                 }
             }
-            case KeyEvent.VK_F5 -> ui.p.sortInventory();
             case KeyEvent.VK_D -> dPressed = true;
             case KeyEvent.VK_F3 -> ui.debug = !ui.debug;
             case KeyEvent.VK_F11 -> ui.toggleFullscreen();

@@ -14,7 +14,7 @@ public class Player extends Entity{
     public int gravitySpeed = 5;
     public int defaultHeight = 50;
     public int defaultWidth = 25;
-    public int IndexBlockRight, IndexBlockMiddle, IndexBlockLeft;
+    public int IndexBlockRight, IndexBlockMiddle;
     public KeyListener kh;
     public int grass = 0, dirt = 0, stone = 0, iron_ore = 0;
     public String[] types = {"grass","dirt","stone","iron_ore"};

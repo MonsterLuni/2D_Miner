@@ -62,13 +62,15 @@ public class Block extends Entity{
     public void drawBlockSpecial(Graphics g, Player p){
         g.drawRect(X + p.offsetX, Y - p.offsetY, 25, 25);
     }
-    public void breakBlock(Map map, Image image){
+    public void breakBlock(Map map, Image image, String blockName){
         hitTop = false;
         hitBottom = false;
         hitRight = false;
         hitLeft = false;
         deactivateHitBox = true;
         sprite = image;
+        breakable = false;
+        name = blockName;
         map.updateHitBoxes();
     }
     public boolean breakable() {
