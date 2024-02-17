@@ -212,11 +212,10 @@ public class Map {
                         System.out.println("Abgebaut");
                     }
                     else{
-                        System.out.println("You can't break " + ui.blocks.get(i).getName());
+                        ui.addMessage("You can't break " + ui.blocks.get(i).getName(),60);
                     }
                 }
             }
         }
-
     }
 }
