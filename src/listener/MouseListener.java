@@ -11,9 +11,7 @@ public class MouseListener implements java.awt.event.MouseListener {
         this.ui = ui;
     }
     @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
+    public void mouseClicked(MouseEvent e) {}
     @Override
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()){

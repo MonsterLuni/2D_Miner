@@ -12,16 +12,18 @@ public class Block extends Entity{
     public boolean hitRight = false;
     public boolean hitTop = false;
     public boolean hitBottom = false;
+    public int hardness;
     public boolean breakable;
     public boolean deactivateHitBox;
     public String name;
     public BufferedImage image;
-    public Block(int h, int w, int i, int l,BufferedImage spriteUnscaled, boolean deactivateHitBox, boolean breakable, String name){
+    public Block(int h, int w, int i, int l,BufferedImage spriteUnscaled, boolean deactivateHitBox, boolean breakable, String name, int hardness){
         this.height = h;
         this.deactivateHitBox = deactivateHitBox;
         this.width = w;
         this.name = name;
         this.breakable = breakable;
+        this.hardness = hardness;
         image = spriteUnscaled;
         X = i*25;
         Y = l*25;
@@ -73,9 +75,8 @@ public class Block extends Entity{
         name = blockName;
         map.updateHitBoxes();
     }
-    public boolean breakable() {
-        return breakable;
-        //Todo: Add statement that states if a block is breakable or not
+    public boolean harvestable(Player p) {
+        return p.miningDamage >= hardness;
     }
     @Override
     public String getName() {

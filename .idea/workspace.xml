@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="fix: Issue #1 hitbox with head of the player now works">
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="fix: Issue #8 Blocks now have a harvestability score so that loot only drops if the players harvest stat is greater than its score.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Block.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listener/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,6 +106,7 @@
       <workItem from="1707580536152" duration="3983000" />
       <workItem from="1707666285997" duration="1592000" />
       <workItem from="1707677904144" duration="443000" />
+      <workItem from="1708187751031" duration="1769000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -248,7 +249,8 @@
     <MESSAGE value="Improved the mouse block finding system" />
     <MESSAGE value="fix: Issue #2 hitbox with gravity now works as expected" />
     <MESSAGE value="fix: Issue #1 hitbox with head of the player now works" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Issue #1 hitbox with head of the player now works" />
+    <MESSAGE value="fix: Issue #8 Blocks now have a harvestability score so that loot only drops if the players harvest stat is greater than its score." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Issue #8 Blocks now have a harvestability score so that loot only drops if the players harvest stat is greater than its score." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -27,13 +27,13 @@ public class Map {
         mapHeightTest = new int[worldWidth];
         ui.blocks = new ArrayList<>((worldWidth / 25) * (worldHeight / 25));
         try {
-            grass = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\grass.png"));
-            dirt = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\dirt.png"));
-            stone = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\stone.png"));
-            air = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\air.png"));
-            bedrock = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\bedrock.png"));
-            barrier = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\barrier.png"));
-            iron_ore = ImageIO.read(new File("F:\\Java\\_2D_Miner\\assets\\tiles\\iron_ore.png"));
+            grass = ImageIO.read(new File("assets/tiles/grass.png"));
+            dirt = ImageIO.read(new File("assets/tiles/dirt.png"));
+            stone = ImageIO.read(new File("assets/tiles/stone.png"));
+            air = ImageIO.read(new File("assets/tiles/air.png"));
+            bedrock = ImageIO.read(new File("assets/tiles/bedrock.png"));
+            barrier = ImageIO.read(new File("assets/tiles/barrier.png"));
+            iron_ore = ImageIO.read(new File("assets/tiles/iron_ore.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -110,18 +110,18 @@ public class Map {
     }
     public void blockSelector(int blockNumber, int i, int l){
         switch (blockNumber){
-            case 0 -> addBlock(25,25, i, l, grass,false,true, "grass");
-            case 1 -> addBlock(25, 25, i, l, dirt, false, true, "dirt");
-            case 2 -> addBlock(25, 25, i, l, stone, false, true, "stone");
-            case 3 -> addBlock(25, 25, i, l, air, true, false, "air");
-            case 4 -> addBlock(25, 25, i, l, bedrock, false, false, "bedrock");
-            case 5 -> addBlock(25, 25, i, l, barrier, false, false, "barrier");
-            case 6 -> addBlock(25, 25, i, l, iron_ore, false, true, "iron_ore");
+            case 0 -> addBlock(25,25, i, l, grass,false,true, "grass",1);
+            case 1 -> addBlock(25, 25, i, l, dirt, false, true, "dirt",1);
+            case 2 -> addBlock(25, 25, i, l, stone, false, true, "stone",2);
+            case 3 -> addBlock(25, 25, i, l, air, true, false, "air",0);
+            case 4 -> addBlock(25, 25, i, l, bedrock, false, false, "bedrock",10);
+            case 5 -> addBlock(25, 25, i, l, barrier, false, false, "barrier",10);
+            case 6 -> addBlock(25, 25, i, l, iron_ore, false, true, "iron_ore",3);
             case 7 -> {}
         }
     }
-    public void addBlock(int height, int width, int i, int l, BufferedImage sprite, boolean deactivateHitBox, boolean breakable, String name){
-        ui.blocks.add(new Block(height, width, i, l, sprite, deactivateHitBox, breakable, name));
+    public void addBlock(int height, int width, int i, int l, BufferedImage sprite, boolean deactivateHitBox, boolean breakable, String name, int hardness){
+        ui.blocks.add(new Block(height, width, i, l, sprite, deactivateHitBox, breakable, name, hardness));
     }
     public void loadHitBoxes() {
         for (int i = 0; i < ui.blocks.size(); i++){
@@ -203,8 +203,11 @@ public class Map {
         for(int i=0; i< ui.blocks.size(); i++){
             if(getOnlyVisibleBlocks(i)){
                 if(mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y){
-                    if(ui.blocks.get(i).breakable()){
-                        ui.p.inventory.add(new Block(ui.blocks.get(i).height,ui.blocks.get(i).width,ui.blocks.get(i).X/25,ui.blocks.get(i).Y/25,ui.blocks.get(i).image,ui.blocks.get(i).deactivateHitBox,ui.blocks.get(i).breakable,ui.blocks.get(i).getName()));
+                    if(ui.blocks.get(i).breakable){
+                        if(ui.blocks.get(i).harvestable(ui.p)){
+                            ui.p.inventory.add(new Block(ui.blocks.get(i).height,ui.blocks.get(i).width,ui.blocks.get(i).image,ui.blocks.get(i).getName()));
+                            System.out.println("Harvested");
+                        }
                         ui.blocks.get(i).breakBlock(this, air, "air");
                         System.out.println("Abgebaut");
                     }
