@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/items/pickaxe_wood.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Entity/Items/Pickaxe_wood.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/items/pickaxe_feather.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/game/Entity/Items/Pickaxe_feather.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Item.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +108,7 @@
       <workItem from="1707666285997" duration="1592000" />
       <workItem from="1707677904144" duration="443000" />
       <workItem from="1708187751031" duration="5029000" />
-      <workItem from="1708270057083" duration="6290000" />
+      <workItem from="1708270057083" duration="7391000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -260,7 +254,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708271772460</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fix: Issue #10 included hotbar in which items can be held. Those Items can increase hardness and miningDamage stats of player.">
+      <option name="closed" value="true" />
+      <created>1708280482329</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1708280482329</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,7 +286,8 @@
     <MESSAGE value="fix: Issue #8 Blocks now have a harvestability score so that loot only drops if the players harvest stat is greater than its score." />
     <MESSAGE value="fix: Issue #9 Messages added at the bottom left corner of the screen" />
     <MESSAGE value="fix: Issue #8 Add health to blocks." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Issue #8 Add health to blocks." />
+    <MESSAGE value="fix: Issue #10 included hotbar in which items can be held. Those Items can increase hardness and miningDamage stats of player." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Issue #10 included hotbar in which items can be held. Those Items can increase hardness and miningDamage stats of player." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

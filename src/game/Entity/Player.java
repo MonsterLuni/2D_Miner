@@ -1,5 +1,6 @@
 package game.Entity;
 
+import game.Entity.Items.Pickaxe_feather;
 import game.Entity.Items.Pickaxe_wood;
 import game.UI;
 import listener.KeyListener;
@@ -37,6 +38,7 @@ public class Player extends Entity{
         Y = ui.screenHeight/2 - defaultHeight;
         hotbar = new ArrayList<>(5);
         hotbar.add(new Pickaxe_wood());
+        hotbar.add(new Pickaxe_feather());
         inventory = new ArrayList<>((ui.inventoryWidth/25) * (ui.inventoryHeight/25));
     }
     public void drawPlayer(Graphics g){

@@ -107,6 +107,8 @@ public class UI extends JFrame {
         }
     }
     private void drawMessage(){
+        imageG.setFont(getFont().deriveFont(Font.ITALIC,20));
+        imageG.setColor(Color.black);
         for(int i = 0; i < messages.size(); i++){
             if(messages.get(i) != null){
                 imageG.drawString(messages.get(i),50,screenHeight-100 + (i*20));
