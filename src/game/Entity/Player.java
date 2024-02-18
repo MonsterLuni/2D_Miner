@@ -1,5 +1,6 @@
 package game.Entity;
 
+import game.Entity.Items.Pickaxe_wood;
 import game.UI;
 import listener.KeyListener;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 public class Player extends Entity{
     public int offsetX;
     public int offsetY = 900;
+    public int hotbarSize = 5;
+    public int hotbarSelected = 0;
     public int walkSpeed = 5;
     public int jumpSpeed = 10;
     public int gravitySpeed = 5;
@@ -16,12 +19,15 @@ public class Player extends Entity{
     public int defaultWidth = 25;
     public int hardness = 1;
     public int miningDamage = 2;
+    public int currentHardness = hardness;
+    public int currentMiningDamage = miningDamage;
     public int IndexBlockRight, IndexBlockMiddle;
     public KeyListener kh;
     public int grass = 0, dirt = 0, stone = 0, iron_ore = 0;
     public String[] types = {"grass","dirt","stone","iron_ore"};
     UI ui;
     public ArrayList<Entity> inventory;
+    public ArrayList<Entity> hotbar;
     public Player(UI ui,KeyListener kh){
         this.kh = kh;
         this.ui = ui;
@@ -29,6 +35,8 @@ public class Player extends Entity{
         height = defaultHeight;
         X = ui.screenWidth/2;
         Y = ui.screenHeight/2 - defaultHeight;
+        hotbar = new ArrayList<>(5);
+        hotbar.add(new Pickaxe_wood());
         inventory = new ArrayList<>((ui.inventoryWidth/25) * (ui.inventoryHeight/25));
     }
     public void drawPlayer(Graphics g){

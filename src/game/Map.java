@@ -204,7 +204,7 @@ public class Map {
             if(getOnlyVisibleBlocks(i)){
                 if(mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y){
                     if(ui.blocks.get(i).breakable){
-                        if(ui.blocks.get(i).health - ui.p.miningDamage <= 0){
+                        if(ui.blocks.get(i).health - ui.p.currentMiningDamage <= 0){
                             if(ui.blocks.get(i).harvestable(ui.p)){
                                 ui.addMessage("Harvested " + ui.blocks.get(i).getName(),120);
                                 ui.p.inventory.add(new Block(ui.blocks.get(i).height,ui.blocks.get(i).width,ui.blocks.get(i).image,ui.blocks.get(i).getName()));
@@ -212,7 +212,7 @@ public class Map {
                             ui.blocks.get(i).breakBlock(this, air, "air");
                         }
                         else{
-                            ui.blocks.get(i).health -= ui.p.miningDamage;
+                            ui.blocks.get(i).health -= ui.p.currentMiningDamage;
                             ui.addMessage("Hat noch leben: " + ui.blocks.get(i).health,120);
                         }
                     }

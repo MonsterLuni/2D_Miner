@@ -78,7 +78,7 @@ public class Block extends Entity{
         map.updateHitBoxes();
     }
     public boolean harvestable(Player p) {
-        return p.hardness >= hardness;
+        return p.currentHardness >= hardness;
     }
     @Override
     public String getName() {

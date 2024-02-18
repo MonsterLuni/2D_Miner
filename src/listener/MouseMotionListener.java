@@ -11,11 +11,7 @@ public class MouseMotionListener implements java.awt.event.MouseMotionListener {
         this.ui = ui;
     }
     @Override
-    public void mouseDragged(MouseEvent e) {
-        if(ui.ml.leftButtonPressed){
-            ui.map.findBlock(e.getLocationOnScreen());
-        }
-    }
+    public void mouseDragged(MouseEvent e) {}
     public Point getMouseBlockHover(Point coordinates){
         int x = Math.round(((float) coordinates.x / 25) * 25 - ((float) ui.p.offsetX /25)*25) - ui.screenWidthDivideTwo;
         x = Math.round((float) x / 25) * 25;

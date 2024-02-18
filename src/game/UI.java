@@ -97,6 +97,7 @@ public class UI extends JFrame {
             drawDebug();
         }
         drawMessage();
+        drawHotbar();
         drawToImage();
     }
     public void addMessage(String message, int time){
@@ -119,7 +120,7 @@ public class UI extends JFrame {
             }
         }
     }
-    private void drawInventoryState(){
+    private void drawInventory(){
         imageG.setColor(Color.black);
         imageG.drawString("Inventory", 100, 100);
         imageG.setColor(Color.gray);
@@ -141,7 +142,27 @@ public class UI extends JFrame {
                 }
             }
         }
+    }
+    private void drawInventoryState(){
+        drawInventory();
+        drawHotbar();
         drawToImage();
+    }
+    private void drawHotbar(){
+        for (int i = 0; i < p.hotbarSize; i++){
+            if(p.hotbarSelected == i){
+                imageG.setColor(Color.yellow);
+            }
+            else{
+                imageG.setColor(Color.black);
+            }
+            imageG.drawRect((screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50,25,25);
+            try{
+                imageG.drawImage(p.hotbar.get(i).sprite,(screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50,null);
+            }catch (IndexOutOfBoundsException e){
+
+            }
+        }
     }
     private void drawToImage(){
         if(fullscreen){

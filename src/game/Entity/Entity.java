@@ -7,6 +7,8 @@ public abstract class Entity {
     public int Y;
     public int width;
     public int height;
+    public int miningDamage;
+    public int hardness;
     public Image sprite;
     public abstract String getName();
 }
