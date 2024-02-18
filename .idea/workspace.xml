@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Block.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
     </list>
@@ -104,7 +106,8 @@
       <workItem from="1707580536152" duration="3983000" />
       <workItem from="1707666285997" duration="1592000" />
       <workItem from="1707677904144" duration="443000" />
-      <workItem from="1708187751031" duration="4993000" />
+      <workItem from="1708187751031" duration="5029000" />
+      <workItem from="1708270057083" duration="1649000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -234,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708189559001</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="fix: Issue #9 Messages added at the bottom left corner of the screen">
+      <option name="closed" value="true" />
+      <created>1708195667308</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1708195667308</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,7 +267,8 @@
     <MESSAGE value="fix: Issue #2 hitbox with gravity now works as expected" />
     <MESSAGE value="fix: Issue #1 hitbox with head of the player now works" />
     <MESSAGE value="fix: Issue #8 Blocks now have a harvestability score so that loot only drops if the players harvest stat is greater than its score." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Issue #8 Blocks now have a harvestability score so that loot only drops if the players harvest stat is greater than its score." />
+    <MESSAGE value="fix: Issue #9 Messages added at the bottom left corner of the screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Issue #9 Messages added at the bottom left corner of the screen" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public class UI extends JFrame {
     long lastTime;
@@ -35,8 +34,8 @@ public class UI extends JFrame {
     public int maxFps = 60;
     public MouseListener ml;
     public MouseMotionListener mml;
-    public ArrayList<String> messages = new ArrayList<>(10);
-    public ArrayList<Integer> liveTime = new ArrayList<>(10);
+    public ArrayList<String> messages = new ArrayList<>(4);
+    public ArrayList<Integer> liveTime = new ArrayList<>(4);
     public KeyListener kl;
     public final int gameState = 0;
     public final int inventoryState = 1;
@@ -101,8 +100,10 @@ public class UI extends JFrame {
         drawToImage();
     }
     public void addMessage(String message, int time){
-        messages.add(message);
-        liveTime.add(time);
+        if(messages.size() < 5){
+            messages.add(message);
+            liveTime.add(time);
+        }
     }
     private void drawMessage(){
         for(int i = 0; i < messages.size(); i++){
@@ -114,7 +115,6 @@ public class UI extends JFrame {
                 }
                 else {
                     liveTime.set(i,liveTime.get(i) - 1);
-                    System.out.println(liveTime.get(i));
                 }
             }
         }

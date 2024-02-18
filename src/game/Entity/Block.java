@@ -14,13 +14,15 @@ public class Block extends Entity{
     public boolean hitBottom = false;
     public int hardness;
     public boolean breakable;
+    public int health;
     public boolean deactivateHitBox;
     public String name;
     public BufferedImage image;
-    public Block(int h, int w, int i, int l,BufferedImage spriteUnscaled, boolean deactivateHitBox, boolean breakable, String name, int hardness){
+    public Block(int h, int w, int i, int l,BufferedImage spriteUnscaled, boolean deactivateHitBox, boolean breakable, String name, int hardness,int health){
         this.height = h;
         this.deactivateHitBox = deactivateHitBox;
         this.width = w;
+        this.health = health;
         this.name = name;
         this.breakable = breakable;
         this.hardness = hardness;
@@ -76,7 +78,7 @@ public class Block extends Entity{
         map.updateHitBoxes();
     }
     public boolean harvestable(Player p) {
-        return p.miningDamage >= hardness;
+        return p.hardness >= hardness;
     }
     @Override
     public String getName() {
