@@ -2,6 +2,10 @@ package game.Entity.Blocks;
 
 import game.Entity.Entity;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+
 public class BLK_STONE extends Entity {
     public BLK_STONE(){
         this.height = 25;
@@ -10,6 +14,11 @@ public class BLK_STONE extends Entity {
         this.deactivateHitBox = false;
         this.hardness = 2;
         this.health = 30;
+        try {
+            this.sprite = ImageIO.read(new File("assets/tiles/stone.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     @Override
     public String getName() {

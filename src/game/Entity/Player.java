@@ -1,5 +1,9 @@
 package game.Entity;
 
+import game.Entity.Blocks.BLK_DIRT;
+import game.Entity.Blocks.BLK_GRASS;
+import game.Entity.Blocks.BLK_IRON_ORE;
+import game.Entity.Blocks.BLK_STONE;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
 import game.Entity.Items.ITM_PICKAXE_WOOD;
 import game.UI;
@@ -9,6 +13,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player extends Entity{
     public int offsetX;
@@ -32,6 +37,7 @@ public class Player extends Entity{
     public String[] types = {"grass","dirt","stone","iron_ore"};
     UI ui;
     public ArrayList<Entity> inventory;
+    public HashMap<Entity, Integer> inventoryPlus;
     public ArrayList<Entity> hotbar;
     public Player(UI ui,KeyListener kh){
         this.kh = kh;
@@ -43,7 +49,9 @@ public class Player extends Entity{
         hotbar = new ArrayList<>(5);
         hotbar.add(new ITM_PICKAXE_WOOD());
         hotbar.add(new ITM_PICKAXE_FEATHER());
+        hotbar.add(new BLK_DIRT());
         inventory = new ArrayList<>((ui.inventoryWidth/25) * (ui.inventoryHeight/25));
+        inventoryPlus = new HashMap<>((ui.inventoryWidth / 25) * (ui.inventoryHeight / 25));
     }
     public void drawPlayer(Graphics g){
         g.setColor(Color.blue);
@@ -73,31 +81,25 @@ public class Player extends Entity{
         AffineTransform old = g2d.getTransform();
         int spriteY = Y;
         int spriteX = X;
-        if(lookDirection){
-            spriteSelected = hotbar.get(hotbarSelected).sprite;
-            if(ui.ml.leftButtonPressed){
-                g2d.rotate(Math.toRadians(35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+        try {
+            if (lookDirection) {
+                spriteSelected = hotbar.get(hotbarSelected).sprite;
+                if (ui.ml.leftButtonPressed) {
+                    g2d.rotate(Math.toRadians(35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+                } else {
+                    g2d.rotate(Math.toRadians(25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+                }
+            } else {
+                spriteSelected = flipHorizontal(hotbar.get(hotbarSelected).sprite);
+                spriteY += 10;
+                if (ui.ml.leftButtonPressed) {
+                    g2d.rotate(Math.toRadians(-35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+                } else {
+                    g2d.rotate(Math.toRadians(-25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+                }
             }
-            else{
-                g2d.rotate(Math.toRadians(25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
-            }
-        }
-        else{
-            spriteSelected = flipHorizontal(hotbar.get(hotbarSelected).sprite);
-            spriteY += 10;
-            if(ui.ml.leftButtonPressed){
-                g2d.rotate(Math.toRadians(-35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
-            }
-            else{
-                g2d.rotate(Math.toRadians(-25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
-            }
-        }
-        try{
             g2d.drawImage(spriteSelected,spriteX,spriteY,hotbar.get(hotbarSelected).width,hotbar.get(hotbarSelected).height,null);
-
-        }catch (IndexOutOfBoundsException e){
-            System.out.println("catch");
-        }
+        }catch (IndexOutOfBoundsException e){}
         g2d.setTransform(old);
     }
     public void updateIndex(){
@@ -171,40 +173,31 @@ public class Player extends Entity{
         }
     }
     public void sortInventory() {
-        countInventoryEntities();
         inventory.clear();
         for (String type : types){
             switch (type){
                 case "grass" -> {
                     if(grass != 0){
-                        inventory.add(new Block(25, 25, ui.map.grass, type));}
+                        inventory.add(new BLK_GRASS());}
                     }
                 case "dirt" -> {
                     if(dirt != 0){
-                        inventory.add(new Block(25, 25, ui.map.dirt, type));}
+                        inventory.add(new BLK_DIRT());}
                     }
                 case "stone" -> {
                     if(stone != 0){
-                        inventory.add(new Block(25, 25, ui.map.stone, type));}
+                        inventory.add(new BLK_STONE());}
                     }
                 case "iron_ore" -> {
                     if(iron_ore != 0){
-                        inventory.add(new Block(25, 25, ui.map.iron_ore, type));}
-                    }
+                        inventory.add(new BLK_IRON_ORE());}
+                }
             }
 
         }
     }
-    public void countInventoryEntities(){
-        //TODO: Help?
-        for (int i = 0; i < ui.p.inventory.size(); i++){
-            switch (ui.p.inventory.get(i).getName()){
-                case "grass" -> grass++;
-                case "dirt" -> dirt++;
-                case "stone" -> stone++;
-                case "iron_ore" -> iron_ore++;
-            }
-        }
+    public void updateInventory(){
+        //sortInventory();
     }
     @Override
     public String getName() {

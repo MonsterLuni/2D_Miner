@@ -28,17 +28,6 @@ public class Map {
         worldHeight = ui.screenHeight*3;
         mapHeightTest = new int[worldWidth];
         ui.blocks = new ArrayList<>((worldWidth / 25) * (worldHeight / 25));
-        try {
-            grass = ImageIO.read(new File("assets/tiles/grass.png"));
-            dirt = ImageIO.read(new File("assets/tiles/dirt.png"));
-            stone = ImageIO.read(new File("assets/tiles/stone.png"));
-            air = ImageIO.read(new File("assets/tiles/air.png"));
-            bedrock = ImageIO.read(new File("assets/tiles/bedrock.png"));
-            barrier = ImageIO.read(new File("assets/tiles/barrier.png"));
-            iron_ore = ImageIO.read(new File("assets/tiles/iron_ore.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
     public void loadMap() {
         randomMapHeight();
@@ -112,18 +101,18 @@ public class Map {
     }
     public void blockSelector(int blockNumber, int i, int l){
         switch (blockNumber){
-            case 0 -> addBlock(new BLK_GRASS(),i,l, grass);
-            case 1 -> addBlock(new BLK_DIRT(), i, l, dirt);
-            case 2 -> addBlock(new BLK_STONE(), i, l, stone);
-            case 3 -> addBlock(new BLK_AIR(), i, l, air);
-            case 4 -> addBlock(new BLK_BEDROCK(), i, l, bedrock);
-            case 5 -> addBlock(new BLK_BARRIER(), i, l, barrier);
-            case 6 -> addBlock(new BLK_IRON_ORE(), i, l, iron_ore);
+            case 0 -> addBlock(new BLK_GRASS(),i,l);
+            case 1 -> addBlock(new BLK_DIRT(), i, l);
+            case 2 -> addBlock(new BLK_STONE(), i, l);
+            case 3 -> addBlock(new BLK_AIR(), i, l);
+            case 4 -> addBlock(new BLK_BEDROCK(), i, l);
+            case 5 -> addBlock(new BLK_BARRIER(), i, l);
+            case 6 -> addBlock(new BLK_IRON_ORE(), i, l);
             case 7 -> {}
         }
     }
-    public void addBlock(Entity entity, int x, int y, BufferedImage sprite){
-        ui.blocks.add(new Block(entity.height,entity.width,x,y,sprite, entity.deactivateHitBox, entity.breakable, entity.getName(), entity.hardness, entity.health));
+    public void addBlock(Entity entity, int x, int y){
+        ui.blocks.add(new Block(entity.height,entity.width,x,y, (BufferedImage) entity.sprite, entity.deactivateHitBox, entity.breakable, entity.getName(), entity.hardness, entity.health));
     }
     public void loadHitBoxes() {
         for (int i = 0; i < ui.blocks.size(); i++){
@@ -209,7 +198,19 @@ public class Map {
                         if(ui.blocks.get(i).health - ui.p.currentMiningDamage <= 0){
                             if(ui.blocks.get(i).harvestable(ui.p)){
                                 ui.addMessage("Harvested " + ui.blocks.get(i).getName(),120);
-                                ui.p.inventory.add(new Block(ui.blocks.get(i).height,ui.blocks.get(i).width,ui.blocks.get(i).image,ui.blocks.get(i).getName()));
+                                switch (ui.blocks.get(i).name){
+                                    case "grass" -> ui.p.inventory.add(new BLK_GRASS());
+                                    case "dirt" -> ui.p.inventory.add(new BLK_DIRT());
+                                    case "stone" -> ui.p.inventory.add(new BLK_STONE());
+                                    case "iron_ore" -> ui.p.inventory.add(new BLK_IRON_ORE());
+                                }
+                                switch (ui.blocks.get(i).name){
+                                    case "grass" -> ui.p.inventoryPlus.put(new BLK_GRASS(),1);
+                                    case "dirt" -> ui.p.inventoryPlus.put(new BLK_DIRT(),1);
+                                    case "stone" -> ui.p.inventoryPlus.put(new BLK_STONE(),1);
+                                    case "iron_ore" -> ui.p.inventoryPlus.put(new BLK_IRON_ORE(),1);
+                                }
+                                ui.p.updateInventory();
                             }
                             ui.blocks.get(i).breakBlock(this, air, "air");
                         }
