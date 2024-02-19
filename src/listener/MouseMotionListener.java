@@ -13,9 +13,9 @@ public class MouseMotionListener implements java.awt.event.MouseMotionListener {
     @Override
     public void mouseDragged(MouseEvent e) {}
     public Point getMouseBlockHover(Point coordinates){
-        int x = Math.round(((float) coordinates.x / 25) * 25 - ((float) ui.p.offsetX /25)*25) - ui.screenWidthDivideTwo;
+        int x = coordinates.x - ui.p.offsetX;
         x = Math.round((float) x / 25) * 25;
-        int y = Math.round(((float) coordinates.y / 25) * 25 + ((float) ui.p.offsetY /25)*25) - ui.screenHeightDivideTwo;
+        int y = coordinates.y + ui.p.offsetY;
         y = Math.round((float) y / 25) * 25;
         return new Point(x,y);
     }
@@ -24,7 +24,7 @@ public class MouseMotionListener implements java.awt.event.MouseMotionListener {
         Point point = getMouseBlockHover(e.getLocationOnScreen());
         for(int i=0; i< ui.blocks.size(); i++){
             if(ui.map.getOnlyVisibleBlocks(i)){
-                if(point.x == ui.blocks.get(i).point.x && point.y == ui.blocks.get(i).point.y){
+                if(point.x - 150 == ui.blocks.get(i).point.x && point.y - 50 == ui.blocks.get(i).point.y){
                     ui.blocks.get(i).color = Color.red;
                 }
             }

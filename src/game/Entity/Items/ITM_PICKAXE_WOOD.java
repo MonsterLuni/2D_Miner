@@ -7,8 +7,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class Pickaxe_wood extends Entity {
-    public Pickaxe_wood(){
+public class ITM_PICKAXE_WOOD extends Entity {
+    public ITM_PICKAXE_WOOD(){
         width = 25;
         height = 25;
         try {

@@ -7,8 +7,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class Pickaxe_feather extends Entity {
-    public Pickaxe_feather(){
+public class ITM_PICKAXE_FEATHER extends Entity {
+    public ITM_PICKAXE_FEATHER(){
         width = 25;
         height = 25;
         try {

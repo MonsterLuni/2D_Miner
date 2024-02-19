@@ -9,6 +9,9 @@ public abstract class Entity {
     public int height;
     public int miningDamage;
     public int hardness;
+    public boolean breakable;
+    public boolean deactivateHitBox;
+    public int health;
     public Image sprite;
     public abstract String getName();
 }

@@ -1,6 +1,7 @@
 package game;
 
 import game.Entity.Block;
+import game.Entity.Entity;
 import game.Entity.Player;
 import listener.KeyListener;
 import listener.MouseListener;

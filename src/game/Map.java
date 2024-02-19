@@ -1,6 +1,8 @@
 package game;
 
 import game.Entity.Block;
+import game.Entity.Blocks.*;
+import game.Entity.Entity;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -110,18 +112,18 @@ public class Map {
     }
     public void blockSelector(int blockNumber, int i, int l){
         switch (blockNumber){
-            case 0 -> addBlock(25,25, i, l, grass,false,true, "grass",1,5);
-            case 1 -> addBlock(25, 25, i, l, dirt, false, true, "dirt",1,10);
-            case 2 -> addBlock(25, 25, i, l, stone, false, true, "stone",2,30);
-            case 3 -> addBlock(25, 25, i, l, air, true, false, "air",0,0);
-            case 4 -> addBlock(25, 25, i, l, bedrock, false, false, "bedrock",10,1000);
-            case 5 -> addBlock(25, 25, i, l, barrier, false, false, "barrier",10,1000);
-            case 6 -> addBlock(25, 25, i, l, iron_ore, false, true, "iron_ore",3,50);
+            case 0 -> addBlock(new BLK_GRASS(),i,l, grass);
+            case 1 -> addBlock(new BLK_DIRT(), i, l, dirt);
+            case 2 -> addBlock(new BLK_STONE(), i, l, stone);
+            case 3 -> addBlock(new BLK_AIR(), i, l, air);
+            case 4 -> addBlock(new BLK_BEDROCK(), i, l, bedrock);
+            case 5 -> addBlock(new BLK_BARRIER(), i, l, barrier);
+            case 6 -> addBlock(new BLK_IRON_ORE(), i, l, iron_ore);
             case 7 -> {}
         }
     }
-    public void addBlock(int height, int width, int i, int l, BufferedImage sprite, boolean deactivateHitBox, boolean breakable, String name, int hardness, int health){
-        ui.blocks.add(new Block(height, width, i, l, sprite, deactivateHitBox, breakable, name, hardness, health));
+    public void addBlock(Entity entity, int x, int y, BufferedImage sprite){
+        ui.blocks.add(new Block(entity.height,entity.width,x,y,sprite, entity.deactivateHitBox, entity.breakable, entity.getName(), entity.hardness, entity.health));
     }
     public void loadHitBoxes() {
         for (int i = 0; i < ui.blocks.size(); i++){
@@ -202,7 +204,7 @@ public class Map {
         Point mouseC = ui.mml.getMouseBlockHover(mouseCoordinates);
         for(int i=0; i< ui.blocks.size(); i++){
             if(getOnlyVisibleBlocks(i)){
-                if(mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y){
+                if(mouseC.x - 150 == ui.blocks.get(i).point.x && mouseC.y - 50 == ui.blocks.get(i).point.y){
                     if(ui.blocks.get(i).breakable){
                         if(ui.blocks.get(i).health - ui.p.currentMiningDamage <= 0){
                             if(ui.blocks.get(i).harvestable(ui.p)){
