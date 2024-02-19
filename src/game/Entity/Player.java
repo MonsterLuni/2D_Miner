@@ -6,6 +6,8 @@ import game.UI;
 import listener.KeyListener;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Player extends Entity{
@@ -23,6 +25,8 @@ public class Player extends Entity{
     public int currentHardness = hardness;
     public int currentMiningDamage = miningDamage;
     public int IndexBlockRight, IndexBlockMiddle;
+    /* true == right, false == left */
+    public boolean lookDirection = true;
     public KeyListener kh;
     public int grass = 0, dirt = 0, stone = 0, iron_ore = 0;
     public String[] types = {"grass","dirt","stone","iron_ore"};
@@ -44,6 +48,57 @@ public class Player extends Entity{
     public void drawPlayer(Graphics g){
         g.setColor(Color.blue);
         g.fillRect(X,Y,width,height);
+    }
+    public static BufferedImage flipHorizontal(Image image) {
+        int width = image.getWidth(null);
+        int height = image.getHeight(null);
+
+        BufferedImage flippedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = flippedImage.createGraphics();
+
+        // Create an AffineTransform to flip the image horizontally
+        AffineTransform transform = new AffineTransform();
+        transform.scale(-1, 1);
+        transform.translate(-width, 0);
+
+        // Apply the transformation to the graphics context
+        g2d.drawImage(image, transform, null);
+
+        g2d.dispose();
+        return flippedImage;
+    }
+    public void drawSelected(Graphics g){
+        Image spriteSelected;
+        Graphics2D g2d = (Graphics2D) g;
+        AffineTransform old = g2d.getTransform();
+        int spriteY = Y;
+        int spriteX = X;
+        if(lookDirection){
+            spriteSelected = hotbar.get(hotbarSelected).sprite;
+            if(ui.ml.leftButtonPressed){
+                g2d.rotate(Math.toRadians(35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+            }
+            else{
+                g2d.rotate(Math.toRadians(25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+            }
+        }
+        else{
+            spriteSelected = flipHorizontal(hotbar.get(hotbarSelected).sprite);
+            spriteY += 10;
+            if(ui.ml.leftButtonPressed){
+                g2d.rotate(Math.toRadians(-35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+            }
+            else{
+                g2d.rotate(Math.toRadians(-25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+            }
+        }
+        try{
+            g2d.drawImage(spriteSelected,spriteX,spriteY,hotbar.get(hotbarSelected).width,hotbar.get(hotbarSelected).height,null);
+
+        }catch (IndexOutOfBoundsException e){
+            System.out.println("catch");
+        }
+        g2d.setTransform(old);
     }
     public void updateIndex(){
         IndexBlockRight = ui.map.getBlockFromPlayerY((((X - offsetX) / 25) * 25) + 25,(((Y + offsetY) / 25) * 25));

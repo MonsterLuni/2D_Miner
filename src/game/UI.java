@@ -1,7 +1,6 @@
 package game;
 
 import game.Entity.Block;
-import game.Entity.Entity;
 import game.Entity.Player;
 import listener.KeyListener;
 import listener.MouseListener;
@@ -20,8 +19,6 @@ public class UI extends JFrame {
     int defaultWidth = 1280;
     public int screenHeight = defaultHeight;
     public int screenWidth = defaultWidth;
-    public int screenHeightDivideTwo = screenHeight/2;
-    public int screenWidthDivideTwo = screenWidth/2;
     public Player p;
     public Map map;
     public ArrayList<Block> blocks;
@@ -193,6 +190,7 @@ public class UI extends JFrame {
     }
     private void updatePlayer() {
         p.drawPlayer(imageG);
+        p.drawSelected(imageG);
         p.jump();
         p.walk();
         p.gravity();

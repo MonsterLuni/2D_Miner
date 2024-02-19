@@ -45,7 +45,10 @@ public class KeyListener implements java.awt.event.KeyListener {
                     ui.p.sortInventory();
                 }
             }
-            case KeyEvent.VK_A -> aPressed = true;
+            case KeyEvent.VK_A -> {
+                aPressed = true;
+                ui.p.lookDirection = false;
+            }
             case KeyEvent.VK_E -> {
                 if(ui.currentState == ui.gameState){
                     ui.currentState = ui.inventoryState;
@@ -54,7 +57,10 @@ public class KeyListener implements java.awt.event.KeyListener {
                     ui.currentState = ui.gameState;
                 }
             }
-            case KeyEvent.VK_D -> dPressed = true;
+            case KeyEvent.VK_D -> {
+                dPressed = true;
+                ui.p.lookDirection = true;
+            }
             case KeyEvent.VK_F3 -> ui.debug = !ui.debug;
             case KeyEvent.VK_F11 -> ui.toggleFullscreen();
             case KeyEvent.VK_SPACE -> spacePressed = true;

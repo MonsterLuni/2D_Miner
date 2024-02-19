@@ -24,7 +24,11 @@ public class MouseListener implements java.awt.event.MouseListener {
     }
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        switch (e.getButton()) {
+            case MouseEvent.BUTTON1 -> {
+                leftButtonPressed = false;
+            }
+        }
     }
     @Override
     public void mouseEntered(MouseEvent e) {

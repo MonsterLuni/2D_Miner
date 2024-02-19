@@ -4,23 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_AIR.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BARRIER.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BEDROCK.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_DIRT.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_GRASS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_IRON_ORE.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_STONE.java" afterDir="false" />
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="changed how blocks are being added to the game, each block now has it's own file in which the most important values can be changed">
+      <change afterPath="$PROJECT_DIR$/assets/tiles/void.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/Pickaxe_feather.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_FEATHER.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/Pickaxe_wood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_WOOD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/items/pickaxe_feather.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/items/pickaxe_feather.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/items/pickaxe_wood.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/items/pickaxe_wood.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listener/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +61,8 @@
       <recent name="F:\Java\_2D_Miner\assets\tiles" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\1_Dateien-BiCT\2.Lehrjahr\Java\2D_Miner\assets\items" />
+      <recent name="D:\1_Dateien-BiCT\2.Lehrjahr\Java\2D_Miner\assets\tiles" />
       <recent name="F:\Java\2D_Miner\assets\items" />
       <recent name="F:\Java\_2D_Miner\assets\tiles" />
     </key>
@@ -274,7 +268,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708280482329</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="changed how blocks are being added to the game, each block now has it's own file in which the most important values can be changed">
+      <option name="closed" value="true" />
+      <created>1708343570116</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1708343570116</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,7 +301,8 @@
     <MESSAGE value="fix: Issue #9 Messages added at the bottom left corner of the screen" />
     <MESSAGE value="fix: Issue #8 Add health to blocks." />
     <MESSAGE value="fix: Issue #10 included hotbar in which items can be held. Those Items can increase hardness and miningDamage stats of player." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Issue #10 included hotbar in which items can be held. Those Items can increase hardness and miningDamage stats of player." />
+    <MESSAGE value="changed how blocks are being added to the game, each block now has it's own file in which the most important values can be changed" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed how blocks are being added to the game, each block now has it's own file in which the most important values can be changed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
