@@ -141,23 +141,10 @@ public class UI extends JFrame {
                 i = 0;
             }
             entry.getKey().getName();
-            imageG.drawString(String.valueOf(p.grass),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+            imageG.drawImage(entry.getKey().sprite, 100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25),null);
+            imageG.drawString(String.valueOf(entry.getValue()),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
             i++;
         }
-        /*for (int i = 0; i < inventoryWidth / 25; i++){
-            for (int l = 0; l < inventoryHeight/25; l++){
-                if((i*25)+l < p.inventoryPlus.size()){
-                    switch (p.inventory.get((i*25)+l).getName()){
-                        case "grass" -> imageG.drawString(String.valueOf(p.grass),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
-                        case "dirt" -> imageG.drawString(String.valueOf(p.dirt),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
-                        case "stone" -> imageG.drawString(String.valueOf(p.stone),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
-                        case "iron_ore" -> imageG.drawString(String.valueOf(p.iron_ore),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
-                    }
-                    imageG.drawImage(p.inventory.get((i*25)+l).sprite,100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25),null);
-                }
-            }
-        }*/
     }
     private void drawInventoryState(){
         drawInventory();

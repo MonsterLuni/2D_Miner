@@ -9,6 +9,7 @@ public abstract class Entity {
     public int height;
     public int miningDamage = 0;
     public int hardness = 0;
+    public int stackSize = 64;
     public boolean breakable;
     public boolean deactivateHitBox;
     public int health;

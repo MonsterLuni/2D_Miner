@@ -41,9 +41,6 @@ public class KeyListener implements java.awt.event.KeyListener {
                 if(ui.debug){
                     ui.map.specificBlockShown = !ui.map.specificBlockShown;
                 }
-                else {
-                    ui.p.sortInventory();
-                }
             }
             case KeyEvent.VK_A -> {
                 aPressed = true;

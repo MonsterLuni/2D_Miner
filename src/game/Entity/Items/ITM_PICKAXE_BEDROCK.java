@@ -7,20 +7,20 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class ITM_PICKAXE_FEATHER extends Entity {
-    public ITM_PICKAXE_FEATHER(){
+public class ITM_PICKAXE_BEDROCK extends Entity {
+    public ITM_PICKAXE_BEDROCK(){
         width = 25;
         height = 25;
         try {
-            this.sprite = ImageIO.read(new File("assets/items/pickaxe_feather.png")).getScaledInstance(width,height, Image.SCALE_DEFAULT);
+            this.sprite = ImageIO.read(new File("assets/items/pickaxe_bedrock.png")).getScaledInstance(width,height, Image.SCALE_DEFAULT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        this.miningDamage = 0;
-        this.hardness = 0;
+        this.miningDamage = 100;
+        this.hardness = 5;
     }
     @Override
     public String getName() {
-        return "Pickaxe_feather";
+        return "Pickaxe_bedrock";
     }
 }

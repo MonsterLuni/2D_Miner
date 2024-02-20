@@ -4,6 +4,7 @@ import game.Entity.Blocks.BLK_DIRT;
 import game.Entity.Blocks.BLK_GRASS;
 import game.Entity.Blocks.BLK_IRON_ORE;
 import game.Entity.Blocks.BLK_STONE;
+import game.Entity.Items.ITM_PICKAXE_BEDROCK;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
 import game.Entity.Items.ITM_PICKAXE_WOOD;
 import game.UI;
@@ -13,7 +14,9 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Player extends Entity{
     public int offsetX;
@@ -33,8 +36,6 @@ public class Player extends Entity{
     /* true == right, false == left */
     public boolean lookDirection = true;
     public KeyListener kh;
-    public int grass = 0, dirt = 0, stone = 0, iron_ore = 0;
-    public String[] types = {"grass","dirt","stone","iron_ore"};
     UI ui;
     public ArrayList<Entity> inventory;
     public HashMap<Entity, Integer> inventoryPlus;
@@ -50,6 +51,7 @@ public class Player extends Entity{
         hotbar.add(new ITM_PICKAXE_WOOD());
         hotbar.add(new ITM_PICKAXE_FEATHER());
         hotbar.add(new BLK_DIRT());
+        hotbar.add(new ITM_PICKAXE_BEDROCK());
         inventory = new ArrayList<>((ui.inventoryWidth/25) * (ui.inventoryHeight/25));
         inventoryPlus = new HashMap<>((ui.inventoryWidth / 25) * (ui.inventoryHeight / 25));
     }
@@ -172,32 +174,19 @@ public class Player extends Entity{
             }
         }
     }
-    public void sortInventory() {
-        inventory.clear();
-        for (String type : types){
-            switch (type){
-                case "grass" -> {
-                    if(grass != 0){
-                        inventory.add(new BLK_GRASS());}
-                    }
-                case "dirt" -> {
-                    if(dirt != 0){
-                        inventory.add(new BLK_DIRT());}
-                    }
-                case "stone" -> {
-                    if(stone != 0){
-                        inventory.add(new BLK_STONE());}
-                    }
-                case "iron_ore" -> {
-                    if(iron_ore != 0){
-                        inventory.add(new BLK_IRON_ORE());}
+    public void sortInventory(Entity current) {
+        for (java.util.Map.Entry<Entity, Integer> entry : inventoryPlus.entrySet()) {
+            if(Objects.equals(entry.getKey().getName(), current.getName()) && entry.getKey() != current){
+                if(entry.getValue() + inventoryPlus.get(current) <= entry.getKey().stackSize){
+                    entry.setValue(entry.getValue() + inventoryPlus.get(current));
+                    inventoryPlus.remove(current);
+                    break;
                 }
             }
-
         }
     }
-    public void updateInventory(){
-        //sortInventory();
+    public void updateInventory(Entity current){
+        sortInventory(current);
     }
     @Override
     public String getName() {
