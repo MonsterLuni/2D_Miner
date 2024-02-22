@@ -30,15 +30,6 @@ public class Block extends Entity{
         color = Color.blue;
         sprite = spriteUnscaled.getScaledInstance(width,height, Image.SCALE_DEFAULT);
     }
-    public Block(int h, int w,BufferedImage spriteUnscaled, String name){
-        this.height = h;
-        this.width = w;
-        this.name = name;
-        image = spriteUnscaled;
-        point = new Point(this.X,this.Y);
-        color = Color.blue;
-        sprite = spriteUnscaled.getScaledInstance(width,height, Image.SCALE_DEFAULT);
-    }
     public void drawBlockVertices(Graphics g, Player p){
         g.setColor(color);
         g.drawRect(X + p.offsetX, Y - p.offsetY, width, height);

@@ -4,11 +4,8 @@ import game.Entity.Block;
 import game.Entity.Blocks.*;
 import game.Entity.Entity;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Map {
@@ -141,7 +138,7 @@ public class Map {
     }
     public int getBlockFromCoordinates(int X, int Y){
         for (int i = 0; i < ui.blocks.size(); i++){
-            if(ui.blocks.get(i).X == X && ui.blocks.get(i).Y == Y){
+            if (ui.blocks.get(i).X == X && ui.blocks.get(i).Y == Y) {
                 return i;
             }
         }

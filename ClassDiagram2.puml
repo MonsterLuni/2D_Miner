@@ -1,0 +1,209 @@
+@startuml
+class game.Entity.Player {
++ int offsetX
++ int offsetY
++ int hotbarSize
++ int hotbarSelected
++ int walkSpeed
++ int jumpSpeed
++ int gravitySpeed
++ int defaultHeight
++ int defaultWidth
++ int hardness
++ int miningDamage
++ int currentHardness
++ int currentMiningDamage
++ int IndexBlockRight
++ boolean lookDirection
++ KeyListener kh
+~ UI ui
++ ArrayList<Entity> inventory
++ HashMap<Entity,Integer> inventoryPlus
++ ArrayList<Entity> hotbar
++ void drawPlayer(Graphics)
++ {static} BufferedImage flipHorizontal(Image)
++ void drawSelected(Graphics)
++ void updateIndex()
++ void gravity()
++ void jump()
++ boolean checkOverlapX(int,int,boolean)
++ void walk()
++ void sortInventory(Entity)
++ void updateInventory(Entity)
++ String getName()
+}
+class game.Entity.Blocks.BLK_STONE {
++ String getName()
+}
+class game.Entity.Blocks.BLK_DIRT {
++ String getName()
+}
+class listener.KeyListener {
++ UI ui
++ boolean aPressed
++ void keyTyped(KeyEvent)
++ void keyPressed(KeyEvent)
++ void keyReleased(KeyEvent)
++ void switchHotbar(int)
+}
+class game.UI {
+~ long lastTime
+~ boolean running
+~ int defaultHeight
+~ int defaultWidth
++ int screenHeight
++ int screenWidth
++ Player p
++ Map map
++ ArrayList<Block> blocks
++ BufferedImage bufferedImage
++ BufferedImage fullscreenBuffer
++ Graphics imageG
+- {static} DecimalFormat df
++ boolean fullscreen
++ boolean debug
++ double fps
++ int maxFps
++ MouseListener ml
++ MouseMotionListener mml
++ ArrayList<String> messages
++ ArrayList<Integer> liveTime
++ KeyListener kl
++ int gameState
++ int inventoryState
++ int currentState
++ int inventoryWidth
++ int inventoryHeight
+~ Color background
++ void fpsLimiter()
++ void update()
+- void clearWindow(Color)
+- void drawGameState()
++ void addMessage(String,int)
+- void drawMessage()
+- void drawInventory()
+- void drawInventoryState()
+- void drawHotbar()
+- void drawToImage()
+- void drawDebug()
+- void updatePlayer()
++ void toggleFullscreen()
+}
+class game.Entity.Blocks.BLK_IRON_ORE {
++ String getName()
+}
+class listener.MouseMotionListener {
+~ UI ui
++ void mouseDragged(MouseEvent)
++ Point getMouseBlockHover(Point)
++ void mouseMoved(MouseEvent)
+}
+class game.Entity.Blocks.BLK_AIR {
++ String getName()
+}
+class game.Entity.Blocks.BLK_BEDROCK {
++ String getName()
+}
+class game.Entity.Block {
++ Point point
++ Color color
++ boolean hitLeft
++ boolean hitRight
++ boolean hitTop
++ boolean hitBottom
++ int hardness
++ String name
++ BufferedImage image
++ void drawBlockVertices(Graphics,Player)
++ void drawHitBox(Graphics,Player)
++ void drawBlock(Graphics,Player)
++ void drawBlockSpecial(Graphics,Player)
++ void breakBlock(Map,Image,String)
++ boolean harvestable(Player)
++ String getName()
+}
+abstract class game.Entity.Entity {
++ int X
++ int Y
++ int width
++ int height
++ int miningDamage
++ int hardness
++ int stackSize
++ boolean breakable
++ boolean deactivateHitBox
++ int health
++ Image sprite
++ {abstract}String getName()
+}
+class game.Entity.Items.ITM_PICKAXE_WOOD {
++ String getName()
+}
+class game.Entity.Blocks.BLK_GRASS {
++ String getName()
+}
+class game.Main {
++ {static} void main(String[])
+}
+class game.Entity.Items.ITM_PICKAXE_BEDROCK {
++ String getName()
+}
+class game.Entity.Blocks.BLK_BARRIER {
++ String getName()
+}
+class game.Map {
++ UI ui
++ boolean specificBlockShown
+~ boolean first
++ boolean vertices
++ int worldWidth
++ int worldHeight
++ int blockNumberFromFirstGround
+~ int[] mapHeightTest
+~ int[] mapHeightPerColumn
++ void loadMap()
++ void randomMapHeight()
+- int blockSelectingMechanism(int,int)
++ void blockSelector(int,int,int)
++ void addBlock(Entity,int,int)
++ void loadHitBoxes()
++ void updateHitBoxes()
++ void checkHitBoxFromBlock(int)
++ int getBlockFromCoordinates(int,int)
++ int getBlockFromPlayerY(int,int)
++ void drawMap(Graphics)
++ boolean getOnlyVisibleBlocks(int)
++ void findBlock(Point)
+}
+class game.Entity.Items.ITM_PICKAXE_FEATHER {
++ String getName()
+}
+class listener.MouseListener {
++ UI ui
++ boolean leftButtonPressed
++ void mouseClicked(MouseEvent)
++ void mousePressed(MouseEvent)
++ void mouseReleased(MouseEvent)
++ void mouseEntered(MouseEvent)
++ void mouseExited(MouseEvent)
+}
+
+
+game.Entity.Entity <|-- game.Entity.Player
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_STONE
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_DIRT
+listener.KeyListener <|.. listener.KeyListener
+game.JFrame <|-- game.UI
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_IRON_ORE
+listener.MouseMotionListener <|.. listener.MouseMotionListener
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_AIR
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_BEDROCK
+game.Entity.Entity <|-- game.Entity.Block
+game.Entity.Entity <|-- game.Entity.Items.ITM_PICKAXE_WOOD
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_GRASS
+game.JFrame <|-- game.Main
+game.Entity.Entity <|-- game.Entity.Items.ITM_PICKAXE_BEDROCK
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_BARRIER
+game.Entity.Entity <|-- game.Entity.Items.ITM_PICKAXE_FEATHER
+listener.MouseListener <|.. listener.MouseListener
+@enduml

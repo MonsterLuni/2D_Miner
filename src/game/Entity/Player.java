@@ -1,9 +1,6 @@
 package game.Entity;
 
 import game.Entity.Blocks.BLK_DIRT;
-import game.Entity.Blocks.BLK_GRASS;
-import game.Entity.Blocks.BLK_IRON_ORE;
-import game.Entity.Blocks.BLK_STONE;
 import game.Entity.Items.ITM_PICKAXE_BEDROCK;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
 import game.Entity.Items.ITM_PICKAXE_WOOD;
@@ -14,7 +11,6 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.HashMap;
 import java.util.Objects;
 
