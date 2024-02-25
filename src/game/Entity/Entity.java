@@ -7,8 +7,10 @@ public abstract class Entity {
     public int Y;
     public int inventoryX;
     public int inventoryY;
+    public int hotbarInt;
     public int width;
     public int height;
+    public int dropAmount = 1;
     public int miningDamage = 0;
     public int hardness = 0;
     public int stackSize = 64;

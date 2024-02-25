@@ -130,7 +130,7 @@
       <workItem from="1708621416939" duration="618000" />
       <workItem from="1708622051544" duration="81000" />
       <workItem from="1708625147076" duration="672000" />
-      <workItem from="1708851735668" duration="10054000" />
+      <workItem from="1708851735668" duration="20120000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -316,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708622124541</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="made #11 Items in the Inventory can now be swapped, changed Inventory to LinkedHashmap">
+      <option name="closed" value="true" />
+      <created>1708869437322</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1708869437323</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -345,7 +353,8 @@
     <MESSAGE value="add sprite of selected hotbar entity to player so that the player holds them" />
     <MESSAGE value="save" />
     <MESSAGE value="cleaned up code a bit" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up code a bit" />
+    <MESSAGE value="made #11 Items in the Inventory can now be swapped, changed Inventory to LinkedHashmap" />
+    <option name="LAST_COMMIT_MESSAGE" value="made #11 Items in the Inventory can now be swapped, changed Inventory to LinkedHashmap" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

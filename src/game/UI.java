@@ -159,6 +159,7 @@ public class UI extends JFrame {
     }
     private void drawHotbar(){
         for (int i = 0; i < p.hotbarSize; i++){
+            Entity hotbar = p.getHotbarItem(i);
             if(p.hotbarSelected == i){
                 imageG.setColor(Color.yellow);
             }
@@ -167,8 +168,8 @@ public class UI extends JFrame {
             }
             imageG.drawRect((screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50,25,25);
             try{
-                imageG.drawImage(p.hotbar.get(i).sprite,(screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50,null);
-            }catch (IndexOutOfBoundsException e){
+                imageG.drawImage(hotbar.sprite,(screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50,null);
+            }catch (NullPointerException e){
 
             }
         }

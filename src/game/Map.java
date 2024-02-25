@@ -195,30 +195,16 @@ public class Map {
                             if(ui.blocks.get(i).harvestable(ui.p)){
                                 ui.addMessage("Harvested " + ui.blocks.get(i).getName(),120);
                                 Entity currentEntity = null;
-                                int amount = 0;
                                 switch (ui.blocks.get(i).name){
-                                    case "grass" -> {
-                                        currentEntity = new BLK_GRASS();
-                                        amount = 1;
-                                    }
-                                    case "dirt" -> {
-                                        currentEntity = new BLK_DIRT();
-                                        amount = 1;
-                                    }
-                                    case "stone" -> {
-                                        currentEntity = new BLK_STONE();
-                                        amount = 1;
-                                    }
-                                    case "iron_ore" -> {
-                                        currentEntity = new BLK_IRON_ORE();
-                                        amount = 1;
-                                    }
+                                    case "grass" -> currentEntity = new BLK_GRASS();
+                                    case "dirt" -> currentEntity = new BLK_DIRT();
+                                    case "stone" -> currentEntity = new BLK_STONE();
+                                    case "iron_ore" -> currentEntity = new BLK_IRON_ORE();
                                 }
                                 if(currentEntity != null){
                                     currentEntity.inventoryX = ui.p.getFirstFreeInventorySpace().x;
                                     currentEntity.inventoryY = ui.p.getFirstFreeInventorySpace().y;
-                                    System.out.println(ui.p.getFirstFreeInventorySpace());
-                                    ui.p.inventoryPlus.put(currentEntity,amount);
+                                    ui.p.inventoryPlus.put(currentEntity,currentEntity.dropAmount);
                                     ui.p.updateInventory(currentEntity);
                                 }
                             }

@@ -1,16 +1,13 @@
 package game.Entity;
 
-import game.Entity.Blocks.BLK_DIRT;
 import game.Entity.Items.ITM_PICKAXE_BEDROCK;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
-import game.Entity.Items.ITM_PICKAXE_WOOD;
 import game.UI;
 import listener.KeyListener;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
@@ -37,9 +34,8 @@ public class Player extends Entity{
     public boolean lookDirection = true;
     public KeyListener kh;
     UI ui;
-    public ArrayList<Entity> inventory;
     public LinkedHashMap<Entity, Integer> inventoryPlus;
-    public ArrayList<Entity> hotbar;
+    public LinkedHashMap<Entity, Integer> hotbarPlus;
     public Player(UI ui,KeyListener kh){
         this.kh = kh;
         this.ui = ui;
@@ -47,13 +43,12 @@ public class Player extends Entity{
         height = defaultHeight;
         X = ui.screenWidth/2;
         Y = ui.screenHeight/2 - defaultHeight;
-        hotbar = new ArrayList<>(5);
-        hotbar.add(new ITM_PICKAXE_WOOD());
-        hotbar.add(new ITM_PICKAXE_FEATHER());
-        hotbar.add(new BLK_DIRT());
-        hotbar.add(new ITM_PICKAXE_BEDROCK());
-        inventory = new ArrayList<>((ui.inventoryWidth/25) * (ui.inventoryHeight/25));
+        hotbarPlus = new LinkedHashMap<>(5);
+        Entity pickaxe = new ITM_PICKAXE_BEDROCK();
+        pickaxe.hotbarInt = 0;
+        hotbarPlus.put(pickaxe,1);
         inventoryPlus = new LinkedHashMap<>((ui.inventoryWidth / 25) * (ui.inventoryHeight / 25));
+        inventoryPlus.put(new ITM_PICKAXE_FEATHER(),1);
     }
     public void drawPlayer(Graphics g){
         g.setColor(Color.blue);
@@ -83,16 +78,17 @@ public class Player extends Entity{
         AffineTransform old = g2d.getTransform();
         int spriteY = Y;
         int spriteX = X;
+        Entity hotbar = getHotbarItem(hotbarSelected);
         try {
             if (lookDirection) {
-                spriteSelected = hotbar.get(hotbarSelected).sprite;
+                spriteSelected = hotbar.sprite;
                 if (ui.ml.leftButtonPressed) {
                     g2d.rotate(Math.toRadians(35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
                 } else {
                     g2d.rotate(Math.toRadians(25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
                 }
             } else {
-                spriteSelected = flipHorizontal(hotbar.get(hotbarSelected).sprite);
+                spriteSelected = flipHorizontal(hotbar.sprite);
                 spriteY += 10;
                 if (ui.ml.leftButtonPressed) {
                     g2d.rotate(Math.toRadians(-35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
@@ -100,8 +96,8 @@ public class Player extends Entity{
                     g2d.rotate(Math.toRadians(-25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
                 }
             }
-            g2d.drawImage(spriteSelected,spriteX,spriteY,hotbar.get(hotbarSelected).width,hotbar.get(hotbarSelected).height,null);
-        }catch (IndexOutOfBoundsException e){}
+            g2d.drawImage(spriteSelected,spriteX,spriteY,hotbar.width,hotbar.height,null);
+        }catch (NullPointerException e){}
         g2d.setTransform(old);
     }
     public void updateIndex(){
@@ -182,6 +178,10 @@ public class Player extends Entity{
                     inventoryPlus.remove(current);
                     break;
                 }
+                else{
+                    inventoryPlus.replace(current, (entry.getValue() - entry.getKey().stackSize) + inventoryPlus.get(current));
+                    entry.setValue(entry.getKey().stackSize);
+                }
             }
         }
     }
@@ -189,16 +189,18 @@ public class Player extends Entity{
         sortInventory(current);
     }
     public Point getFirstFreeInventorySpace(){
-        int x = 0;
-        int y = 0;
-        Point point = new Point(x,y);
+        int lastX = 0;
+        int lastY = 0;
+        Point point = new Point(lastX,lastY);
         for (java.util.Map.Entry<Entity, Integer> entry : inventoryPlus.entrySet()) {
-            if(x == 8){
-                y++;
-                x = 0;
+            if(entry.getKey().inventoryX == lastX && entry.getKey().inventoryY == lastY){
+                lastX++;
             }
-            x++;
-            point = new Point(x,y);
+            if(lastX >= 10){
+                lastY++;
+                lastX = 0;
+            }
+            point = new Point(lastX,lastY);
         }
         return point;
     }
@@ -219,13 +221,65 @@ public class Player extends Entity{
             firstEntry.inventoryY = secondEntry.inventoryY;
             secondEntry.inventoryX = swapX;
             secondEntry.inventoryY= swapY;
-            System.out.println("BEIDE GETAUSCHT");
         }
         else if (firstEntry != null){
             firstEntry.inventoryX = activeInventorySpaceTwo.x;
             firstEntry.inventoryY = activeInventorySpaceTwo.y;
-            System.out.println("EINES GETAUSCHT");
         }
+
+    }
+    public Entity getHotbarItem(int selected){
+        Entity entity = null;
+        for (java.util.Map.Entry<Entity, Integer> entry : hotbarPlus.entrySet()) {
+            if(entry.getKey().hotbarInt == selected){
+                entity = entry.getKey();
+            }
+        }
+        return entity;
+    }
+    public int getHotbarValue(int selected){
+        int entity = 0;
+        for (java.util.Map.Entry<Entity, Integer> entry : hotbarPlus.entrySet()) {
+            if(entry.getKey().hotbarInt == selected){
+                entity = entry.getValue();
+            }
+        }
+        return entity;
+    }
+    public void swapInventoryToHotbar(){
+        Entity inventory = null;
+        Entity hotbar = getHotbarItem(hotbarSelected);
+        int hotbarInt = getHotbarValue(hotbarSelected);
+        int inventoryInt = 0;
+        for (java.util.Map.Entry<Entity, Integer> entry : inventoryPlus.entrySet()) {
+            if(entry.getKey().inventoryX == inventorySpaceX && entry.getKey().inventoryY == inventorySpaceY){
+                inventory = entry.getKey();
+                inventoryInt = entry.getValue();
+            }
+        }
+        if(inventory != null && hotbar != null){
+            int invX = inventory.inventoryX;
+            int invY = inventory.inventoryY;
+            hotbar.inventoryX = invX;
+            hotbar.inventoryY = invY;
+            inventory.hotbarInt = hotbar.hotbarInt;
+            inventoryPlus.put(hotbar,hotbarInt);
+            hotbarPlus.put(inventory,inventoryInt);
+            hotbarPlus.remove(hotbar);
+            inventoryPlus.remove(inventory);
+        }
+        else if (inventory != null){
+            inventory.hotbarInt = hotbarSelected;
+            hotbarPlus.put(inventory,inventoryInt);
+            inventoryPlus.remove(inventory);
+        }
+        else if(hotbar != null){
+            hotbar.inventoryX = inventorySpaceX;
+            hotbar.inventoryY = inventorySpaceY;
+            inventoryPlus.put(hotbar,hotbarInt);
+            hotbarPlus.remove(hotbar);
+        }
+        ui.kl.switchHotbar(hotbarSelected);
     }
     @Override
     public String getName() {

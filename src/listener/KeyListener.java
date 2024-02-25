@@ -1,5 +1,6 @@
 package listener;
 
+import game.Entity.Entity;
 import game.UI;
 
 import java.awt.*;
@@ -24,6 +25,21 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
     private void inventoryState(int e) {
         switch (e){
+            case KeyEvent.VK_1 -> {ui.p.hotbarSelected = 0;
+                switchHotbar(0);
+            }
+            case KeyEvent.VK_2 -> {ui.p.hotbarSelected = 1;
+                switchHotbar(1);
+            }
+            case KeyEvent.VK_3 -> {ui.p.hotbarSelected = 2;
+                switchHotbar(2);
+            }
+            case KeyEvent.VK_4 -> {ui.p.hotbarSelected = 3;
+                switchHotbar(3);
+            }
+            case KeyEvent.VK_5 -> {ui.p.hotbarSelected = 4;
+                switchHotbar(4);
+            }
             case KeyEvent.VK_E -> ui.currentState = UI.gameState;
             case KeyEvent.VK_W -> changeInventoryPlace(0,-1);
             case KeyEvent.VK_A -> changeInventoryPlace(-1,0);
@@ -31,6 +47,7 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_D -> changeInventoryPlace(1,0);
             case KeyEvent.VK_SPACE -> selectInventoryPlace();
             case KeyEvent.VK_ESCAPE -> resetActiveInventorySpace();
+            case KeyEvent.VK_F -> ui.p.swapInventoryToHotbar();
         }
     }
     private void selectInventoryPlace() {
@@ -121,10 +138,11 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
 
     public void switchHotbar(int i){
+        Entity hotbar = ui.p.getHotbarItem(i);
         try{
-            ui.p.currentMiningDamage = ui.p.hotbar.get(i).miningDamage;
-            ui.p.currentHardness = ui.p.hotbar.get(i).hardness;
-        }catch (IndexOutOfBoundsException e){
+            ui.p.currentMiningDamage = hotbar.miningDamage;
+            ui.p.currentHardness = hotbar.hardness;
+        }catch (NullPointerException e){
             ui.p.currentMiningDamage = ui.p.miningDamage;
             ui.p.currentHardness = ui.p.hardness;
         }
