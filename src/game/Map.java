@@ -7,6 +7,7 @@ import game.Entity.Entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Map {
     public UI ui;
@@ -217,6 +218,22 @@ public class Map {
                     }
                     else{
                         ui.addMessage("You can't break " + ui.blocks.get(i).getName(),60);
+                    }
+                }
+            }
+        }
+    }
+    public void placeBlock(Point mouseCoordinates, Entity entity){
+        Point mouseC = ui.mml.getMouseBlockHover(mouseCoordinates);
+        for(int i=0; i< ui.blocks.size(); i++){
+            if(getOnlyVisibleBlocks(i)){
+                if(mouseC.x - 150 == ui.blocks.get(i).point.x && mouseC.y - 50 == ui.blocks.get(i).point.y){
+                    if(Objects.equals(ui.blocks.get(i).getName(), "air")){
+                        ui.blocks.remove(i);
+                        entity.X = 0;
+                        entity.Y = 0;
+                        addBlock(entity,(mouseC.x - 150) / 25,(mouseC.y - 50)/25);
+                        updateHitBoxes();
                     }
                 }
             }

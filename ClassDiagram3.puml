@@ -1,0 +1,196 @@
+@startuml
+class game.Entity.Player {
++ int offsetX
++ int offsetY
++ int hotbarSize
++ int hotbarSelected
++ int walkSpeed
++ int jumpSpeed
++ int gravitySpeed
++ int defaultHeight
++ int defaultWidth
++ int hardness
++ int miningDamage
++ int currentHardness
++ int currentMiningDamage
++ int IndexBlockRight
++ int inventorySpaceX
++ int inventorySpaceY
++ Point activeInventorySpace
++ Point activeInventorySpaceTwo
++ boolean lookDirection
++ KeyListener kh
+~ UI ui
++ LinkedHashMap<Entity,Integer> inventoryPlus
++ LinkedHashMap<Entity,Integer> hotbarPlus
++ void drawPlayer(Graphics)
++ {static} BufferedImage flipHorizontal(Image)
++ void drawSelected(Graphics)
++ void updateIndex()
++ void gravity()
++ void jump()
++ boolean checkOverlapX(int,int,boolean)
++ void walk()
++ void sortInventory(Entity)
++ void updateInventory(Entity)
++ Point getFirstFreeInventorySpace()
++ void changeItemInInventory()
++ void swapInventoryToHotbar()
++ Entity getHotbarItem(int)
++ int getHotbarValue(int)
++ void switchHotbar(int)
++ String getName()
+}
+class game.Entity.Blocks.BLK_STONE {
++ String getName()
+}
+class game.Entity.Blocks.BLK_DIRT {
++ String getName()
+}
+class game.UI {
+~ long lastTime
+~ boolean running
+~ int defaultHeight
+~ int defaultWidth
++ int screenHeight
++ int screenWidth
++ Player p
++ Map map
++ ArrayList<Block> blocks
++ BufferedImage bufferedImage
++ BufferedImage fullscreenBuffer
++ Graphics imageG
+- {static} DecimalFormat df
++ boolean fullscreen
++ boolean debug
++ double fps
++ int maxFps
++ MouseListener ml
++ MouseMotionListener mml
++ ArrayList<String> messages
++ ArrayList<Integer> liveTime
++ KeyListener kl
++ {static} int gameState
++ {static} int inventoryState
++ int currentState
++ int inventoryWidth
++ int inventoryHeight
+~ Color background
++ void fpsLimiter()
++ void update()
+- void clearWindow(Color)
+- void drawGameState()
++ void addMessage(String,int)
+- void drawMessage()
+- void drawInventory()
+- void drawInventoryState()
+- void drawHotbar()
+- void drawToImage()
+- void drawDebug()
+- void updatePlayer()
++ void toggleFullscreen()
+}
+class game.Entity.Blocks.BLK_IRON_ORE {
++ String getName()
+}
+class game.Entity.Blocks.BLK_AIR {
++ String getName()
+}
+class game.Entity.Blocks.BLK_BEDROCK {
++ String getName()
+}
+class game.Entity.Block {
++ Point point
++ Color color
++ boolean hitLeft
++ boolean hitRight
++ boolean hitTop
++ boolean hitBottom
++ int hardness
++ String name
++ BufferedImage image
++ void drawBlockVertices(Graphics,Player)
++ void drawHitBox(Graphics,Player)
++ void drawBlock(Graphics,Player)
++ void drawBlockSpecial(Graphics,Player)
++ void breakBlock(Map,Image,String)
++ boolean harvestable(Player)
++ String getName()
+}
+abstract class game.Entity.Entity {
++ int X
++ int Y
++ int inventoryX
++ int inventoryY
++ int hotbarInt
++ int width
++ int height
++ int dropAmount
++ int miningDamage
++ int hardness
++ int stackSize
++ boolean breakable
++ boolean deactivateHitBox
++ int health
++ Image sprite
++ {abstract}String getName()
+}
+class game.Entity.Items.ITM_PICKAXE_WOOD {
++ String getName()
+}
+class game.Entity.Blocks.BLK_GRASS {
++ String getName()
+}
+class game.Main {
++ {static} void main(String[])
+}
+class game.Entity.Items.ITM_PICKAXE_BEDROCK {
++ String getName()
+}
+class game.Entity.Blocks.BLK_BARRIER {
++ String getName()
+}
+class game.Map {
++ UI ui
++ boolean specificBlockShown
+~ boolean first
++ boolean vertices
++ int worldWidth
++ int worldHeight
++ int blockNumberFromFirstGround
+~ int[] mapHeightTest
+~ int[] mapHeightPerColumn
++ void loadMap()
++ void randomMapHeight()
+- int blockSelectingMechanism(int,int)
++ void blockSelector(int,int,int)
++ void addBlock(Entity,int,int)
++ void loadHitBoxes()
++ void updateHitBoxes()
++ void checkHitBoxFromBlock(int)
++ int getBlockFromCoordinates(int,int)
++ int getBlockFromPlayerY(int,int)
++ void drawMap(Graphics)
++ boolean getOnlyVisibleBlocks(int)
++ void findBlock(Point)
+}
+class game.Entity.Items.ITM_PICKAXE_FEATHER {
++ String getName()
+}
+
+
+game.Entity.Entity <|-- game.Entity.Player
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_STONE
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_DIRT
+game.JFrame <|-- game.UI
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_IRON_ORE
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_AIR
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_BEDROCK
+game.Entity.Entity <|-- game.Entity.Block
+game.Entity.Entity <|-- game.Entity.Items.ITM_PICKAXE_WOOD
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_GRASS
+game.JFrame <|-- game.Main
+game.Entity.Entity <|-- game.Entity.Items.ITM_PICKAXE_BEDROCK
+game.Entity.Entity <|-- game.Entity.Blocks.BLK_BARRIER
+game.Entity.Entity <|-- game.Entity.Items.ITM_PICKAXE_FEATHER
+@enduml

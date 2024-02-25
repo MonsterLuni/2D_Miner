@@ -227,25 +227,6 @@ public class Player extends Entity{
             firstEntry.inventoryX = activeInventorySpaceTwo.x;
             firstEntry.inventoryY = activeInventorySpaceTwo.y;
         }
-
-    }
-    public Entity getHotbarItem(int selected){
-        Entity entity = null;
-        for (java.util.Map.Entry<Entity, Integer> entry : hotbarPlus.entrySet()) {
-            if(entry.getKey().hotbarInt == selected){
-                entity = entry.getKey();
-            }
-        }
-        return entity;
-    }
-    public int getHotbarValue(int selected){
-        int entity = 0;
-        for (java.util.Map.Entry<Entity, Integer> entry : hotbarPlus.entrySet()) {
-            if(entry.getKey().hotbarInt == selected){
-                entity = entry.getValue();
-            }
-        }
-        return entity;
     }
     public void swapInventoryToHotbar(){
         Entity inventory = null;
@@ -281,6 +262,24 @@ public class Player extends Entity{
             hotbarPlus.remove(hotbar);
         }
         switchHotbar(hotbarSelected);
+    }
+    public Entity getHotbarItem(int selected){
+        Entity entity = null;
+        for (java.util.Map.Entry<Entity, Integer> entry : hotbarPlus.entrySet()) {
+            if(entry.getKey().hotbarInt == selected){
+                entity = entry.getKey();
+            }
+        }
+        return entity;
+    }
+    public int getHotbarValue(int selected){
+        int entity = 0;
+        for (java.util.Map.Entry<Entity, Integer> entry : hotbarPlus.entrySet()) {
+            if(entry.getKey().hotbarInt == selected){
+                entity = entry.getValue();
+            }
+        }
+        return entity;
     }
     public void switchHotbar(int i){
         Entity hotbar = getHotbarItem(i);
