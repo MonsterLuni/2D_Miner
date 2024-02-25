@@ -1,6 +1,5 @@
 package listener;
 
-import game.Entity.Entity;
 import game.UI;
 
 import java.awt.*;
@@ -26,19 +25,19 @@ public class KeyListener implements java.awt.event.KeyListener {
     private void inventoryState(int e) {
         switch (e){
             case KeyEvent.VK_1 -> {ui.p.hotbarSelected = 0;
-                switchHotbar(0);
+                ui.p.switchHotbar(0);
             }
             case KeyEvent.VK_2 -> {ui.p.hotbarSelected = 1;
-                switchHotbar(1);
+                ui.p.switchHotbar(1);
             }
             case KeyEvent.VK_3 -> {ui.p.hotbarSelected = 2;
-                switchHotbar(2);
+                ui.p.switchHotbar(2);
             }
             case KeyEvent.VK_4 -> {ui.p.hotbarSelected = 3;
-                switchHotbar(3);
+                ui.p.switchHotbar(3);
             }
             case KeyEvent.VK_5 -> {ui.p.hotbarSelected = 4;
-                switchHotbar(4);
+                ui.p.switchHotbar(4);
             }
             case KeyEvent.VK_E -> ui.currentState = UI.gameState;
             case KeyEvent.VK_W -> changeInventoryPlace(0,-1);
@@ -75,19 +74,19 @@ public class KeyListener implements java.awt.event.KeyListener {
     private void gameState(int e) {
         switch (e){
             case KeyEvent.VK_1 -> {ui.p.hotbarSelected = 0;
-                switchHotbar(0);
+                ui.p.switchHotbar(0);
             }
             case KeyEvent.VK_2 -> {ui.p.hotbarSelected = 1;
-                switchHotbar(1);
+                ui.p.switchHotbar(1);
             }
             case KeyEvent.VK_3 -> {ui.p.hotbarSelected = 2;
-                switchHotbar(2);
+                ui.p.switchHotbar(2);
             }
             case KeyEvent.VK_4 -> {ui.p.hotbarSelected = 3;
-                switchHotbar(3);
+                ui.p.switchHotbar(3);
             }
             case KeyEvent.VK_5 -> {ui.p.hotbarSelected = 4;
-                switchHotbar(4);
+                ui.p.switchHotbar(4);
             }
             case KeyEvent.VK_F2 -> {
                 if(ui.debug){
@@ -134,17 +133,6 @@ public class KeyListener implements java.awt.event.KeyListener {
                 ui.p.Y -= 25;
                 ui.p.height = ui.p.defaultHeight;
             }
-        }
-    }
-
-    public void switchHotbar(int i){
-        Entity hotbar = ui.p.getHotbarItem(i);
-        try{
-            ui.p.currentMiningDamage = hotbar.miningDamage;
-            ui.p.currentHardness = hotbar.hardness;
-        }catch (NullPointerException e){
-            ui.p.currentMiningDamage = ui.p.miningDamage;
-            ui.p.currentHardness = ui.p.hardness;
         }
     }
 }

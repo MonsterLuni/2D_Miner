@@ -49,6 +49,7 @@ public class Player extends Entity{
         hotbarPlus.put(pickaxe,1);
         inventoryPlus = new LinkedHashMap<>((ui.inventoryWidth / 25) * (ui.inventoryHeight / 25));
         inventoryPlus.put(new ITM_PICKAXE_FEATHER(),1);
+        switchHotbar(hotbarSelected);
     }
     public void drawPlayer(Graphics g){
         g.setColor(Color.blue);
@@ -279,7 +280,17 @@ public class Player extends Entity{
             inventoryPlus.put(hotbar,hotbarInt);
             hotbarPlus.remove(hotbar);
         }
-        ui.kl.switchHotbar(hotbarSelected);
+        switchHotbar(hotbarSelected);
+    }
+    public void switchHotbar(int i){
+        Entity hotbar = getHotbarItem(i);
+        try{
+            currentMiningDamage = hotbar.miningDamage;
+            currentHardness = hotbar.hardness;
+        }catch (NullPointerException e){
+            currentMiningDamage = miningDamage;
+            currentHardness = hardness;
+        }
     }
     @Override
     public String getName() {
