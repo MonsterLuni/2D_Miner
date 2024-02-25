@@ -5,6 +5,8 @@ import java.awt.*;
 public abstract class Entity {
     public int X;
     public int Y;
+    public int inventoryX;
+    public int inventoryY;
     public int width;
     public int height;
     public int miningDamage = 0;

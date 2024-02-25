@@ -214,8 +214,13 @@ public class Map {
                                         amount = 1;
                                     }
                                 }
-                                ui.p.inventoryPlus.put(currentEntity,amount);
-                                ui.p.updateInventory(currentEntity);
+                                if(currentEntity != null){
+                                    currentEntity.inventoryX = ui.p.getFirstFreeInventorySpace().x;
+                                    currentEntity.inventoryY = ui.p.getFirstFreeInventorySpace().y;
+                                    System.out.println(ui.p.getFirstFreeInventorySpace());
+                                    ui.p.inventoryPlus.put(currentEntity,amount);
+                                    ui.p.updateInventory(currentEntity);
+                                }
                             }
                             ui.blocks.get(i).breakBlock(this, new BLK_AIR().sprite, "air");
                         }

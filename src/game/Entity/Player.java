@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 
 public class Player extends Entity{
@@ -29,12 +29,16 @@ public class Player extends Entity{
     public int currentHardness = hardness;
     public int currentMiningDamage = miningDamage;
     public int IndexBlockRight, IndexBlockMiddle;
+    public int inventorySpaceX = 0;
+    public int inventorySpaceY = 0;
+    public Point activeInventorySpace = new Point(-1,-1);
+    public Point activeInventorySpaceTwo = new Point(-1,-1);
     /* true == right, false == left */
     public boolean lookDirection = true;
     public KeyListener kh;
     UI ui;
     public ArrayList<Entity> inventory;
-    public HashMap<Entity, Integer> inventoryPlus;
+    public LinkedHashMap<Entity, Integer> inventoryPlus;
     public ArrayList<Entity> hotbar;
     public Player(UI ui,KeyListener kh){
         this.kh = kh;
@@ -49,7 +53,7 @@ public class Player extends Entity{
         hotbar.add(new BLK_DIRT());
         hotbar.add(new ITM_PICKAXE_BEDROCK());
         inventory = new ArrayList<>((ui.inventoryWidth/25) * (ui.inventoryHeight/25));
-        inventoryPlus = new HashMap<>((ui.inventoryWidth / 25) * (ui.inventoryHeight / 25));
+        inventoryPlus = new LinkedHashMap<>((ui.inventoryWidth / 25) * (ui.inventoryHeight / 25));
     }
     public void drawPlayer(Graphics g){
         g.setColor(Color.blue);
@@ -183,6 +187,45 @@ public class Player extends Entity{
     }
     public void updateInventory(Entity current){
         sortInventory(current);
+    }
+    public Point getFirstFreeInventorySpace(){
+        int x = 0;
+        int y = 0;
+        Point point = new Point(x,y);
+        for (java.util.Map.Entry<Entity, Integer> entry : inventoryPlus.entrySet()) {
+            if(x == 8){
+                y++;
+                x = 0;
+            }
+            x++;
+            point = new Point(x,y);
+        }
+        return point;
+    }
+    public void changeItemInInventory(){
+        Entity firstEntry = null;
+        Entity secondEntry = null;
+        for (java.util.Map.Entry<Entity, Integer> entry : inventoryPlus.entrySet()) {
+            if(entry.getKey().inventoryX == activeInventorySpace.x && entry.getKey().inventoryY == activeInventorySpace.y){
+                firstEntry = entry.getKey();
+            } else if (entry.getKey().inventoryX == activeInventorySpaceTwo.x && entry.getKey().inventoryY == activeInventorySpaceTwo.y) {
+                secondEntry = entry.getKey();
+            }
+        }
+        if(firstEntry != null && secondEntry != null){
+            int swapX = firstEntry.inventoryX;
+            int swapY = firstEntry.inventoryY;
+            firstEntry.inventoryX = secondEntry.inventoryX;
+            firstEntry.inventoryY = secondEntry.inventoryY;
+            secondEntry.inventoryX = swapX;
+            secondEntry.inventoryY= swapY;
+            System.out.println("BEIDE GETAUSCHT");
+        }
+        else if (firstEntry != null){
+            firstEntry.inventoryX = activeInventorySpaceTwo.x;
+            firstEntry.inventoryY = activeInventorySpaceTwo.y;
+            System.out.println("EINES GETAUSCHT");
+        }
     }
     @Override
     public String getName() {

@@ -36,8 +36,8 @@ public class UI extends JFrame {
     public ArrayList<String> messages = new ArrayList<>(4);
     public ArrayList<Integer> liveTime = new ArrayList<>(4);
     public KeyListener kl;
-    public final int gameState = 0;
-    public final int inventoryState = 1;
+    public final static int gameState = 0;
+    public final static int inventoryState = 1;
     public int currentState = gameState;
     public int inventoryWidth = 250;
     public int inventoryHeight = 250;
@@ -125,25 +125,31 @@ public class UI extends JFrame {
         imageG.setColor(Color.black);
         imageG.drawString("Inventory", 100, 100);
         imageG.setColor(Color.gray);
-        imageG.fillRect(100,(screenHeight - inventoryWidth)/2,inventoryWidth,inventoryHeight);
+        imageG.fillRect(100,(screenHeight - inventoryWidth)/2,inventoryWidth + 28,inventoryHeight + 28);
         imageG.setColor(Color.black);
         for (int i = 0; i < inventoryWidth / 25; i++){
             for (int l = 0; l < inventoryHeight/25; l++) {
-                imageG.drawRect(100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25),25,25);
+                if(p.activeInventorySpace.x == i && p.activeInventorySpace.y == l){
+                    imageG.setColor(Color.yellow);
+                    imageG.fillRect(100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),25,25);
+                    imageG.drawRect(100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),25,25);
+                }
+                else{
+                    if(p.inventorySpaceX == i && p.inventorySpaceY == l){
+                        imageG.setColor(Color.yellow);
+                    }
+                    else{
+                        imageG.setColor(Color.black);
+                    }
+                    imageG.drawRect(100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),25,25);
+                }
+                for (java.util.Map.Entry<Entity, Integer> entry : p.inventoryPlus.entrySet()) {
+                    if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
+                        imageG.drawImage(entry.getKey().sprite, 100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),null);
+                        imageG.drawString(String.valueOf(entry.getValue()),100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28));
+                    }
+                }
             }
-        }
-        int i = 0;
-        int l = 0;
-        for (java.util.Map.Entry<Entity, Integer> entry : p.inventoryPlus.entrySet()) {
-            int row = inventoryWidth/25;
-            if(i >= row){
-                l++;
-                i = 0;
-            }
-            entry.getKey().getName();
-            imageG.drawImage(entry.getKey().sprite, 100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25),null);
-            imageG.drawString(String.valueOf(entry.getValue()),100 + (i * 25),(screenHeight - inventoryWidth)/2 + (l*25));
-            i++;
         }
     }
     private void drawInventoryState(){
