@@ -201,10 +201,15 @@ public class Map {
             }
         }
     }
-    public boolean getOnlyVisibleBlocks(int index) throws NullPointerException{
+    public boolean getOnlyVisibleBlocks(int index){
             int positionPlayer = Math.round(((ui.p.X - (float) ui.p.offsetX) - (30 * 25)) /25);
             int positionPlayerY = Math.round(((ui.p.Y + (float) ui.p.offsetY) - (30 * 25)) /25);
-        return ui.blocks.get(index).X / 25 >= positionPlayer && ui.blocks.get(index).X / 25 <= positionPlayer + 59 && ui.blocks.get(index).Y / 25 <= positionPlayerY + 54 && ui.blocks.get(index).Y / 25 >= positionPlayerY + 15;
+            if(ui.blocks.get(index) != null){
+                return ui.blocks.get(index).X / 25 >= positionPlayer && ui.blocks.get(index).X / 25 <= positionPlayer + 59 && ui.blocks.get(index).Y / 25 <= positionPlayerY + 54 && ui.blocks.get(index).Y / 25 >= positionPlayerY + 15;
+            }
+            else{
+                return false;
+            }
     }
     public void findBlock(Point mouseCoordinates) {
         Point mouseC = ui.mml.getMouseBlockHover(mouseCoordinates);

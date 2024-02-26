@@ -11,7 +11,6 @@ public abstract class Entity {
     public int inventoryY;
     public boolean interactive;
     public int id;
-    public int hotbarInt;
     public int width;
     public int height;
     public int dropAmount = 1;

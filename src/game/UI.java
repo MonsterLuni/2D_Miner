@@ -39,6 +39,7 @@ public class UI extends JFrame {
     public final static int gameState = 0;
     public final static int inventoryState = 1;
     public final static int interactState = 2;
+    public Entity interactStateEntity;
     public int currentInteractState = 0;
     public final static int furnaceInteractState = 1;
     public int currentState = gameState;
@@ -106,6 +107,7 @@ public class UI extends JFrame {
     private void drawInteractiveState() {
         switch (currentInteractState) {
             case furnaceInteractState -> furnaceInteractiveState();
+            case 2 -> System.out.println("kommt noch nh");
         }
     }
     private void furnaceInteractiveState() {
@@ -118,11 +120,12 @@ public class UI extends JFrame {
         imageG.setColor(Color.black);
         imageG.drawString("Furnace", 800, 100);
         imageG.setColor(Color.gray);
-        imageG.fillRect(800,(screenHeight - inventoryWidth)/2,inventoryWidth + 28,inventoryHeight + 28);
+        imageG.fillRect(800,(screenHeight - inventoryWidth)/2,200,200);
         imageG.setColor(Color.black);
-        for (int i = 0; i < inventoryWidth / 25; i++){
-            for (int l = 0; l < inventoryHeight/25; l++) {
-
+        for (int i = 0; i < 1; i++){
+            for (int l = 0; l < 1; l++) {
+                imageG.drawRect(900,(screenHeight - inventoryWidth)/2 + 50 - (25/2),25,25);
+                imageG.drawRect(900,(screenHeight - inventoryWidth)/2 + 100 - (25/2),25,25);
             }
         }
     }
@@ -197,12 +200,11 @@ public class UI extends JFrame {
                 imageG.setColor(Color.black);
             }
             imageG.drawRect((screenWidth/2 - (p.hotbar.maxSize/2 * 28)) + (i * 28),screenHeight - 50,25,25);
-            try{
+            if(hotbarElement != null){
                 imageG.drawImage(hotbarElement.sprite,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)) + (i * 28),screenHeight - 50,null);
                 if(hotbarInt > 1){
                     imageG.drawString(String.valueOf(hotbarInt),(screenWidth/2 - (p.hotbar.maxSize/2 * 28)) + (i * 28),screenHeight - 50 + 25);
                 }
-            }catch (NullPointerException e){
             }
         }
     }

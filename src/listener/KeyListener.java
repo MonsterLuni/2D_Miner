@@ -24,21 +24,6 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
     private void inventoryState(int e) {
         switch (e){
-            /*case KeyEvent.VK_1 -> {ui.p.hotbarSelected = 0;
-                ui.p.switchHotbar(0);
-            }
-            case KeyEvent.VK_2 -> {ui.p.hotbarSelected = 1;
-                ui.p.switchHotbar(1);
-            }
-            case KeyEvent.VK_3 -> {ui.p.hotbarSelected = 2;
-                ui.p.switchHotbar(2);
-            }
-            case KeyEvent.VK_4 -> {ui.p.hotbarSelected = 3;
-                ui.p.switchHotbar(3);
-            }
-            case KeyEvent.VK_5 -> {ui.p.hotbarSelected = 4;
-                ui.p.switchHotbar(4);
-            }*/
             case KeyEvent.VK_RIGHT -> {
                 if(ui.p.hotbar.inventorySpaceX + 1 <= ui.p.hotbar.maxSize - 1){
                     ui.p.hotbar.inventorySpaceX += 1;
@@ -85,21 +70,6 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
     private void gameState(int e) {
         switch (e){
-            /*case KeyEvent.VK_1 -> {ui.p.hotbarSelected = 0;
-                ui.p.switchHotbar(0);
-            }
-            case KeyEvent.VK_2 -> {ui.p.hotbarSelected = 1;
-                ui.p.switchHotbar(1);
-            }
-            case KeyEvent.VK_3 -> {ui.p.hotbarSelected = 2;
-                ui.p.switchHotbar(2);
-            }
-            case KeyEvent.VK_4 -> {ui.p.hotbarSelected = 3;
-                ui.p.switchHotbar(3);
-            }
-            case KeyEvent.VK_5 -> {ui.p.hotbarSelected = 4;
-                ui.p.switchHotbar(4);
-            }*/
             case KeyEvent.VK_RIGHT -> {
                 if(ui.p.hotbar.inventorySpaceX + 1 <= ui.p.hotbar.maxSize - 1){
                     ui.p.hotbar.inventorySpaceX += 1;
@@ -146,6 +116,7 @@ public class KeyListener implements java.awt.event.KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (ui.currentState){
             case UI.gameState -> gameStateReleased(e.getKeyCode());
+            case UI.inventoryState -> System.out.println("Kommt noch");
         }
     }
     private void gameStateReleased(int e) {

@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.LinkedHashMap;
-import java.util.Objects;
 
 public class Player extends Entity{
     public int offsetX;
@@ -41,13 +40,14 @@ public class Player extends Entity{
         Y = ui.screenHeight/2 - defaultHeight;
         hotbar.maxSize = 5;
         hotbar.inventory = new LinkedHashMap<>(5);
-        Entity pickaxe = new ITM_PICKAXE_BEDROCK();
-        pickaxe.hotbarInt = 0;
-        hotbar.inventory.put(pickaxe,1);
+        hotbar.inventory.put(new ITM_PICKAXE_BEDROCK(),1);
+        hotbar.inventory.put(new BLK_INTERACTIVE_FURNACE(),1);
         inv.inventory = new LinkedHashMap<>((ui.inventoryWidth / 25) * (ui.inventoryHeight / 25));
         inv.inventory.put(new ITM_PICKAXE_FEATHER(),1);
-        inv.inventory.put(new BLK_INTERACTIVE_FURNACE(),1);
-        //switchHotbar(hotbarSelected);
+        Entity entity = new BLK_INTERACTIVE_FURNACE();
+        entity.inventoryX = 1;
+        inv.inventory.put(entity,1);
+        switchHotbar(hotbar.inventorySpaceX);
     }
     public void drawPlayer(Graphics g){
         g.setColor(Color.blue);
@@ -78,7 +78,7 @@ public class Player extends Entity{
         int spriteY = Y;
         int spriteX = X;
         Entity hotbarElement = hotbar.getKeyFromCoordinates(hotbar.inventorySpaceX,0);
-        try {
+        if(hotbarElement != null){
             if (lookDirection) {
                 spriteSelected = hotbarElement.sprite;
                 if (ui.ml.leftButtonPressed) {
@@ -96,7 +96,7 @@ public class Player extends Entity{
                 }
             }
             g2d.drawImage(spriteSelected,spriteX,spriteY,hotbarElement.width,hotbarElement.height,null);
-        }catch (NullPointerException e){}
+        }
         g2d.setTransform(old);
     }
     public void updateIndex(){
