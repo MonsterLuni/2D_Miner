@@ -181,7 +181,7 @@ public class Map {
             }
         }
     }
-    public boolean getOnlyVisibleBlocks(int index){
+    public boolean getOnlyVisibleBlocks(int index) throws NullPointerException{
             int positionPlayer = Math.round(((ui.p.X - (float) ui.p.offsetX) - (30 * 25)) /25);
             int positionPlayerY = Math.round(((ui.p.Y + (float) ui.p.offsetY) - (30 * 25)) /25);
         return ui.blocks.get(index).X / 25 >= positionPlayer && ui.blocks.get(index).X / 25 <= positionPlayer + 59 && ui.blocks.get(index).Y / 25 <= positionPlayerY + 54 && ui.blocks.get(index).Y / 25 >= positionPlayerY + 15;
@@ -232,8 +232,19 @@ public class Map {
                         ui.blocks.remove(i);
                         entity.X = 0;
                         entity.Y = 0;
-                        addBlock(entity,(mouseC.x - 150) / 25,(mouseC.y - 50)/25);
+                        blockSelector(entity.id,(mouseC.x - 150) / 25,(mouseC.y - 50)/25);
+                        //addBlock(entity,(mouseC.x - 150) / 25,(mouseC.y - 50)/25);
                         updateHitBoxes();
+                        for (java.util.Map.Entry<Entity, Integer> entry : ui.p.hotbarPlus.entrySet()) {
+                            if(entry.getKey().hotbarInt == ui.p.hotbarSelected){
+                                if(entry.getValue() - 1 <= 0){
+                                    ui.p.hotbarPlus.remove(entry.getKey());
+                                }
+                                else{
+                                    entry.setValue(entry.getValue() - 1);
+                                }
+                            }
+                        }
                     }
                 }
             }

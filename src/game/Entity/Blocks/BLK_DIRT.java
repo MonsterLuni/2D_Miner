@@ -10,6 +10,7 @@ public class BLK_DIRT extends Entity {
     public BLK_DIRT(){
         this.height = 25;
         this.width = 25;
+        this.id = 1;
         this.breakable = true;
         this.deactivateHitBox = false;
         this.hardness = 1;

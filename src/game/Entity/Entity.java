@@ -7,6 +7,7 @@ public abstract class Entity {
     public int Y;
     public int inventoryX;
     public int inventoryY;
+    public int id;
     public int hotbarInt;
     public int width;
     public int height;

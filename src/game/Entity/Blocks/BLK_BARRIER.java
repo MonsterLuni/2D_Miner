@@ -10,6 +10,7 @@ public class BLK_BARRIER extends Entity {
     public BLK_BARRIER(){
         this.height = 25;
         this.width = 25;
+        this.id = 5;
         this.breakable = false;
         this.deactivateHitBox = false;
         this.hardness = 10;

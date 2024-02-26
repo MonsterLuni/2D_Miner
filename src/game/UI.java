@@ -146,7 +146,7 @@ public class UI extends JFrame {
                 for (java.util.Map.Entry<Entity, Integer> entry : p.inventoryPlus.entrySet()) {
                     if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
                         imageG.drawImage(entry.getKey().sprite, 100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),null);
-                        imageG.drawString(String.valueOf(entry.getValue()),100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28));
+                        imageG.drawString(String.valueOf(entry.getValue()),100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28) + 25);
                     }
                 }
             }
@@ -160,6 +160,7 @@ public class UI extends JFrame {
     private void drawHotbar(){
         for (int i = 0; i < p.hotbarSize; i++){
             Entity hotbar = p.getHotbarItem(i);
+            int hotbarInt = p.getHotbarValue(i);
             if(p.hotbarSelected == i){
                 imageG.setColor(Color.yellow);
             }
@@ -169,6 +170,7 @@ public class UI extends JFrame {
             imageG.drawRect((screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50,25,25);
             try{
                 imageG.drawImage(hotbar.sprite,(screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50,null);
+                imageG.drawString(String.valueOf(hotbarInt),(screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50 + 25);
             }catch (NullPointerException e){
 
             }

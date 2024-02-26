@@ -10,6 +10,7 @@ public class BLK_IRON_ORE extends Entity {
     public BLK_IRON_ORE(){
         this.height = 25;
         this.width = 25;
+        this.id = 6;
         this.breakable = true;
         this.deactivateHitBox = false;
         this.hardness = 3;
