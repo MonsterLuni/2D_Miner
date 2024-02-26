@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="made code prettier">
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="add id to every block so that they are easier to place. Made blocks value display in hotbar +">
+      <change afterPath="$PROJECT_DIR$/assets/tiles/furnace.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/game/Inventory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Block.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_AIR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_AIR.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BARRIER.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BARRIER.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BEDROCK.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BEDROCK.java" afterDir="false" />
@@ -14,8 +18,14 @@
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_IRON_ORE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_IRON_ORE.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_STONE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_STONE.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_BEDROCK.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_BEDROCK.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_FEATHER.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_FEATHER.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_WOOD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_WOOD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listener/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,8 +78,8 @@
       <recent name="F:\Java\_2D_Miner\assets\tiles" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\1_Dateien-BiCT\2.Lehrjahr\Java\2D_Miner\assets\items" />
       <recent name="D:\1_Dateien-BiCT\2.Lehrjahr\Java\2D_Miner\assets\tiles" />
+      <recent name="D:\1_Dateien-BiCT\2.Lehrjahr\Java\2D_Miner\assets\items" />
       <recent name="F:\Java\2D_Miner\assets\items" />
       <recent name="F:\Java\_2D_Miner\assets\tiles" />
     </key>
@@ -136,7 +146,8 @@
       <workItem from="1708622051544" duration="81000" />
       <workItem from="1708625147076" duration="672000" />
       <workItem from="1708851735668" duration="22812000" />
-      <workItem from="1708934436522" duration="1711000" />
+      <workItem from="1708934436522" duration="7079000" />
+      <workItem from="1708941785459" duration="13843000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -346,14 +357,21 @@
       <option name="project" value="LOCAL" />
       <updated>1708887386677</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="add id to every block so that they are easier to place. Made blocks value display in hotbar +">
+      <option name="closed" value="true" />
+      <created>1708936158456</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1708936158456</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Stopped the Flickering of the background :D &#10;+ everything else" />
     <MESSAGE value="added fullscreen" />
     <MESSAGE value="blocks disappear when to far away" />
     <MESSAGE value="camera now functions correctly" />
@@ -378,7 +396,8 @@
     <MESSAGE value="made #11 Items in the Inventory can now be swapped, changed Inventory to LinkedHashmap" />
     <MESSAGE value="made #12 Items can now be transferred between hotbar and Inventory." />
     <MESSAGE value="made code prettier" />
-    <option name="LAST_COMMIT_MESSAGE" value="made code prettier" />
+    <MESSAGE value="add id to every block so that they are easier to place. Made blocks value display in hotbar +" />
+    <option name="LAST_COMMIT_MESSAGE" value="add id to every block so that they are easier to place. Made blocks value display in hotbar +" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

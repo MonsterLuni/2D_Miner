@@ -1,6 +1,7 @@
 package game.Entity.Blocks;
 
 import game.Entity.Entity;
+import game.UI;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -25,4 +26,10 @@ public class BLK_IRON_ORE extends Entity {
     public String getName() {
         return "iron_ore";
     }
+
+    @Override
+    public void interact(UI ui) {
+
+    }
+
 }

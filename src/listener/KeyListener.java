@@ -24,7 +24,7 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
     private void inventoryState(int e) {
         switch (e){
-            case KeyEvent.VK_1 -> {ui.p.hotbarSelected = 0;
+            /*case KeyEvent.VK_1 -> {ui.p.hotbarSelected = 0;
                 ui.p.switchHotbar(0);
             }
             case KeyEvent.VK_2 -> {ui.p.hotbarSelected = 1;
@@ -38,6 +38,18 @@ public class KeyListener implements java.awt.event.KeyListener {
             }
             case KeyEvent.VK_5 -> {ui.p.hotbarSelected = 4;
                 ui.p.switchHotbar(4);
+            }*/
+            case KeyEvent.VK_RIGHT -> {
+                if(ui.p.hotbar.inventorySpaceX + 1 <= ui.p.hotbar.maxSize - 1){
+                    ui.p.hotbar.inventorySpaceX += 1;
+                    ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
+                }
+            }
+            case KeyEvent.VK_LEFT -> {
+                if(ui.p.hotbar.inventorySpaceX - 1 >= 0){
+                    ui.p.hotbar.inventorySpaceX -= 1;
+                    ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
+                }
             }
             case KeyEvent.VK_E -> ui.currentState = UI.gameState;
             case KeyEvent.VK_W -> changeInventoryPlace(0,-1);
@@ -46,34 +58,34 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_D -> changeInventoryPlace(1,0);
             case KeyEvent.VK_SPACE -> selectInventoryPlace();
             case KeyEvent.VK_ESCAPE -> resetActiveInventorySpace();
-            case KeyEvent.VK_F -> ui.p.swapInventoryToHotbar();
+            case KeyEvent.VK_F -> ui.p.inv.swapInventories(ui.p.hotbar);
         }
     }
     private void selectInventoryPlace() {
-        if(ui.p.activeInventorySpace.x == -1){
-            ui.p.activeInventorySpace = new Point(ui.p.inventorySpaceX,ui.p.inventorySpaceY);
+        if(ui.p.inv.activeInventorySpace.x == -1){
+            ui.p.inv.activeInventorySpace = new Point(ui.p.inv.inventorySpaceX,ui.p.inv.inventorySpaceY);
         }
         else{
-            ui.p.activeInventorySpaceTwo = new Point(ui.p.inventorySpaceX,ui.p.inventorySpaceY);
-            ui.p.changeItemInInventory();
+            ui.p.inv.activeInventorySpaceTwo = new Point(ui.p.inv.inventorySpaceX,ui.p.inv.inventorySpaceY);
+            ui.p.inv.changeItemInInventory();
             resetActiveInventorySpace();
         }
     }
     private void resetActiveInventorySpace(){
-        ui.p.activeInventorySpace = new Point(-1,-1);
-        ui.p.activeInventorySpaceTwo = new Point(-1,-1);
+        ui.p.inv.activeInventorySpace = new Point(-1,-1);
+        ui.p.inv.activeInventorySpaceTwo = new Point(-1,-1);
     }
     private void changeInventoryPlace(int x, int y) {
-        if(ui.p.inventorySpaceX + x >= 0 && ui.p.inventorySpaceX + x <= 9){
-            ui.p.inventorySpaceX += x;
+        if(ui.p.inv.inventorySpaceX + x >= 0 && ui.p.inv.inventorySpaceX + x <= 9){
+            ui.p.inv.inventorySpaceX += x;
         }
-        if(ui.p.inventorySpaceY + y >= 0 && ui.p.inventorySpaceY + y <= 9){
-            ui.p.inventorySpaceY += y;
+        if(ui.p.inv.inventorySpaceY + y >= 0 && ui.p.inv.inventorySpaceY + y <= 9){
+            ui.p.inv.inventorySpaceY += y;
         }
     }
     private void gameState(int e) {
         switch (e){
-            case KeyEvent.VK_1 -> {ui.p.hotbarSelected = 0;
+            /*case KeyEvent.VK_1 -> {ui.p.hotbarSelected = 0;
                 ui.p.switchHotbar(0);
             }
             case KeyEvent.VK_2 -> {ui.p.hotbarSelected = 1;
@@ -87,6 +99,18 @@ public class KeyListener implements java.awt.event.KeyListener {
             }
             case KeyEvent.VK_5 -> {ui.p.hotbarSelected = 4;
                 ui.p.switchHotbar(4);
+            }*/
+            case KeyEvent.VK_RIGHT -> {
+                if(ui.p.hotbar.inventorySpaceX + 1 <= ui.p.hotbar.maxSize - 1){
+                    ui.p.hotbar.inventorySpaceX += 1;
+                    ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
+                }
+            }
+            case KeyEvent.VK_LEFT -> {
+                if(ui.p.hotbar.inventorySpaceX - 1 >= 0){
+                    ui.p.hotbar.inventorySpaceX -= 1;
+                    ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
+                }
             }
             case KeyEvent.VK_F2 -> {
                 if(ui.debug){

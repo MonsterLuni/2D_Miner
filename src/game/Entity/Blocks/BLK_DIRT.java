@@ -1,5 +1,6 @@
 package game.Entity.Blocks;
 import game.Entity.Entity;
+import game.UI;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -24,6 +25,10 @@ public class BLK_DIRT extends Entity {
     @Override
     public String getName() {
         return "dirt";
+    }
+    @Override
+    public void interact(UI ui) {
+
     }
 }
 

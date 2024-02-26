@@ -1,7 +1,9 @@
 package game.Entity;
 
+import game.Entity.Blocks.BLK_INTERACTIVE_FURNACE;
 import game.Entity.Items.ITM_PICKAXE_BEDROCK;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
+import game.Inventory;
 import game.UI;
 import listener.KeyListener;
 
@@ -14,8 +16,6 @@ import java.util.Objects;
 public class Player extends Entity{
     public int offsetX;
     public int offsetY = 900;
-    public int hotbarSize = 5;
-    public int hotbarSelected = 0;
     public int walkSpeed = 5;
     public int jumpSpeed = 10;
     public int gravitySpeed = 5;
@@ -26,16 +26,12 @@ public class Player extends Entity{
     public int currentHardness = hardness;
     public int currentMiningDamage = miningDamage;
     public int IndexBlockRight, IndexBlockMiddle;
-    public int inventorySpaceX = 0;
-    public int inventorySpaceY = 0;
-    public Point activeInventorySpace = new Point(-1,-1);
-    public Point activeInventorySpaceTwo = new Point(-1,-1);
+    public Inventory inv = new Inventory();
+    public Inventory hotbar = new Inventory();
     /* true == right, false == left */
     public boolean lookDirection = true;
     public KeyListener kh;
     UI ui;
-    public LinkedHashMap<Entity, Integer> inventoryPlus;
-    public LinkedHashMap<Entity, Integer> hotbarPlus;
     public Player(UI ui,KeyListener kh){
         this.kh = kh;
         this.ui = ui;
@@ -43,13 +39,15 @@ public class Player extends Entity{
         height = defaultHeight;
         X = ui.screenWidth/2;
         Y = ui.screenHeight/2 - defaultHeight;
-        hotbarPlus = new LinkedHashMap<>(5);
+        hotbar.maxSize = 5;
+        hotbar.inventory = new LinkedHashMap<>(5);
         Entity pickaxe = new ITM_PICKAXE_BEDROCK();
         pickaxe.hotbarInt = 0;
-        hotbarPlus.put(pickaxe,1);
-        inventoryPlus = new LinkedHashMap<>((ui.inventoryWidth / 25) * (ui.inventoryHeight / 25));
-        inventoryPlus.put(new ITM_PICKAXE_FEATHER(),1);
-        switchHotbar(hotbarSelected);
+        hotbar.inventory.put(pickaxe,1);
+        inv.inventory = new LinkedHashMap<>((ui.inventoryWidth / 25) * (ui.inventoryHeight / 25));
+        inv.inventory.put(new ITM_PICKAXE_FEATHER(),1);
+        inv.inventory.put(new BLK_INTERACTIVE_FURNACE(),1);
+        //switchHotbar(hotbarSelected);
     }
     public void drawPlayer(Graphics g){
         g.setColor(Color.blue);
@@ -79,17 +77,17 @@ public class Player extends Entity{
         AffineTransform old = g2d.getTransform();
         int spriteY = Y;
         int spriteX = X;
-        Entity hotbar = getHotbarItem(hotbarSelected);
+        Entity hotbarElement = hotbar.getKeyFromCoordinates(hotbar.inventorySpaceX,0);
         try {
             if (lookDirection) {
-                spriteSelected = hotbar.sprite;
+                spriteSelected = hotbarElement.sprite;
                 if (ui.ml.leftButtonPressed) {
                     g2d.rotate(Math.toRadians(35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
                 } else {
                     g2d.rotate(Math.toRadians(25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
                 }
             } else {
-                spriteSelected = flipHorizontal(hotbar.sprite);
+                spriteSelected = flipHorizontal(hotbarElement.sprite);
                 spriteY += 10;
                 if (ui.ml.leftButtonPressed) {
                     g2d.rotate(Math.toRadians(-35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
@@ -97,7 +95,7 @@ public class Player extends Entity{
                     g2d.rotate(Math.toRadians(-25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
                 }
             }
-            g2d.drawImage(spriteSelected,spriteX,spriteY,hotbar.width,hotbar.height,null);
+            g2d.drawImage(spriteSelected,spriteX,spriteY,hotbarElement.width,hotbarElement.height,null);
         }catch (NullPointerException e){}
         g2d.setTransform(old);
     }
@@ -171,121 +169,11 @@ public class Player extends Entity{
             }
         }
     }
-    public void sortInventory(Entity current) {
-        for (java.util.Map.Entry<Entity, Integer> entry : inventoryPlus.entrySet()) {
-            if(Objects.equals(entry.getKey().getName(), current.getName()) && entry.getKey() != current){
-                if(entry.getValue() + inventoryPlus.get(current) <= entry.getKey().stackSize){
-                    entry.setValue(entry.getValue() + inventoryPlus.get(current));
-                    inventoryPlus.remove(current);
-                    break;
-                }
-                else{
-                    inventoryPlus.replace(current, (entry.getValue() - entry.getKey().stackSize) + inventoryPlus.get(current));
-                    entry.setValue(entry.getKey().stackSize);
-                }
-            }
-        }
-    }
-    public void updateInventory(Entity current){
-        sortInventory(current);
-    }
-    public Point getFirstFreeInventorySpace(){
-        int lastX = 0;
-        int lastY = 0;
-        Point point = new Point(lastX,lastY);
-        for (java.util.Map.Entry<Entity, Integer> entry : inventoryPlus.entrySet()) {
-            if(entry.getKey().inventoryX == lastX && entry.getKey().inventoryY == lastY){
-                lastX++;
-            }
-            if(lastX >= 10){
-                lastY++;
-                lastX = 0;
-            }
-            point = new Point(lastX,lastY);
-        }
-        return point;
-    }
-    public void changeItemInInventory(){
-        Entity firstEntry = null;
-        Entity secondEntry = null;
-        for (java.util.Map.Entry<Entity, Integer> entry : inventoryPlus.entrySet()) {
-            if(entry.getKey().inventoryX == activeInventorySpace.x && entry.getKey().inventoryY == activeInventorySpace.y){
-                firstEntry = entry.getKey();
-            } else if (entry.getKey().inventoryX == activeInventorySpaceTwo.x && entry.getKey().inventoryY == activeInventorySpaceTwo.y) {
-                secondEntry = entry.getKey();
-            }
-        }
-        if(firstEntry != null && secondEntry != null){
-            int swapX = firstEntry.inventoryX;
-            int swapY = firstEntry.inventoryY;
-            firstEntry.inventoryX = secondEntry.inventoryX;
-            firstEntry.inventoryY = secondEntry.inventoryY;
-            secondEntry.inventoryX = swapX;
-            secondEntry.inventoryY= swapY;
-        }
-        else if (firstEntry != null){
-            firstEntry.inventoryX = activeInventorySpaceTwo.x;
-            firstEntry.inventoryY = activeInventorySpaceTwo.y;
-        }
-    }
-    public void swapInventoryToHotbar(){
-        Entity inventory = null;
-        Entity hotbar = getHotbarItem(hotbarSelected);
-        int hotbarInt = getHotbarValue(hotbarSelected);
-        int inventoryInt = 0;
-        for (java.util.Map.Entry<Entity, Integer> entry : inventoryPlus.entrySet()) {
-            if(entry.getKey().inventoryX == inventorySpaceX && entry.getKey().inventoryY == inventorySpaceY){
-                inventory = entry.getKey();
-                inventoryInt = entry.getValue();
-            }
-        }
-        if(inventory != null && hotbar != null){
-            int invX = inventory.inventoryX;
-            int invY = inventory.inventoryY;
-            hotbar.inventoryX = invX;
-            hotbar.inventoryY = invY;
-            inventory.hotbarInt = hotbar.hotbarInt;
-            inventoryPlus.put(hotbar,hotbarInt);
-            hotbarPlus.put(inventory,inventoryInt);
-            hotbarPlus.remove(hotbar);
-            inventoryPlus.remove(inventory);
-        }
-        else if (inventory != null){
-            inventory.hotbarInt = hotbarSelected;
-            hotbarPlus.put(inventory,inventoryInt);
-            inventoryPlus.remove(inventory);
-        }
-        else if(hotbar != null){
-            hotbar.inventoryX = inventorySpaceX;
-            hotbar.inventoryY = inventorySpaceY;
-            inventoryPlus.put(hotbar,hotbarInt);
-            hotbarPlus.remove(hotbar);
-        }
-        switchHotbar(hotbarSelected);
-    }
-    public Entity getHotbarItem(int selected){
-        Entity entity = null;
-        for (java.util.Map.Entry<Entity, Integer> entry : hotbarPlus.entrySet()) {
-            if(entry.getKey().hotbarInt == selected){
-                entity = entry.getKey();
-            }
-        }
-        return entity;
-    }
-    public int getHotbarValue(int selected){
-        int entity = 0;
-        for (java.util.Map.Entry<Entity, Integer> entry : hotbarPlus.entrySet()) {
-            if(entry.getKey().hotbarInt == selected){
-                entity = entry.getValue();
-            }
-        }
-        return entity;
-    }
     public void switchHotbar(int i){
-        Entity hotbar = getHotbarItem(i);
+        Entity hotbarElement = hotbar.getKeyFromCoordinates(i,0);
         try{
-            currentMiningDamage = hotbar.miningDamage;
-            currentHardness = hotbar.hardness;
+            currentMiningDamage = hotbarElement.miningDamage;
+            currentHardness = hotbarElement.hardness;
         }catch (NullPointerException e){
             currentMiningDamage = miningDamage;
             currentHardness = hardness;
@@ -294,5 +182,9 @@ public class Player extends Entity{
     @Override
     public String getName() {
         return "Player";
+    }
+    @Override
+    public void interact(UI ui) {
+
     }
 }

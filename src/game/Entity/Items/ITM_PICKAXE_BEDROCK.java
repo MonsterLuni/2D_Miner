@@ -1,6 +1,7 @@
 package game.Entity.Items;
 
 import game.Entity.Entity;
+import game.UI;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,5 +23,10 @@ public class ITM_PICKAXE_BEDROCK extends Entity {
     @Override
     public String getName() {
         return "Pickaxe_bedrock";
+    }
+
+    @Override
+    public void interact(UI ui) {
+
     }
 }

@@ -1,5 +1,7 @@
 package game.Entity;
 
+import game.UI;
+
 import java.awt.*;
 
 public abstract class Entity {
@@ -7,6 +9,7 @@ public abstract class Entity {
     public int Y;
     public int inventoryX;
     public int inventoryY;
+    public boolean interactive;
     public int id;
     public int hotbarInt;
     public int width;
@@ -20,4 +23,5 @@ public abstract class Entity {
     public int health;
     public Image sprite;
     public abstract String getName();
+    public abstract void interact(UI ui);
 }

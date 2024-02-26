@@ -1,6 +1,7 @@
 package game.Entity.Blocks;
 
 import game.Entity.Entity;
+import game.UI;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -24,5 +25,10 @@ public class BLK_STONE extends Entity {
     @Override
     public String getName() {
         return "stone";
+    }
+
+    @Override
+    public void interact(UI ui) {
+
     }
 }

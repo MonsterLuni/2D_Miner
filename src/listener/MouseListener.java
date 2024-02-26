@@ -19,7 +19,7 @@ public class MouseListener implements java.awt.event.MouseListener {
                 leftButtonPressed = true;
                 ui.map.findBlock(e.getLocationOnScreen());
             }
-            case MouseEvent.BUTTON3 -> ui.map.placeBlock(e.getLocationOnScreen(),ui.p.getHotbarItem(ui.p.hotbarSelected));
+            case MouseEvent.BUTTON3 -> ui.map.interactWorld(e.getLocationOnScreen(),ui.p.hotbar.getKeyFromCoordinates(ui.p.hotbar.inventorySpaceX,0));
         }
     }
     @Override

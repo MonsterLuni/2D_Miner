@@ -38,6 +38,9 @@ public class UI extends JFrame {
     public KeyListener kl;
     public final static int gameState = 0;
     public final static int inventoryState = 1;
+    public final static int interactState = 2;
+    public int currentInteractState = 0;
+    public final static int furnaceInteractState = 1;
     public int currentState = gameState;
     public int inventoryWidth = 250;
     public int inventoryHeight = 250;
@@ -82,6 +85,7 @@ public class UI extends JFrame {
         switch (currentState){
             case gameState -> drawGameState();
             case inventoryState -> drawInventoryState();
+            case interactState -> drawInteractiveState();
         }
     }
     private void clearWindow(Color col){
@@ -98,6 +102,29 @@ public class UI extends JFrame {
         drawMessage();
         drawHotbar();
         drawToImage();
+    }
+    private void drawInteractiveState() {
+        switch (currentInteractState) {
+            case furnaceInteractState -> furnaceInteractiveState();
+        }
+    }
+    private void furnaceInteractiveState() {
+        drawInventory();
+        drawHotbar();
+        drawInventoryFurnace();
+        drawToImage();
+    }
+    private void drawInventoryFurnace() {
+        imageG.setColor(Color.black);
+        imageG.drawString("Furnace", 800, 100);
+        imageG.setColor(Color.gray);
+        imageG.fillRect(800,(screenHeight - inventoryWidth)/2,inventoryWidth + 28,inventoryHeight + 28);
+        imageG.setColor(Color.black);
+        for (int i = 0; i < inventoryWidth / 25; i++){
+            for (int l = 0; l < inventoryHeight/25; l++) {
+
+            }
+        }
     }
     public void addMessage(String message, int time){
         if(messages.size() < 5){
@@ -129,13 +156,13 @@ public class UI extends JFrame {
         imageG.setColor(Color.black);
         for (int i = 0; i < inventoryWidth / 25; i++){
             for (int l = 0; l < inventoryHeight/25; l++) {
-                if(p.activeInventorySpace.x == i && p.activeInventorySpace.y == l){
+                if(p.inv.activeInventorySpace.x == i && p.inv.activeInventorySpace.y == l){
                     imageG.setColor(Color.yellow);
                     imageG.fillRect(100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),25,25);
                     imageG.drawRect(100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),25,25);
                 }
                 else{
-                    if(p.inventorySpaceX == i && p.inventorySpaceY == l){
+                    if(p.inv.inventorySpaceX == i && p.inv.inventorySpaceY == l){
                         imageG.setColor(Color.yellow);
                     }
                     else{
@@ -143,10 +170,12 @@ public class UI extends JFrame {
                     }
                     imageG.drawRect(100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),25,25);
                 }
-                for (java.util.Map.Entry<Entity, Integer> entry : p.inventoryPlus.entrySet()) {
+                for (java.util.Map.Entry<Entity, Integer> entry : p.inv.inventory.entrySet()) {
                     if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
                         imageG.drawImage(entry.getKey().sprite, 100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),null);
-                        imageG.drawString(String.valueOf(entry.getValue()),100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28) + 25);
+                        if(entry.getValue() > 1){
+                            imageG.drawString(String.valueOf(entry.getValue()),100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28) + 25);
+                        }
                     }
                 }
             }
@@ -158,21 +187,22 @@ public class UI extends JFrame {
         drawToImage();
     }
     private void drawHotbar(){
-        for (int i = 0; i < p.hotbarSize; i++){
-            Entity hotbar = p.getHotbarItem(i);
-            int hotbarInt = p.getHotbarValue(i);
-            if(p.hotbarSelected == i){
+        for (int i = 0; i < p.hotbar.maxSize; i++){
+            Entity hotbarElement = p.hotbar.getKeyFromCoordinates(i,0);
+            int hotbarInt = p.hotbar.getValueFromCoordinates(i,0);
+            if(p.hotbar.inventorySpaceX == i){
                 imageG.setColor(Color.yellow);
             }
             else{
                 imageG.setColor(Color.black);
             }
-            imageG.drawRect((screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50,25,25);
+            imageG.drawRect((screenWidth/2 - (p.hotbar.maxSize/2 * 28)) + (i * 28),screenHeight - 50,25,25);
             try{
-                imageG.drawImage(hotbar.sprite,(screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50,null);
-                imageG.drawString(String.valueOf(hotbarInt),(screenWidth/2 - (p.hotbarSize/2 * 28)) + (i * 28),screenHeight - 50 + 25);
+                imageG.drawImage(hotbarElement.sprite,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)) + (i * 28),screenHeight - 50,null);
+                if(hotbarInt > 1){
+                    imageG.drawString(String.valueOf(hotbarInt),(screenWidth/2 - (p.hotbar.maxSize/2 * 28)) + (i * 28),screenHeight - 50 + 25);
+                }
             }catch (NullPointerException e){
-
             }
         }
     }

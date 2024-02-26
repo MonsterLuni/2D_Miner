@@ -1,6 +1,7 @@
 package game.Entity.Items;
 
 import game.Entity.Entity;
+import game.UI;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,5 +23,9 @@ public class ITM_PICKAXE_FEATHER extends Entity {
     @Override
     public String getName() {
         return "Pickaxe_feather";
+    }
+    @Override
+    public void interact(UI ui) {
+
     }
 }
