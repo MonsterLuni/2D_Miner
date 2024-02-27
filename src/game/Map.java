@@ -3,6 +3,7 @@ package game;
 import game.Entity.Block;
 import game.Entity.Blocks.*;
 import game.Entity.Entity;
+import game.Entity.Items.ITM_IRON_BAR;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -125,11 +126,17 @@ public class Map {
             case 7 -> {
                 return new BLK_INTERACTIVE_FURNACE();
             }
+            case 8 -> {
+                return new BLK_COAL_ORE();
+            }
+            case 9 -> {
+                return new ITM_IRON_BAR();
+            }
         }
         return null;
     }
     public void addBlock(Entity entity, int x, int y){
-        ui.blocks.add(new Block(entity.height,entity.width,x,y, (BufferedImage) entity.sprite, entity.deactivateHitBox, entity.breakable, entity.getName(), entity.hardness, entity.health, entity.interactive, entity.id));
+        ui.blocks.add(new Block(entity.height,entity.width,x,y, (BufferedImage) entity.sprite, entity.deactivateHitBox, entity.breakable, entity.getName(), entity.hardness, entity.health, entity.interactive, entity.id, entity.smeltable, entity.fuel));
     }
     public void loadHitBoxes() {
         for (int i = 0; i < ui.blocks.size(); i++){

@@ -1,6 +1,8 @@
 package game.Entity;
 
+import game.Entity.Blocks.BLK_COAL_ORE;
 import game.Entity.Blocks.BLK_INTERACTIVE_FURNACE;
+import game.Entity.Blocks.BLK_IRON_ORE;
 import game.Entity.Items.ITM_PICKAXE_BEDROCK;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
 import game.Inventory;
@@ -41,7 +43,13 @@ public class Player extends Entity{
         hotbar.inventory.put(new ITM_PICKAXE_BEDROCK(),1);
         inv = new Inventory(10,10);
         inv.inventory.put(new ITM_PICKAXE_FEATHER(),1);
-        Entity entity = new BLK_INTERACTIVE_FURNACE();
+        Entity entity = new BLK_COAL_ORE();
+        entity.inventoryX = 3;
+        inv.inventory.put(entity,1);
+        entity = new BLK_IRON_ORE();
+        entity.inventoryX = 2;
+        inv.inventory.put(entity,1);
+        entity = new BLK_INTERACTIVE_FURNACE();
         entity.inventoryX = 1;
         inv.inventory.put(entity,1);
         switchHotbar(hotbar.inventorySpaceX);

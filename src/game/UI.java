@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class UI extends JFrame {
 
@@ -121,7 +122,26 @@ public class UI extends JFrame {
         drawAnyInventory(interactStateInventory2,(screenHeight - 250)/2 + 50,900);
         drawAnyInventory(interactStateInventory3,(screenHeight - 250)/2 + 25,950);
         drawToImage();
+        checkFurnace();
     }
+    private void checkFurnace() {
+        if(interactStateInventory.getKeyFromCoordinates(0,0) != null && interactStateInventory2.getKeyFromCoordinates(0,0) != null) {
+            if (interactStateInventory.getKeyFromCoordinates(0, 0).smeltable && interactStateInventory2.getKeyFromCoordinates(0, 0).fuel) {
+                System.out.println("AM SCHMELZEN");
+                checkRecipe();
+            }
+        }
+    }
+    private void checkRecipe() {
+        Integer[][] recipes = {{6,9}};
+        for (Integer[] recipe : recipes){
+            if(recipe[0] == interactStateInventory.getKeyFromCoordinates(0, 0).id){
+                interactStateInventory.inventory.remove(interactStateInventory.getKeyFromCoordinates(0, 0));
+                interactStateInventory3.inventory.put(map.getNewBlockFromID(recipe[1]),2);
+            }
+        }
+    }
+
     public void addMessage(String message, int time){
         if(messages.size() < 5){
             messages.add(message);
@@ -167,10 +187,12 @@ public class UI extends JFrame {
                 }
                 imageG.drawRect(width + (i*28),height + (l*28),25,25);
                 for (java.util.Map.Entry<Entity, Integer> entry : inv.inventory.entrySet()) {
-                    if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
-                        imageG.drawImage(entry.getKey().sprite,width + (i*28),height + (l*28),null);
-                        if(entry.getValue() > 1){
-                            imageG.drawString(String.valueOf(entry.getValue()),width + (i*28),height + (l*28) + 25);
+                    if(entry.getKey() != null){
+                        if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
+                            imageG.drawImage(entry.getKey().sprite,width + (i*28),height + (l*28),null);
+                            if(entry.getValue() > 1){
+                                imageG.drawString(String.valueOf(entry.getValue()),width + (i*28),height + (l*28) + 25);
+                            }
                         }
                     }
                 }

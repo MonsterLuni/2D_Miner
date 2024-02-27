@@ -10,6 +10,7 @@ import java.io.IOException;
 public class BLK_STONE extends Entity {
     public BLK_STONE(){
         this.height = 25;
+        this.smeltable = true;
         this.width = 25;
         this.id = 2;
         this.breakable = true;

@@ -10,6 +10,8 @@ public abstract class Entity {
     public int inventoryX;
     public int inventoryY;
     public boolean interactive;
+    public boolean smeltable;
+    public boolean fuel;
     public int id;
     public int width;
     public int height;

@@ -16,8 +16,10 @@ public class Block extends Entity{
     public int hardness;
     public String name;
     public BufferedImage image;
-    public Block(int h, int w, int i, int l,BufferedImage spriteUnscaled, boolean deactivateHitBox, boolean breakable, String name, int hardness,int health, boolean interactive, int id){
+    public Block(int h, int w, int i, int l,BufferedImage spriteUnscaled, boolean deactivateHitBox, boolean breakable, String name, int hardness,int health, boolean interactive, int id, boolean smeltable, boolean fuel){
         this.height = h;
+        this.smeltable = smeltable;
+        this.fuel = fuel;
         this.id = id;
         this.deactivateHitBox = deactivateHitBox;
         this.width = w;
