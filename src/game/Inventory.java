@@ -11,7 +11,15 @@ public class Inventory {
     public Point activeInventorySpaceTwo = new Point(-1,-1);
     public int inventorySpaceX;
     public int inventorySpaceY;
+    public int height;
+    public int width;
     public int maxSize;
+    public Inventory(int height, int width){
+        this.height = height * 25;
+        this.width = width * 25;
+        this.maxSize = height*width;
+        inventory = new LinkedHashMap<>(maxSize);
+    }
     public LinkedHashMap<Entity, Integer> inventory;
     public void sortInventory(Entity current) {
         for (java.util.Map.Entry<Entity, Integer> entry : inventory.entrySet()) {

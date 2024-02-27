@@ -25,8 +25,8 @@ public class Player extends Entity{
     public int currentHardness = hardness;
     public int currentMiningDamage = miningDamage;
     public int IndexBlockRight, IndexBlockMiddle;
-    public Inventory inv = new Inventory();
-    public Inventory hotbar = new Inventory();
+    public Inventory inv;
+    public Inventory hotbar = new Inventory(1,5);
     /* true == right, false == left */
     public boolean lookDirection = true;
     public KeyListener kh;
@@ -38,11 +38,8 @@ public class Player extends Entity{
         height = defaultHeight;
         X = ui.screenWidth/2;
         Y = ui.screenHeight/2 - defaultHeight;
-        hotbar.maxSize = 5;
-        hotbar.inventory = new LinkedHashMap<>(5);
         hotbar.inventory.put(new ITM_PICKAXE_BEDROCK(),1);
-        hotbar.inventory.put(new BLK_INTERACTIVE_FURNACE(),1);
-        inv.inventory = new LinkedHashMap<>((ui.inventoryWidth / 25) * (ui.inventoryHeight / 25));
+        inv = new Inventory(10,10);
         inv.inventory.put(new ITM_PICKAXE_FEATHER(),1);
         Entity entity = new BLK_INTERACTIVE_FURNACE();
         entity.inventoryX = 1;

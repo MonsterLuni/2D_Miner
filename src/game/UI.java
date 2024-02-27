@@ -39,12 +39,11 @@ public class UI extends JFrame {
     public final static int gameState = 0;
     public final static int inventoryState = 1;
     public final static int interactState = 2;
-    public Entity interactStateEntity;
+    public Inventory interactStateInventory;
+    public Inventory interactStateInventory2;
     public int currentInteractState = 0;
     public final static int furnaceInteractState = 1;
     public int currentState = gameState;
-    public int inventoryWidth = 250;
-    public int inventoryHeight = 250;
     Color background = new Color(211, 244, 244);
     public UI(){
         kl  = new KeyListener(this);
@@ -60,6 +59,7 @@ public class UI extends JFrame {
         addKeyListener(kl);
         addMouseListener(ml);
         addMouseMotionListener(mml);
+        setFocusTraversalKeysEnabled(false);
         p = new Player(this,kl);
         map.loadMap();
         map.loadHitBoxes();
@@ -101,7 +101,7 @@ public class UI extends JFrame {
         }
         updatePlayer();
         drawMessage();
-        drawHotbar();
+        drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
         drawToImage();
     }
     private void drawInteractiveState() {
@@ -111,23 +111,11 @@ public class UI extends JFrame {
         }
     }
     private void furnaceInteractiveState() {
-        drawInventory();
-        drawHotbar();
-        drawInventoryFurnace();
+        drawAnyInventory(p.inv,(screenHeight - 250)/2,100);
+        drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
+        drawAnyInventory(interactStateInventory,(screenHeight - 250)/2,900);
+        drawAnyInventory(interactStateInventory2,(screenHeight - 250)/2 + 50,900);
         drawToImage();
-    }
-    private void drawInventoryFurnace() {
-        imageG.setColor(Color.black);
-        imageG.drawString("Furnace", 800, 100);
-        imageG.setColor(Color.gray);
-        imageG.fillRect(800,(screenHeight - inventoryWidth)/2,200,200);
-        imageG.setColor(Color.black);
-        for (int i = 0; i < 1; i++){
-            for (int l = 0; l < 1; l++) {
-                imageG.drawRect(900,(screenHeight - inventoryWidth)/2 + 50 - (25/2),25,25);
-                imageG.drawRect(900,(screenHeight - inventoryWidth)/2 + 100 - (25/2),25,25);
-            }
-        }
     }
     public void addMessage(String message, int time){
         if(messages.size() < 5){
@@ -151,33 +139,31 @@ public class UI extends JFrame {
             }
         }
     }
-    private void drawInventory(){
-        imageG.setColor(Color.black);
-        imageG.drawString("Inventory", 100, 100);
+    private void drawAnyInventory(Inventory inv, int height, int width){
         imageG.setColor(Color.gray);
-        imageG.fillRect(100,(screenHeight - inventoryWidth)/2,inventoryWidth + 28,inventoryHeight + 28);
+        imageG.fillRect(width,height,(28 * inv.width/25),(28 * inv.height/25));
         imageG.setColor(Color.black);
-        for (int i = 0; i < inventoryWidth / 25; i++){
-            for (int l = 0; l < inventoryHeight/25; l++) {
-                if(p.inv.activeInventorySpace.x == i && p.inv.activeInventorySpace.y == l){
+        for (int i = 0; i < inv.width/25; i++){
+            for (int l = 0; l < inv.height/25; l++) {
+                if(inv.activeInventorySpace.x == i && inv.activeInventorySpace.y == l){
                     imageG.setColor(Color.yellow);
-                    imageG.fillRect(100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),25,25);
-                    imageG.drawRect(100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),25,25);
+                    imageG.fillRect(width + (i*28),height + (l*28),25,25);
+                    imageG.drawRect(width + (i*28),height + (l*28),25,25);
                 }
                 else{
-                    if(p.inv.inventorySpaceX == i && p.inv.inventorySpaceY == l){
+                    if(inv.inventorySpaceX == i && inv.inventorySpaceY == l){
                         imageG.setColor(Color.yellow);
                     }
                     else{
                         imageG.setColor(Color.black);
                     }
-                    imageG.drawRect(100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),25,25);
+                    imageG.drawRect(width + (i*28),height + (l*28),25,25);
                 }
-                for (java.util.Map.Entry<Entity, Integer> entry : p.inv.inventory.entrySet()) {
+                for (java.util.Map.Entry<Entity, Integer> entry : inv.inventory.entrySet()) {
                     if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
-                        imageG.drawImage(entry.getKey().sprite, 100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28),null);
+                        imageG.drawImage(entry.getKey().sprite,width + (i*28),height + (l*28),null);
                         if(entry.getValue() > 1){
-                            imageG.drawString(String.valueOf(entry.getValue()),100 + (i * 28),(screenHeight - inventoryWidth)/2 + (l*28) + 25);
+                            imageG.drawString(String.valueOf(entry.getValue()),width + (i*28),height + (l*28) + 25);
                         }
                     }
                 }
@@ -185,28 +171,9 @@ public class UI extends JFrame {
         }
     }
     private void drawInventoryState(){
-        drawInventory();
-        drawHotbar();
+        drawAnyInventory(p.inv,(screenHeight - 250)/2,100);
+        drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
         drawToImage();
-    }
-    private void drawHotbar(){
-        for (int i = 0; i < p.hotbar.maxSize; i++){
-            Entity hotbarElement = p.hotbar.getKeyFromCoordinates(i,0);
-            int hotbarInt = p.hotbar.getValueFromCoordinates(i,0);
-            if(p.hotbar.inventorySpaceX == i){
-                imageG.setColor(Color.yellow);
-            }
-            else{
-                imageG.setColor(Color.black);
-            }
-            imageG.drawRect((screenWidth/2 - (p.hotbar.maxSize/2 * 28)) + (i * 28),screenHeight - 50,25,25);
-            if(hotbarElement != null){
-                imageG.drawImage(hotbarElement.sprite,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)) + (i * 28),screenHeight - 50,null);
-                if(hotbarInt > 1){
-                    imageG.drawString(String.valueOf(hotbarInt),(screenWidth/2 - (p.hotbar.maxSize/2 * 28)) + (i * 28),screenHeight - 50 + 25);
-                }
-            }
-        }
     }
     private void drawToImage(){
         if(fullscreen){

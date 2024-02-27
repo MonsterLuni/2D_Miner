@@ -1,5 +1,6 @@
 package listener;
 
+import game.Inventory;
 import game.UI;
 
 import java.awt.*;
@@ -8,6 +9,10 @@ import java.awt.event.KeyEvent;
 public class KeyListener implements java.awt.event.KeyListener {
     public UI ui;
     public boolean aPressed,dPressed, spacePressed;
+    public Inventory primaryInv;
+    public Inventory secondaryInv;
+    public Inventory[] choosableInventories = new Inventory[3];
+    public int chosenOne = 0;
     public KeyListener(UI ui){
         this.ui = ui;
     }
@@ -20,53 +25,62 @@ public class KeyListener implements java.awt.event.KeyListener {
         switch (ui.currentState){
             case UI.gameState -> gameState(e.getKeyCode());
             case UI.inventoryState -> inventoryState(e.getKeyCode());
+            case UI.interactState -> interactStateSelector(e.getKeyCode());
         }
+    }
+    private void interactStateSelector(int keyCode) {
+        switch(ui.currentInteractState){
+            case UI.furnaceInteractState -> interactStateFurnace(keyCode);
+        }
+    }
+    private void interactStateFurnace(int e) {
+        primaryInv = ui.p.inv;
+        choosableInventories[0] = ui.interactStateInventory;
+        choosableInventories[1] = ui.interactStateInventory2;
+        choosableInventories[2] = ui.p.hotbar;
+        inventoryToInventory(e);
     }
     private void inventoryState(int e) {
+        primaryInv = ui.p.inv;
+        secondaryInv = ui.p.hotbar;
+        inventoryToInventory(e);
+    }
+    private void inventoryToInventory(int e){
         switch (e){
-            case KeyEvent.VK_RIGHT -> {
-                if(ui.p.hotbar.inventorySpaceX + 1 <= ui.p.hotbar.maxSize - 1){
-                    ui.p.hotbar.inventorySpaceX += 1;
-                    ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
-                }
-            }
-            case KeyEvent.VK_LEFT -> {
-                if(ui.p.hotbar.inventorySpaceX - 1 >= 0){
-                    ui.p.hotbar.inventorySpaceX -= 1;
-                    ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
-                }
-            }
             case KeyEvent.VK_E -> ui.currentState = UI.gameState;
-            case KeyEvent.VK_W -> changeInventoryPlace(0,-1);
-            case KeyEvent.VK_A -> changeInventoryPlace(-1,0);
-            case KeyEvent.VK_S -> changeInventoryPlace(0,1);
-            case KeyEvent.VK_D -> changeInventoryPlace(1,0);
-            case KeyEvent.VK_SPACE -> selectInventoryPlace();
-            case KeyEvent.VK_ESCAPE -> resetActiveInventorySpace();
-            case KeyEvent.VK_F -> ui.p.inv.swapInventories(ui.p.hotbar);
+            // --------------
+            case KeyEvent.VK_W -> changeInventoryPlace(primaryInv,0,-1);
+            case KeyEvent.VK_A -> changeInventoryPlace(primaryInv,-1,0);
+            case KeyEvent.VK_S -> changeInventoryPlace(primaryInv,0,1);
+            case KeyEvent.VK_D -> changeInventoryPlace(primaryInv,1,0);
+            // --------------
+            case KeyEvent.VK_UP -> changeInventoryPlace(secondaryInv,0,-1);
+            case KeyEvent.VK_LEFT -> changeInventoryPlace(secondaryInv,-1,0);
+            case KeyEvent.VK_DOWN -> changeInventoryPlace(secondaryInv,0,1);
+            case KeyEvent.VK_RIGHT -> changeInventoryPlace(secondaryInv,1,0);
+            // --------------
+            case KeyEvent.VK_TAB -> changeSecondaryInventory();
+            case KeyEvent.VK_SPACE -> selectInventoryPlace(primaryInv);
+            case KeyEvent.VK_ENTER -> selectInventoryPlace(secondaryInv);
+            case KeyEvent.VK_F -> primaryInv.swapInventories(secondaryInv);
         }
     }
-    private void selectInventoryPlace() {
-        if(ui.p.inv.activeInventorySpace.x == -1){
-            ui.p.inv.activeInventorySpace = new Point(ui.p.inv.inventorySpaceX,ui.p.inv.inventorySpaceY);
-        }
-        else{
-            ui.p.inv.activeInventorySpaceTwo = new Point(ui.p.inv.inventorySpaceX,ui.p.inv.inventorySpaceY);
-            ui.p.inv.changeItemInInventory();
-            resetActiveInventorySpace();
-        }
+    private void changeSecondaryInventory() {
+        secondaryInv = choosableInventories[chosenOne % choosableInventories.length];
+        chosenOne++;
     }
-    private void resetActiveInventorySpace(){
-        ui.p.inv.activeInventorySpace = new Point(-1,-1);
-        ui.p.inv.activeInventorySpaceTwo = new Point(-1,-1);
+    private void resetActiveInventorySpace(Inventory inv){
+        inv.activeInventorySpace = new Point(-1,-1);
+        inv.activeInventorySpaceTwo = new Point(-1,-1);
     }
-    private void changeInventoryPlace(int x, int y) {
-        if(ui.p.inv.inventorySpaceX + x >= 0 && ui.p.inv.inventorySpaceX + x <= 9){
-            ui.p.inv.inventorySpaceX += x;
+    private void changeInventoryPlace(Inventory inv, int x, int y) {
+        if(inv.inventorySpaceX + x >= 0 && inv.inventorySpaceX + x <= (inv.width/25) - 1){
+            inv.inventorySpaceX += x;
         }
-        if(ui.p.inv.inventorySpaceY + y >= 0 && ui.p.inv.inventorySpaceY + y <= 9){
-            ui.p.inv.inventorySpaceY += y;
+        if(inv.inventorySpaceY + y >= 0 && inv.inventorySpaceY + y <= (inv.height/25) - 1){
+            inv.inventorySpaceY += y;
         }
+        ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
     }
     private void gameState(int e) {
         switch (e){
@@ -128,6 +142,16 @@ public class KeyListener implements java.awt.event.KeyListener {
                 ui.p.Y -= 25;
                 ui.p.height = ui.p.defaultHeight;
             }
+        }
+    }
+    private void selectInventoryPlace(Inventory inv) {
+        if(inv.activeInventorySpace.x == -1){
+            inv.activeInventorySpace = new Point(inv.inventorySpaceX,inv.inventorySpaceY);
+        }
+        else{
+            inv.activeInventorySpaceTwo = new Point(inv.inventorySpaceX,inv.inventorySpaceY);
+            inv.changeItemInInventory();
+            resetActiveInventorySpace(inv);
         }
     }
 }

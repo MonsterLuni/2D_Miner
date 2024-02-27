@@ -9,8 +9,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class BLK_INTERACTIVE_FURNACE extends Entity {
-    Inventory invTop = new Inventory();
-    Inventory invFuel = new Inventory();
+    public Inventory invTop = new Inventory(1,1);
+    public Inventory invFuel = new Inventory(1,1);
     public BLK_INTERACTIVE_FURNACE(){
         this.height = 25;
         this.id = 7;
@@ -37,6 +37,7 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
     public void interact(UI ui) {
         ui.currentState = UI.interactState;
         ui.currentInteractState = UI.furnaceInteractState;
-        ui.interactStateEntity = this;
+        ui.interactStateInventory = this.invTop;
+        ui.interactStateInventory2 = this.invFuel;
     }
 }
