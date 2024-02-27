@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class UI extends JFrame {
+
     long lastTime;
     boolean running = true;
     int defaultHeight = 720;
@@ -41,6 +42,7 @@ public class UI extends JFrame {
     public final static int interactState = 2;
     public Inventory interactStateInventory;
     public Inventory interactStateInventory2;
+    public Inventory interactStateInventory3;
     public int currentInteractState = 0;
     public final static int furnaceInteractState = 1;
     public int currentState = gameState;
@@ -61,6 +63,8 @@ public class UI extends JFrame {
         addMouseMotionListener(mml);
         setFocusTraversalKeysEnabled(false);
         p = new Player(this,kl);
+        kl.primaryInv = p.inv;
+        kl.secondaryInv = p.hotbar;
         map.loadMap();
         map.loadHitBoxes();
         lastTime = System.currentTimeMillis();
@@ -115,6 +119,7 @@ public class UI extends JFrame {
         drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
         drawAnyInventory(interactStateInventory,(screenHeight - 250)/2,900);
         drawAnyInventory(interactStateInventory2,(screenHeight - 250)/2 + 50,900);
+        drawAnyInventory(interactStateInventory3,(screenHeight - 250)/2 + 25,950);
         drawToImage();
     }
     public void addMessage(String message, int time){
@@ -145,20 +150,22 @@ public class UI extends JFrame {
         imageG.setColor(Color.black);
         for (int i = 0; i < inv.width/25; i++){
             for (int l = 0; l < inv.height/25; l++) {
-                if(inv.activeInventorySpace.x == i && inv.activeInventorySpace.y == l){
-                    imageG.setColor(Color.yellow);
-                    imageG.fillRect(width + (i*28),height + (l*28),25,25);
-                    imageG.drawRect(width + (i*28),height + (l*28),25,25);
-                }
-                else{
-                    if(inv.inventorySpaceX == i && inv.inventorySpaceY == l){
+                if(inv == kl.primaryInv || inv == kl.secondaryInv){
+                    if(inv.activeInventorySpace.x == i && inv.activeInventorySpace.y == l){
                         imageG.setColor(Color.yellow);
+                        imageG.fillRect(width + (i*28),height + (l*28),25,25);
+                        imageG.drawRect(width + (i*28),height + (l*28),25,25);
                     }
                     else{
-                        imageG.setColor(Color.black);
+                        if(inv.inventorySpaceX == i && inv.inventorySpaceY == l){
+                            imageG.setColor(Color.yellow);
+                        }
+                        else{
+                            imageG.setColor(Color.black);
+                        }
                     }
-                    imageG.drawRect(width + (i*28),height + (l*28),25,25);
                 }
+                imageG.drawRect(width + (i*28),height + (l*28),25,25);
                 for (java.util.Map.Entry<Entity, Integer> entry : inv.inventory.entrySet()) {
                     if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
                         imageG.drawImage(entry.getKey().sprite,width + (i*28),height + (l*28),null);

@@ -11,7 +11,7 @@ public class KeyListener implements java.awt.event.KeyListener {
     public boolean aPressed,dPressed, spacePressed;
     public Inventory primaryInv;
     public Inventory secondaryInv;
-    public Inventory[] choosableInventories = new Inventory[3];
+    public Inventory[] choosableInventories = new Inventory[4];
     public int chosenOne = 0;
     public KeyListener(UI ui){
         this.ui = ui;
@@ -37,7 +37,8 @@ public class KeyListener implements java.awt.event.KeyListener {
         primaryInv = ui.p.inv;
         choosableInventories[0] = ui.interactStateInventory;
         choosableInventories[1] = ui.interactStateInventory2;
-        choosableInventories[2] = ui.p.hotbar;
+        choosableInventories[2] = ui.interactStateInventory3;
+        choosableInventories[3] = ui.p.hotbar;
         inventoryToInventory(e);
     }
     private void inventoryState(int e) {
@@ -83,6 +84,8 @@ public class KeyListener implements java.awt.event.KeyListener {
         ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
     }
     private void gameState(int e) {
+        primaryInv = ui.p.inv;
+        secondaryInv = ui.p.hotbar;
         switch (e){
             case KeyEvent.VK_RIGHT -> {
                 if(ui.p.hotbar.inventorySpaceX + 1 <= ui.p.hotbar.maxSize - 1){

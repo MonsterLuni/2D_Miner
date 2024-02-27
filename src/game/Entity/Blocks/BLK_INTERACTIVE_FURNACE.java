@@ -11,6 +11,7 @@ import java.io.IOException;
 public class BLK_INTERACTIVE_FURNACE extends Entity {
     public Inventory invTop = new Inventory(1,1);
     public Inventory invFuel = new Inventory(1,1);
+    public Inventory invOutput = new Inventory(1,1);
     public BLK_INTERACTIVE_FURNACE(){
         this.height = 25;
         this.id = 7;
@@ -39,5 +40,6 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
         ui.currentInteractState = UI.furnaceInteractState;
         ui.interactStateInventory = this.invTop;
         ui.interactStateInventory2 = this.invFuel;
+        ui.interactStateInventory3 = this.invOutput;
     }
 }
