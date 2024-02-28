@@ -12,7 +12,6 @@ import listener.KeyListener;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.LinkedHashMap;
 
 public class Player extends Entity{
     public int offsetX;
@@ -51,6 +50,9 @@ public class Player extends Entity{
         inv.inventory.put(entity,1);
         entity = new BLK_INTERACTIVE_FURNACE();
         entity.inventoryX = 1;
+        inv.inventory.put(entity,1);
+        entity = new BLK_INTERACTIVE_FURNACE();
+        entity.inventoryX = 4;
         inv.inventory.put(entity,1);
         switchHotbar(hotbar.inventorySpaceX);
     }

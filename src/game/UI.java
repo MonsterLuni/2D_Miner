@@ -1,6 +1,5 @@
 package game;
-
-import game.Entity.Block;
+import game.Entity.Blocks.BLK_INTERACTIVE_FURNACE;
 import game.Entity.Entity;
 import game.Entity.Player;
 import listener.KeyListener;
@@ -12,7 +11,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class UI extends JFrame {
 
@@ -24,7 +22,7 @@ public class UI extends JFrame {
     public int screenWidth = defaultWidth;
     public Player p;
     public Map map;
-    public ArrayList<Block> blocks;
+    public ArrayList<Entity> blocks;
     public BufferedImage bufferedImage = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
     public BufferedImage fullscreenBuffer;
     public Graphics imageG = bufferedImage.getGraphics();
@@ -41,9 +39,7 @@ public class UI extends JFrame {
     public final static int gameState = 0;
     public final static int inventoryState = 1;
     public final static int interactState = 2;
-    public Inventory interactStateInventory;
-    public Inventory interactStateInventory2;
-    public Inventory interactStateInventory3;
+    public BLK_INTERACTIVE_FURNACE interactStateFurnace;
     public int currentInteractState = 0;
     public final static int furnaceInteractState = 1;
     public int currentState = gameState;
@@ -118,15 +114,15 @@ public class UI extends JFrame {
     private void furnaceInteractiveState() {
         drawAnyInventory(p.inv,(screenHeight - 250)/2,100);
         drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
-        drawAnyInventory(interactStateInventory,(screenHeight - 250)/2,900);
-        drawAnyInventory(interactStateInventory2,(screenHeight - 250)/2 + 50,900);
-        drawAnyInventory(interactStateInventory3,(screenHeight - 250)/2 + 25,950);
+        drawAnyInventory(interactStateFurnace.invTop,(screenHeight - 250)/2,900);
+        drawAnyInventory(interactStateFurnace.invFuel,(screenHeight - 250)/2 + 50,900);
+        drawAnyInventory(interactStateFurnace.invOutput,(screenHeight - 250)/2 + 25,950);
         drawToImage();
         checkFurnace();
     }
     private void checkFurnace() {
-        if(interactStateInventory.getKeyFromCoordinates(0,0) != null && interactStateInventory2.getKeyFromCoordinates(0,0) != null) {
-            if (interactStateInventory.getKeyFromCoordinates(0, 0).smeltable && interactStateInventory2.getKeyFromCoordinates(0, 0).fuel) {
+        if(interactStateFurnace.invTop.getKeyFromCoordinates(0,0) != null && interactStateFurnace.invFuel.getKeyFromCoordinates(0,0) != null) {
+            if (interactStateFurnace.invTop.getKeyFromCoordinates(0, 0).smeltable && interactStateFurnace.invFuel.getKeyFromCoordinates(0, 0).fuel) {
                 System.out.println("AM SCHMELZEN");
                 checkRecipe();
             }
@@ -135,9 +131,9 @@ public class UI extends JFrame {
     private void checkRecipe() {
         Integer[][] recipes = {{6,9}};
         for (Integer[] recipe : recipes){
-            if(recipe[0] == interactStateInventory.getKeyFromCoordinates(0, 0).id){
-                interactStateInventory.inventory.remove(interactStateInventory.getKeyFromCoordinates(0, 0));
-                interactStateInventory3.inventory.put(map.getNewBlockFromID(recipe[1]),2);
+            if(recipe[0] == interactStateFurnace.invTop.getKeyFromCoordinates(0, 0).id){
+                interactStateFurnace.invTop.inventory.remove(interactStateFurnace.invTop.getKeyFromCoordinates(0, 0));
+                interactStateFurnace.invOutput.inventory.put(map.getNewBlockFromID(recipe[1]),2);
             }
         }
     }

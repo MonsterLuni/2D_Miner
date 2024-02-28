@@ -35,9 +35,9 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
     private void interactStateFurnace(int e) {
         primaryInv = ui.p.inv;
-        choosableInventories[0] = ui.interactStateInventory;
-        choosableInventories[1] = ui.interactStateInventory2;
-        choosableInventories[2] = ui.interactStateInventory3;
+        choosableInventories[0] = ui.interactStateFurnace.invTop;
+        choosableInventories[1] = ui.interactStateFurnace.invFuel;
+        choosableInventories[2] = ui.interactStateFurnace.invOutput;
         choosableInventories[3] = ui.p.hotbar;
         inventoryToInventory(e);
     }
@@ -48,7 +48,9 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
     private void inventoryToInventory(int e){
         switch (e){
-            case KeyEvent.VK_E -> ui.currentState = UI.gameState;
+            case KeyEvent.VK_E -> {
+                ui.currentState = UI.gameState;
+            }
             // --------------
             case KeyEvent.VK_W -> changeInventoryPlace(primaryInv,0,-1);
             case KeyEvent.VK_A -> changeInventoryPlace(primaryInv,-1,0);

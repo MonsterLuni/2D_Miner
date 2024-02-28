@@ -13,6 +13,7 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
     public Inventory invFuel = new Inventory(1,1);
     public Inventory invOutput = new Inventory(1,1);
     public BLK_INTERACTIVE_FURNACE(){
+        System.out.println("NEUER OFEN");
         this.height = 25;
         this.id = 7;
         this.width = 25;
@@ -36,10 +37,8 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
     }
     @Override
     public void interact(UI ui) {
+        ui.interactStateFurnace = this;
         ui.currentState = UI.interactState;
         ui.currentInteractState = UI.furnaceInteractState;
-        ui.interactStateInventory = this.invTop;
-        ui.interactStateInventory2 = this.invFuel;
-        ui.interactStateInventory3 = this.invOutput;
     }
 }

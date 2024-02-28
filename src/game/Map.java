@@ -1,12 +1,10 @@
 package game;
 
-import game.Entity.Block;
 import game.Entity.Blocks.*;
 import game.Entity.Entity;
 import game.Entity.Items.ITM_IRON_BAR;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -98,7 +96,11 @@ public class Map {
         }
     }
     public void blockSelector(int blockNumber, int i, int l){
-        addBlock(getNewBlockFromID(blockNumber),i,l);
+        Entity temporaryEntity = getNewBlockFromID(blockNumber);
+        temporaryEntity.X = i*25;
+        temporaryEntity.Y = l*25;
+        temporaryEntity.point = new Point(temporaryEntity.X,temporaryEntity.Y);
+        ui.blocks.add(temporaryEntity);
     }
     public Entity getNewBlockFromID(int blockNumber){
         switch (blockNumber){
@@ -134,9 +136,6 @@ public class Map {
             }
         }
         return null;
-    }
-    public void addBlock(Entity entity, int x, int y){
-        ui.blocks.add(new Block(entity.height,entity.width,x,y, (BufferedImage) entity.sprite, entity.deactivateHitBox, entity.breakable, entity.getName(), entity.hardness, entity.health, entity.interactive, entity.id, entity.smeltable, entity.fuel));
     }
     public void loadHitBoxes() {
         for (int i = 0; i < ui.blocks.size(); i++){
@@ -188,17 +187,17 @@ public class Map {
         for(int i = 0; i < ui.blocks.size(); i++) {
             if(getOnlyVisibleBlocks(i)){
                 g.setColor(Color.blue);
-                ui.blocks.get(i).drawBlock(g, ui.p);
+                ui.blocks.get(i).drawBlock(g,ui.p);
                 if(ui.debug){
                     g.setColor(Color.red);
-                    ui.blocks.get(i).drawHitBox(g, ui.p);
+                    ui.blocks.get(i).drawHitBox(g,ui.p);
                     g.setColor(Color.blue);
                     if(vertices){
-                        ui.blocks.get(i).drawBlockVertices(g, ui.p);
+                        ui.blocks.get(i).drawBlockVertices(g,ui.p);
                     }
                     if(specificBlockShown){
                         try {
-                            ui.blocks.get(ui.map.getBlockFromCoordinates((((ui.p.X - ui.p.offsetX) / 25) * 25),(((ui.p.Y + ui.p.offsetY) / 25) * 25) + (ui.p.height - 25))).drawBlockSpecial(g, ui.p);
+                            ui.blocks.get(ui.map.getBlockFromCoordinates((((ui.p.X - ui.p.offsetX) / 25) * 25),(((ui.p.Y + ui.p.offsetY) / 25) * 25) + (ui.p.height - 25))).drawBlockSpecial(g,ui.p);
                         }
                         catch (Exception e){
                             System.out.println("Out of Bounds");
@@ -269,9 +268,7 @@ public class Map {
             if(getOnlyVisibleBlocks(i)) {
                 if (mouseC.x - 150 == ui.blocks.get(i).point.x && mouseC.y - 50 == ui.blocks.get(i).point.y) {
                     if(ui.blocks.get(i).interactive){
-                        System.out.println(ui.blocks.get(i).getName());
                         ui.blocks.get(i).interact(ui);
-                        System.out.println(ui.currentState);
                     }
                 }
             }
