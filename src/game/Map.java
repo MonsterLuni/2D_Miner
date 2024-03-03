@@ -144,7 +144,7 @@ public class Map {
     }
     public void updateHitBoxes(){
         for (int i = 0; i < ui.blocks.size(); i++){
-            if(getOnlyVisibleBlocks(i)){
+            if(ui.p.getOnlyVisibleBlocks(i)){
                 checkHitBoxFromBlock(i);
             }
         }
@@ -171,21 +171,9 @@ public class Map {
         }
         return 1;
     }
-    public int getBlockFromPlayerY(int X, int Y){
-        for (int i = 0; i < ui.blocks.size(); i++){
-            if(getOnlyVisibleBlocks(i)){
-                if(ui.blocks.get(i).X == X && ui.blocks.get(i).Y == Y + ui.p.height){
-                    if(ui.blocks.get(i).hitTop){
-                        return i;
-                    }
-                }
-            }
-        }
-        return -10;
-    }
     public void drawMap(Graphics g){
         for(int i = 0; i < ui.blocks.size(); i++) {
-            if(getOnlyVisibleBlocks(i)){
+            if(ui.p.getOnlyVisibleBlocks(i)){
                 g.setColor(Color.blue);
                 ui.blocks.get(i).drawBlock(g,ui.p);
                 if(ui.debug){
@@ -207,20 +195,10 @@ public class Map {
             }
         }
     }
-    public boolean getOnlyVisibleBlocks(int index){
-            int positionPlayer = Math.round(((ui.p.X - (float) ui.p.offsetX) - (30 * 25)) /25);
-            int positionPlayerY = Math.round(((ui.p.Y + (float) ui.p.offsetY) - (30 * 25)) /25);
-            if(ui.blocks.get(index) != null){
-                return ui.blocks.get(index).X / 25 >= positionPlayer && ui.blocks.get(index).X / 25 <= positionPlayer + 59 && ui.blocks.get(index).Y / 25 <= positionPlayerY + 54 && ui.blocks.get(index).Y / 25 >= positionPlayerY + 15;
-            }
-            else{
-                return false;
-            }
-    }
     public void findBlock(Point mouseCoordinates) {
         Point mouseC = ui.mml.getMouseBlockHover(mouseCoordinates);
         for(int i=0; i< ui.blocks.size(); i++){
-            if(getOnlyVisibleBlocks(i)){
+            if(ui.p.getOnlyVisibleBlocks(i)){
                 if(mouseC.x - 150 == ui.blocks.get(i).point.x && mouseC.y - 50 == ui.blocks.get(i).point.y){
                     if(ui.blocks.get(i).breakable){
                         if(ui.blocks.get(i).health - ui.p.currentMiningDamage <= 0){
@@ -265,7 +243,7 @@ public class Map {
     }
     public void interactBlock(Point mouseC){
         for(int i=0; i< ui.blocks.size(); i++){
-            if(getOnlyVisibleBlocks(i)) {
+            if(ui.p.getOnlyVisibleBlocks(i)) {
                 if (mouseC.x - 150 == ui.blocks.get(i).point.x && mouseC.y - 50 == ui.blocks.get(i).point.y) {
                     if(ui.blocks.get(i).interactive){
                         ui.blocks.get(i).interact(ui);
@@ -276,7 +254,7 @@ public class Map {
     }
     public void placeBlock(Point mouseC, Entity entity){
         for(int i=0; i< ui.blocks.size(); i++){
-            if(getOnlyVisibleBlocks(i)){
+            if(ui.p.getOnlyVisibleBlocks(i)){
                 if(mouseC.x - 150 == ui.blocks.get(i).point.x && mouseC.y - 50 == ui.blocks.get(i).point.y){
                     if(Objects.equals(ui.blocks.get(i).getName(), "air")){
                         ui.blocks.remove(i);

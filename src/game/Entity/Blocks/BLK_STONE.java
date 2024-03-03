@@ -17,17 +17,13 @@ public class BLK_STONE extends Entity {
         this.deactivateHitBox = false;
         this.hardness = 2;
         this.health = 30;
+        this.name = "stone";
         try {
             this.sprite = ImageIO.read(new File("assets/tiles/stone.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    @Override
-    public String getName() {
-        return "stone";
-    }
-
     @Override
     public void interact(UI ui) {
 

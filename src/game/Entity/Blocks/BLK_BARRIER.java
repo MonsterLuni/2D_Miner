@@ -16,15 +16,12 @@ public class BLK_BARRIER extends Entity {
         this.deactivateHitBox = false;
         this.hardness = 10;
         this.health = 100;
+        this.name = "barrier";
         try {
             this.sprite = ImageIO.read(new File("assets/tiles/barrier.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    @Override
-    public String getName() {
-        return "barrier";
     }
     @Override
     public void interact(UI ui) {

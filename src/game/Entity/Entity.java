@@ -31,7 +31,6 @@ public abstract class Entity {
     public boolean deactivateHitBox;
     public int health;
     public Image sprite;
-    public abstract String getName();
     public abstract void interact(UI ui);
     public boolean harvestable(Player p) {
         return p.currentHardness >= hardness;
@@ -62,7 +61,7 @@ public abstract class Entity {
         map.updateHitBoxes();
     }
     public void drawBlock(Graphics g, Player p){
-        g.drawImage(sprite,X + p.offsetX,Y - p.offsetY,null);
+        g.drawImage(sprite,(X + p.offsetX),(Y - p.offsetY),null);
     }
     public void drawBlockVertices(Graphics g, Player p){
         g.setColor(Color.BLUE);
@@ -70,5 +69,8 @@ public abstract class Entity {
     }
     public void drawBlockSpecial(Graphics g, Player p){
         g.drawRect(X + p.offsetX, Y - p.offsetY, 25, 25);
+    }
+    public String getName() {
+        return name;
     }
 }

@@ -16,17 +16,13 @@ public class BLK_BEDROCK extends Entity {
         this.deactivateHitBox = false;
         this.hardness = 10;
         this.health = 100;
+        this.name = "bedrock";
         try {
             this.sprite = ImageIO.read(new File("assets/tiles/bedrock.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    @Override
-    public String getName() {
-        return "bedrock";
-    }
-
     @Override
     public void interact(UI ui) {
 

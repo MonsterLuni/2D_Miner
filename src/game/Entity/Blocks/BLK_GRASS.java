@@ -15,15 +15,12 @@ public class BLK_GRASS extends Entity {
         this.deactivateHitBox = false;
         this.hardness = 1;
         this.health = 5;
+        this.name = "grass";
         try {
             this.sprite = ImageIO.read(new File("assets/tiles/grass.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    @Override
-    public String getName() {
-        return "grass";
     }
     @Override
     public void interact(UI ui) {

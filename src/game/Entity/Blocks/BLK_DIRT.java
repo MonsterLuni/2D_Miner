@@ -16,15 +16,12 @@ public class BLK_DIRT extends Entity {
         this.deactivateHitBox = false;
         this.hardness = 1;
         this.health = 10;
+        this.name = "dirt";
         try {
             this.sprite = ImageIO.read(new File("assets/tiles/dirt.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    @Override
-    public String getName() {
-        return "dirt";
     }
     @Override
     public void interact(UI ui) {

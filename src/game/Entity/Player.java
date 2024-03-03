@@ -5,6 +5,7 @@ import game.Entity.Blocks.BLK_INTERACTIVE_FURNACE;
 import game.Entity.Blocks.BLK_IRON_ORE;
 import game.Entity.Items.ITM_PICKAXE_BEDROCK;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
+import game.Entity.Living.Living;
 import game.Inventory;
 import game.UI;
 import listener.KeyListener;
@@ -13,28 +14,22 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class Player extends Entity{
-    public int offsetX;
-    public int offsetY = 900;
-    public int walkSpeed = 5;
-    public int jumpSpeed = 10;
-    public int gravitySpeed = 5;
-    public int defaultHeight = 50;
+public class Player extends Living {
+    public KeyListener kh;
+    public Inventory inv;
+    public Inventory hotbar = new Inventory(1,5);
     public int defaultWidth = 25;
     public int hardness = 1;
     public int miningDamage = 2;
     public int currentHardness = hardness;
     public int currentMiningDamage = miningDamage;
-    public int IndexBlockRight, IndexBlockMiddle;
-    public Inventory inv;
-    public Inventory hotbar = new Inventory(1,5);
     /* true == right, false == left */
     public boolean lookDirection = true;
-    public KeyListener kh;
-    UI ui;
     public Player(UI ui,KeyListener kh){
         this.kh = kh;
+        this.offsetY = 900;
         this.ui = ui;
+        this.color = Color.blue;
         width = defaultWidth;
         height = defaultHeight;
         X = ui.screenWidth/2;
@@ -55,10 +50,6 @@ public class Player extends Entity{
         entity.inventoryX = 4;
         inv.inventory.put(entity,1);
         switchHotbar(hotbar.inventorySpaceX);
-    }
-    public void drawPlayer(Graphics g){
-        g.setColor(Color.blue);
-        g.fillRect(X,Y,width,height);
     }
     public static BufferedImage flipHorizontal(Image image) {
         int width = image.getWidth(null);
@@ -106,26 +97,18 @@ public class Player extends Entity{
         }
         g2d.setTransform(old);
     }
-    public void updateIndex(){
-        IndexBlockRight = ui.map.getBlockFromPlayerY((((X - offsetX) / 25) * 25) + 25,(((Y + offsetY) / 25) * 25));
-        IndexBlockMiddle = ui.map.getBlockFromPlayerY((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25));
-    }
-    public void gravity(){
-        updateIndex();
-        if(IndexBlockMiddle != -10 || IndexBlockRight != -10){
-            if(IndexBlockMiddle != -10){
-                offsetY = ui.blocks.get(IndexBlockMiddle).Y - (height + Y);
-            }
-            else{
-                offsetY = ui.blocks.get(IndexBlockRight).Y - (height + Y);
-            }
-        }
-        else{
-            offsetY += gravitySpeed;
+    public void switchHotbar(int i){
+        Entity hotbarElement = hotbar.getKeyFromCoordinates(i,0);
+        try{
+            currentMiningDamage = hotbarElement.miningDamage;
+            currentHardness = hotbarElement.hardness;
+        }catch (NullPointerException e){
+            currentMiningDamage = miningDamage;
+            currentHardness = hardness;
         }
     }
     public void jump(){
-        if(kh.spacePressed){
+        if(jumping){
             int index = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 50));
             if(ui.blocks.get(index).hitBottom){
                 if(Y - offsetY + 1 + height <= ui.blocks.get(index).Y){
@@ -144,17 +127,9 @@ public class Player extends Entity{
             }
         }
     }
-    public boolean checkOverlapX(int index, int overlap, boolean right){
-        if(right){
-            return X - offsetX - overlap + 5 <= ui.blocks.get(index).X;
-        }
-        else {
-            return X - offsetX - overlap >= ui.blocks.get(index).X;
-        }
-    }
     public void walk(){
         int index = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25));
-        if(kh.aPressed){
+        if(left){
             int index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25) - 25,(((Y + offsetY) / 25) * 25) + (height - 25));
             if(ui.blocks.get(index2).hitRight){
                 if(checkOverlapX(index,1,false)){
@@ -164,7 +139,7 @@ public class Player extends Entity{
             else {
                 offsetX += walkSpeed;
             }
-        } else if (kh.dPressed) {
+        } else if (right) {
             int index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25) + 25,(((Y + offsetY) / 25) * 25) + (height - 25));
             if(ui.blocks.get(index2).hitLeft){
                 if(checkOverlapX(index,0,true)){
@@ -176,15 +151,9 @@ public class Player extends Entity{
             }
         }
     }
-    public void switchHotbar(int i){
-        Entity hotbarElement = hotbar.getKeyFromCoordinates(i,0);
-        try{
-            currentMiningDamage = hotbarElement.miningDamage;
-            currentHardness = hotbarElement.hardness;
-        }catch (NullPointerException e){
-            currentMiningDamage = miningDamage;
-            currentHardness = hardness;
-        }
+    public void draw(Graphics g, Player p){
+        g.setColor(color);
+        g.fillRect(X,Y,width,height);
     }
     @Override
     public String getName() {

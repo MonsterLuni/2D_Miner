@@ -1,6 +1,7 @@
 package game;
 import game.Entity.Blocks.BLK_INTERACTIVE_FURNACE;
 import game.Entity.Entity;
+import game.Entity.LIV_ZOMBIE;
 import game.Entity.Player;
 import listener.KeyListener;
 import listener.MouseListener;
@@ -43,6 +44,7 @@ public class UI extends JFrame {
     public int currentInteractState = 0;
     public final static int furnaceInteractState = 1;
     public int currentState = gameState;
+    LIV_ZOMBIE zombie;
     Color background = new Color(211, 244, 244);
     public UI(){
         kl  = new KeyListener(this);
@@ -64,6 +66,7 @@ public class UI extends JFrame {
         kl.secondaryInv = p.hotbar;
         map.loadMap();
         map.loadHitBoxes();
+        zombie = new LIV_ZOMBIE(this);
         lastTime = System.currentTimeMillis();
         fpsLimiter();
     }
@@ -101,9 +104,15 @@ public class UI extends JFrame {
             drawDebug();
         }
         updatePlayer();
+        updateMonsters();
         drawMessage();
         drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
         drawToImage();
+    }
+    private void updateMonsters(){
+        zombie.draw(imageG, p);
+        zombie.gravity();
+        zombie.walk();
     }
     private void drawInteractiveState() {
         switch (currentInteractState) {
@@ -118,24 +127,7 @@ public class UI extends JFrame {
         drawAnyInventory(interactStateFurnace.invFuel,(screenHeight - 250)/2 + 50,900);
         drawAnyInventory(interactStateFurnace.invOutput,(screenHeight - 250)/2 + 25,950);
         drawToImage();
-        checkFurnace();
-    }
-    private void checkFurnace() {
-        if(interactStateFurnace.invTop.getKeyFromCoordinates(0,0) != null && interactStateFurnace.invFuel.getKeyFromCoordinates(0,0) != null) {
-            if (interactStateFurnace.invTop.getKeyFromCoordinates(0, 0).smeltable && interactStateFurnace.invFuel.getKeyFromCoordinates(0, 0).fuel) {
-                System.out.println("AM SCHMELZEN");
-                checkRecipe();
-            }
-        }
-    }
-    private void checkRecipe() {
-        Integer[][] recipes = {{6,9}};
-        for (Integer[] recipe : recipes){
-            if(recipe[0] == interactStateFurnace.invTop.getKeyFromCoordinates(0, 0).id){
-                interactStateFurnace.invTop.inventory.remove(interactStateFurnace.invTop.getKeyFromCoordinates(0, 0));
-                interactStateFurnace.invOutput.inventory.put(map.getNewBlockFromID(recipe[1]),2);
-            }
-        }
+        interactStateFurnace.checkFurnace();
     }
 
     public void addMessage(String message, int time){
@@ -215,7 +207,7 @@ public class UI extends JFrame {
         imageG.drawString("Loaded Blocks: " + blocks.size(),10,75);
         int number = 0;
         for (int i = 0 ; i < blocks.size(); i++){
-            if(map.getOnlyVisibleBlocks(i)){
+            if(map.ui.p.getOnlyVisibleBlocks(i)){
                 number++;
             }
         }
@@ -225,7 +217,7 @@ public class UI extends JFrame {
         imageG.drawString("Specific Block [F4]" + map.specificBlockShown, 10, 175);
     }
     private void updatePlayer() {
-        p.drawPlayer(imageG);
+        p.draw(imageG,p);
         p.drawSelected(imageG);
         p.jump();
         p.walk();

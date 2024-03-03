@@ -16,15 +16,12 @@ public class BLK_AIR extends Entity {
         this.deactivateHitBox = true;
         this.hardness = 0;
         this.health = 0;
+        this.name = "air";
         try {
             this.sprite = ImageIO.read(new File("assets/tiles/air.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    @Override
-    public String getName() {
-        return "air";
     }
     @Override
     public void interact(UI ui) {

@@ -23,7 +23,7 @@ public class MouseMotionListener implements java.awt.event.MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
         Point point = getMouseBlockHover(e.getLocationOnScreen());
         for(int i=0; i< ui.blocks.size(); i++){
-            if(ui.map.getOnlyVisibleBlocks(i)){
+            if(ui.p.getOnlyVisibleBlocks(i)){
                 if(point.x - 150 == ui.blocks.get(i).point.x && point.y - 50 == ui.blocks.get(i).point.y){
                     ui.blocks.get(i).color = Color.red;
                 }

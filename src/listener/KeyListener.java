@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 
 public class KeyListener implements java.awt.event.KeyListener {
     public UI ui;
-    public boolean aPressed,dPressed, spacePressed;
     public Inventory primaryInv;
     public Inventory secondaryInv;
     public Inventory[] choosableInventories = new Inventory[4];
@@ -112,7 +111,7 @@ public class KeyListener implements java.awt.event.KeyListener {
                 }
             }
             case KeyEvent.VK_A -> {
-                aPressed = true;
+                ui.p.left = true;
                 ui.p.lookDirection = false;
             }
             case KeyEvent.VK_S -> {
@@ -122,13 +121,13 @@ public class KeyListener implements java.awt.event.KeyListener {
                 }
             }
             case KeyEvent.VK_D -> {
-                dPressed = true;
+                ui.p.right = true;
                 ui.p.lookDirection = true;
             }
             case KeyEvent.VK_E -> ui.currentState = UI.inventoryState;
             case KeyEvent.VK_F3 -> ui.debug = !ui.debug;
             case KeyEvent.VK_F11 -> ui.toggleFullscreen();
-            case KeyEvent.VK_SPACE -> spacePressed = true;
+            case KeyEvent.VK_SPACE -> ui.p.jumping = true;
         }
     }
     @Override
@@ -140,9 +139,9 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
     private void gameStateReleased(int e) {
         switch (e){
-            case KeyEvent.VK_A -> aPressed = false;
-            case KeyEvent.VK_D -> dPressed = false;
-            case KeyEvent.VK_SPACE -> spacePressed = false;
+            case KeyEvent.VK_A -> ui.p.left = false;
+            case KeyEvent.VK_D -> ui.p.right = false;
+            case KeyEvent.VK_SPACE -> ui.p.jumping = false;
             case KeyEvent.VK_S -> {
                 ui.p.Y -= 25;
                 ui.p.height = ui.p.defaultHeight;
