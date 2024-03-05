@@ -4,7 +4,6 @@ import game.Map;
 import game.UI;
 
 import java.awt.*;
-import java.io.IOException;
 import java.io.Serializable;
 
 public abstract class Entity implements Serializable{

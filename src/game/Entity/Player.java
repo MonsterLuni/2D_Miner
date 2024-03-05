@@ -13,7 +13,6 @@ import listener.KeyListener;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
 
 public class Player extends Living {
     public KeyListener kh;
@@ -161,9 +160,5 @@ public class Player extends Living {
     @Override
     public String getName() {
         return "Player";
-    }
-    @Override
-    public void interact(UI ui) {
-
     }
 }
