@@ -12,11 +12,7 @@ public class ITM_PICKAXE_BEDROCK extends Entity {
     public ITM_PICKAXE_BEDROCK(){
         width = 25;
         height = 25;
-        try {
-            this.sprite = ImageIO.read(new File("assets/items/pickaxe_bedrock.png")).getScaledInstance(width,height, Image.SCALE_DEFAULT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.id = 10;
         this.miningDamage = 100;
         this.hardness = 5;
     }

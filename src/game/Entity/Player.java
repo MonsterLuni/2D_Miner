@@ -13,6 +13,7 @@ import listener.KeyListener;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 public class Player extends Living {
     public KeyListener kh;
@@ -80,14 +81,14 @@ public class Player extends Living {
         Entity hotbarElement = hotbar.getKeyFromCoordinates(hotbar.inventorySpaceX,0);
         if(hotbarElement != null){
             if (lookDirection) {
-                spriteSelected = hotbarElement.sprite;
+                spriteSelected = ui.map.getPictureForID(hotbarElement.id);
                 if (ui.ml.leftButtonPressed) {
                     g2d.rotate(Math.toRadians(35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
                 } else {
                     g2d.rotate(Math.toRadians(25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
                 }
             } else {
-                spriteSelected = flipHorizontal(hotbarElement.sprite);
+                spriteSelected = flipHorizontal(ui.map.getPictureForID(hotbarElement.id));
                 spriteY += 10;
                 if (ui.ml.leftButtonPressed) {
                     g2d.rotate(Math.toRadians(-35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);

@@ -4,8 +4,10 @@ import game.Map;
 import game.UI;
 
 import java.awt.*;
+import java.io.IOException;
+import java.io.Serializable;
 
-public abstract class Entity {
+public abstract class Entity implements Serializable{
     public Point point;
     public Color color = Color.BLUE;
     public boolean hitLeft = false;
@@ -30,7 +32,7 @@ public abstract class Entity {
     public boolean breakable;
     public boolean deactivateHitBox;
     public int health;
-    public Image sprite;
+    //public Image sprite;
     public abstract void interact(UI ui);
     public boolean harvestable(Player p) {
         return p.currentHardness >= hardness;
@@ -49,19 +51,19 @@ public abstract class Entity {
             g.drawLine(X + p.offsetX, Y - p.offsetY,X + p.offsetX,Y - p.offsetY + 25);
         }
     }
-    public void breakBlock(Map map, Image image, String blockName){
+    public void breakBlock(Map map, String blockName){
         hitTop = false;
         hitBottom = false;
         hitRight = false;
         hitLeft = false;
         deactivateHitBox = true;
-        sprite = image;
+        id = 3;
         breakable = false;
         name = blockName;
         map.updateHitBoxes();
     }
-    public void drawBlock(Graphics g, Player p){
-        g.drawImage(sprite,(X + p.offsetX),(Y - p.offsetY),null);
+    public void drawBlock(Graphics g, Player p, UI ui) {
+        g.drawImage(ui.map.getPictureForID(id),(X + p.offsetX),(Y - p.offsetY),null);
     }
     public void drawBlockVertices(Graphics g, Player p){
         g.setColor(Color.BLUE);

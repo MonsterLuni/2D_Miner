@@ -43,13 +43,12 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_SPACE -> menuActivate();
         }
     }
-
     private void menuActivate() {
         switch (ui.menuSelected){
             case 0 -> ui.startGame();
+            case 3 -> ui.running = false;
         }
     }
-
     private void interactStateSelector(int keyCode) {
         switch(ui.currentInteractState){
             case UI.furnaceInteractState -> interactStateFurnace(keyCode);
@@ -148,6 +147,8 @@ public class KeyListener implements java.awt.event.KeyListener {
                     ui.p.height = 25;
                 }
             }
+            case KeyEvent.VK_F8 -> ui.saveGame(1);
+            case KeyEvent.VK_F9 -> ui.loadGame(1);
             case KeyEvent.VK_D -> {
                 ui.p.right = true;
                 ui.p.lookDirection = true;

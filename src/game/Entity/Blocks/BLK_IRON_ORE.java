@@ -18,11 +18,6 @@ public class BLK_IRON_ORE extends Entity {
         this.hardness = 3;
         this.health = 50;
         this.name = "iron_ore";
-        try {
-            this.sprite = ImageIO.read(new File("assets/tiles/iron_ore.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
     @Override
     public void interact(UI ui) {

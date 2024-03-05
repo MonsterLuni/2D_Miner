@@ -3,10 +3,11 @@ package game;
 import game.Entity.Entity;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
-public class Inventory {
+public class Inventory implements Serializable{
     public Point activeInventorySpace = new Point(-1,-1);
     public Point activeInventorySpaceTwo = new Point(-1,-1);
     public int inventorySpaceX;

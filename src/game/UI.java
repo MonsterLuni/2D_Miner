@@ -10,17 +10,17 @@ import listener.MouseMotionListener;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class UI extends JFrame {
-    long lastTime;
-    boolean running = true;
-    int defaultHeight = 720;
-    int defaultWidth = 1280;
+    private long lastTime;
+    public boolean running = true;
+    private final int defaultHeight = 720;
+    private final int defaultWidth = 1280;
     public int menuSelected = 0;
     public int screenHeight = defaultHeight;
     public int screenWidth = defaultWidth;
@@ -34,14 +34,14 @@ public class UI extends JFrame {
     public boolean fullscreen = false;
     public boolean debug = false;
     public double fps = 0;
-    public int maxFps = 60;
+    public int maxFps = 99999;
     public MouseListener ml;
     public MouseMotionListener mml;
-    public ArrayList<String> messages = new ArrayList<>(4);
-    public ArrayList<Integer> liveTime = new ArrayList<>(4);
+    private final ArrayList<String> messages = new ArrayList<>(4);
+    private final ArrayList<Integer> liveTime = new ArrayList<>(4);
     public BLK_INTERACTIVE_FURNACE interactStateFurnace;
     public KeyListener kl;
-    public Image heart_full, heart_half, heart_empty;
+    private Image heart_full, heart_half, heart_empty;
     public final static int menuState = 0;
     public final static int loadingState = 1;
     public final static int gameState = 2;
@@ -54,7 +54,7 @@ public class UI extends JFrame {
     LIV_ZOMBIE zombie;
     String currentText = "";
     String currentPercent = "0%";
-    Color background = new Color(211, 244, 244);
+    static final Color background = new Color(211, 244, 244);
     public UI(){
         kl  = new KeyListener(this);
         setSize(screenWidth, screenHeight);
@@ -62,26 +62,31 @@ public class UI extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setUndecorated(true);
+        setIconImage(new ImageIcon("assets/logo.png").getImage());
         setVisible(true);
         addKeyListener(kl);
         setFocusTraversalKeysEnabled(false);
         lastTime = System.currentTimeMillis();
         fpsLimiter();
     }
-    public void fpsLimiter(){
-        long now = System.currentTimeMillis();
-        long last = lastTime;
-        fps = 1000 / (double)(now - last);
-        while (fps >= maxFps){
-            now = System.currentTimeMillis();
-            fps = 1000 / (double)(now - last);
+    public void fpsLimiter() {
+        long targetTime = System.currentTimeMillis() + (long) (1000 / maxFps);
+        while (running) {
+            long now = System.currentTimeMillis();
+            fps = 1000 / (double)(now - lastTime);
+            update();
+            lastTime = now;
+            long sleepTime = targetTime - System.currentTimeMillis();
+            if (sleepTime > 0) {
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            targetTime += 1000 / maxFps;
         }
-        // Here comes the Code that actually gets run
-        update();
-        lastTime = now;
-        if(running){
-            fpsLimiter();
-        }
+        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
     public void update(){
         switch (currentState){
@@ -110,6 +115,7 @@ public class UI extends JFrame {
         imageG.drawString("DU BIST TOT",screenWidth/2,screenHeight/2);
         drawToImage();
     }
+
     public void startGame(){
         currentState = loadingState;
         updateLoading("Loading MouseListener","0%");
@@ -132,6 +138,7 @@ public class UI extends JFrame {
         }
         updateLoading("Loading Map","80%");
         map = new Map(this);
+        map.getImages();
         map.loadMap();
         updateLoading("Loading Hotboxes","90%");
         map.loadHitBoxes();
@@ -140,7 +147,53 @@ public class UI extends JFrame {
         addMouseMotionListener(mml);
         currentState = gameState;
     }
-    private void updateLoading(String text, String percent) {
+    public void saveGame(int num){
+        SaveGame sg = new SaveGame();
+        sg.offsetX = p.offsetX;
+        sg.offsetY = p.offsetY;
+        sg.hardness = p.hardness;
+        sg.miningDamage = p.miningDamage;
+        sg.currentHardness = p.currentHardness;
+        sg.currentMiningDamage = p .currentMiningDamage;
+        sg.maxHealth = p .maxHealth;
+        sg.health = p.health;
+        sg.inv = p.inv;
+        //sg.hotbar = p.hotbar;
+        try{
+            FileOutputStream fos = new FileOutputStream("Game"+ num +".sav");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(sg);
+            oos.flush();
+            oos.close();
+            System.out.println("Game Saved");
+        }catch (Exception e){
+            System.out.println("Serialization Error! Can't save data\n"
+                    +e.getClass() + ": " + e.getMessage() + "\n");
+        }
+    }
+    public void loadGame(int num){
+        try{
+            FileInputStream fis = new FileInputStream("Game"+ num +".sav");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            SaveGame sg = (SaveGame) ois.readObject();
+            p.offsetX = sg.offsetX;
+            p.offsetY = sg.offsetY;
+            p.hardness = sg.hardness;
+            p.miningDamage = sg.miningDamage;
+            p.currentHardness = sg.currentHardness;
+            p .currentMiningDamage = sg.currentMiningDamage;
+            p.maxHealth = sg.maxHealth;
+            p.health = sg.health;
+            p.inv = sg.inv;
+            //p.hotbar = sg.hotbar;
+            ois.close();
+            System.out.println("Game Loaded");
+        }catch (Exception e){
+            System.out.println("Serialization Error! Can't save data\n"
+                    +e.getClass() + ": " + e.getMessage() + "\n");
+        }
+    }
+    public void updateLoading(String text, String percent) {
         currentText = text;
         currentPercent = percent;
         drawLoadingState();
@@ -296,7 +349,7 @@ public class UI extends JFrame {
                 for (java.util.Map.Entry<Entity, Integer> entry : inv.inventory.entrySet()) {
                     if(entry.getKey() != null){
                         if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
-                            imageG.drawImage(entry.getKey().sprite,width + (i*28),height + (l*28),null);
+                            imageG.drawImage(map.getPictureForID(entry.getKey().id),width + (i*28),height + (l*28),null);
                             if(entry.getValue() > 1){
                                 imageG.drawString(String.valueOf(entry.getValue()),width + (i*28),height + (l*28) + 25);
                             }

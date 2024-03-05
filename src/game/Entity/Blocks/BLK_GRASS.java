@@ -16,11 +16,6 @@ public class BLK_GRASS extends Entity {
         this.hardness = 1;
         this.health = 5;
         this.name = "grass";
-        try {
-            this.sprite = ImageIO.read(new File("assets/tiles/grass.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
     @Override
     public void interact(UI ui) {

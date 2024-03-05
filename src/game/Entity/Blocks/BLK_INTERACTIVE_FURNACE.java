@@ -26,11 +26,6 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
         this.name = "furnace";
         invFuel.maxSize = 1;
         invTop.maxSize = 1;
-        try {
-            this.sprite = ImageIO.read(new File("assets/tiles/furnace.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
     @Override
     public void interact(UI ui) {

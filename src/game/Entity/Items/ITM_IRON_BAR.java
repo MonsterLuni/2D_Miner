@@ -13,11 +13,6 @@ public class ITM_IRON_BAR extends Entity {
         width = 25;
         height = 25;
         this.id = 9;
-        try {
-            this.sprite = ImageIO.read(new File("assets/items/iron_bar.png")).getScaledInstance(width,height, Image.SCALE_DEFAULT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         this.miningDamage = 5;
         this.hardness = 3;
     }

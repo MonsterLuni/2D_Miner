@@ -17,11 +17,6 @@ public class BLK_BEDROCK extends Entity {
         this.hardness = 10;
         this.health = 100;
         this.name = "bedrock";
-        try {
-            this.sprite = ImageIO.read(new File("assets/tiles/bedrock.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
     @Override
     public void interact(UI ui) {

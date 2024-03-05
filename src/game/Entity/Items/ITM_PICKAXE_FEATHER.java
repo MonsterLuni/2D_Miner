@@ -12,11 +12,7 @@ public class ITM_PICKAXE_FEATHER extends Entity {
     public ITM_PICKAXE_FEATHER(){
         width = 25;
         height = 25;
-        try {
-            this.sprite = ImageIO.read(new File("assets/items/pickaxe_feather.png")).getScaledInstance(width,height, Image.SCALE_DEFAULT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.id = 11;
         this.miningDamage = 0;
         this.hardness = 0;
     }

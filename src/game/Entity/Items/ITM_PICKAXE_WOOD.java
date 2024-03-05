@@ -12,11 +12,7 @@ public class ITM_PICKAXE_WOOD extends Entity {
     public ITM_PICKAXE_WOOD(){
         width = 25;
         height = 25;
-        try {
-            this.sprite = ImageIO.read(new File("assets/items/pickaxe_wood.png")).getScaledInstance(width,height, Image.SCALE_DEFAULT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.id = 12;
         this.miningDamage = 5;
         this.hardness = 2;
     }
