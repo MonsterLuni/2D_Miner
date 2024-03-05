@@ -126,12 +126,4 @@ public class Inventory implements Serializable{
         }
         return null;
     }
-    public int getValueFromCoordinates(int x, int y) {
-        for (java.util.Map.Entry<Entity, Integer> entry : inventory.entrySet()) {
-            if(entry.getKey().inventoryX == x && entry.getKey().inventoryY == y){
-                return entry.getValue();
-            }
-        }
-        return -1;
-    }
 }
