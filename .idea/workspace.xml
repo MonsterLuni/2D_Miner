@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Made map loading about 10 times faster by removing the sprite from the entity">
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="#21 implemented load and save mechanic, not yet in ui">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/SaveGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/SaveGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/SaveInventory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_WOOD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_WOOD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Menu.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +138,7 @@
       <workItem from="1709384967451" duration="44000" />
       <workItem from="1709386512446" duration="7184000" />
       <workItem from="1709477016573" duration="3389000" />
-      <workItem from="1709624191596" duration="23512000" />
+      <workItem from="1709624191596" duration="23593000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -413,14 +412,21 @@
       <option name="project" value="LOCAL" />
       <updated>1709648722837</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="#21 implemented load and save mechanic, not yet in ui">
+      <option name="closed" value="true" />
+      <created>1709651181082</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1709651181082</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Made Code Prettier" />
     <MESSAGE value="Add Iron_ore (not spawning at the moment) + try to add an Inventory System (very bad at the moment)" />
     <MESSAGE value="Improved the mouse block finding system" />
     <MESSAGE value="fix: Issue #2 hitbox with gravity now works as expected" />
@@ -445,7 +451,8 @@
     <MESSAGE value="deleted class BloCk for easier code reading. Now Everything block related is a Entity" />
     <MESSAGE value="add Health System #17 + Add Menu Screen" />
     <MESSAGE value="Made map loading about 10 times faster by removing the sprite from the entity" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made map loading about 10 times faster by removing the sprite from the entity" />
+    <MESSAGE value="#21 implemented load and save mechanic, not yet in ui" />
+    <option name="LAST_COMMIT_MESSAGE" value="#21 implemented load and save mechanic, not yet in ui" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
