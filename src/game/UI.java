@@ -34,7 +34,7 @@ public class UI extends JFrame {
     public boolean fullscreen = false;
     public boolean debug = false;
     public double fps = 0;
-    public int maxFps = 99999;
+    public int maxFps = 60;
     public MouseListener ml;
     public MouseMotionListener mml;
     private final ArrayList<String> messages = new ArrayList<>(4);
@@ -115,7 +115,6 @@ public class UI extends JFrame {
         imageG.drawString("DU BIST TOT",screenWidth/2,screenHeight/2);
         drawToImage();
     }
-
     public void startGame(){
         currentState = loadingState;
         updateLoading("Loading MouseListener","0%");
@@ -158,7 +157,8 @@ public class UI extends JFrame {
         sg.maxHealth = p .maxHealth;
         sg.health = p.health;
         sg.inv = p.inv;
-        //sg.hotbar = p.hotbar;
+        sg.hotbar = p.hotbar;
+        sg.blocks = blocks;
         try{
             FileOutputStream fos = new FileOutputStream("Game"+ num +".sav");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -185,7 +185,8 @@ public class UI extends JFrame {
             p.maxHealth = sg.maxHealth;
             p.health = sg.health;
             p.inv = sg.inv;
-            //p.hotbar = sg.hotbar;
+            p.hotbar = sg.hotbar;
+            blocks =  sg.blocks;
             ois.close();
             System.out.println("Game Loaded");
         }catch (Exception e){

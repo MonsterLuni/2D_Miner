@@ -4,31 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="add Health System #17 + Add Menu Screen">
-      <change afterPath="$PROJECT_DIR$/assets/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Menu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/SaveGame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/SaveInventory.java" afterDir="false" />
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Made map loading about 10 times faster by removing the sprite from the entity">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_AIR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_AIR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BARRIER.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BARRIER.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BEDROCK.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BEDROCK.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_COAL_ORE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_COAL_ORE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_DIRT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_DIRT.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_GRASS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_GRASS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_IRON_ORE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_IRON_ORE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_STONE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_STONE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_IRON_BAR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_IRON_BAR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_BEDROCK.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_BEDROCK.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_FEATHER.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_FEATHER.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_WOOD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_WOOD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/SaveGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/SaveGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/SaveInventory.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +139,7 @@
       <workItem from="1709384967451" duration="44000" />
       <workItem from="1709386512446" duration="7184000" />
       <workItem from="1709477016573" duration="3389000" />
-      <workItem from="1709624191596" duration="22061000" />
+      <workItem from="1709624191596" duration="23512000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -425,14 +405,21 @@
       <option name="project" value="LOCAL" />
       <updated>1709631445137</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Made map loading about 10 times faster by removing the sprite from the entity">
+      <option name="closed" value="true" />
+      <created>1709648722837</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1709648722837</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Not Drawing stuff that's out of screen is now working in X and Y axis" />
     <MESSAGE value="Made Code Prettier" />
     <MESSAGE value="Add Iron_ore (not spawning at the moment) + try to add an Inventory System (very bad at the moment)" />
     <MESSAGE value="Improved the mouse block finding system" />
@@ -457,7 +444,8 @@
     <MESSAGE value="smelting now actually works and you can place Iron_ore into furnace and get iron_bar" />
     <MESSAGE value="deleted class BloCk for easier code reading. Now Everything block related is a Entity" />
     <MESSAGE value="add Health System #17 + Add Menu Screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="add Health System #17 + Add Menu Screen" />
+    <MESSAGE value="Made map loading about 10 times faster by removing the sprite from the entity" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made map loading about 10 times faster by removing the sprite from the entity" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
