@@ -1,11 +1,7 @@
 package game.Entity.Blocks;
+
 import game.Entity.Entity;
 import game.UI;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class BLK_DIRT extends Entity {
     public BLK_DIRT(){

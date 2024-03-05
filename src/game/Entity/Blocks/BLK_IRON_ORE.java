@@ -3,10 +3,6 @@ package game.Entity.Blocks;
 import game.Entity.Entity;
 import game.UI;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-
 public class BLK_IRON_ORE extends Entity {
     public BLK_IRON_ORE(){
         this.smeltable = true;

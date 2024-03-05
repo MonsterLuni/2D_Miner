@@ -4,10 +4,6 @@ import game.Entity.Entity;
 import game.Inventory;
 import game.UI;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-
 public class BLK_INTERACTIVE_FURNACE extends Entity {
     public Inventory invTop = new Inventory(1,1);
     public Inventory invFuel = new Inventory(1,1);
