@@ -2,10 +2,6 @@ package game.Entity.Blocks;
 import game.Entity.Entity;
 import game.UI;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-
 public class BLK_GRASS extends Entity {
     public BLK_GRASS(){
         this.height = 25;

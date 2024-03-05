@@ -3,11 +3,6 @@ package game.Entity.Items;
 import game.Entity.Entity;
 import game.UI;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-
 public class ITM_IRON_BAR extends Entity {
     public ITM_IRON_BAR(){
         width = 25;
