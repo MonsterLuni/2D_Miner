@@ -9,6 +9,7 @@ import java.awt.*;
 public abstract class Living extends Entity {
     public Color color;
     public UI ui;
+    public int health,maxHealth;
     public int IndexBlockRight, IndexBlockMiddle;
     public int jumpSpeed = 10;
     int counterSeconds = 0;

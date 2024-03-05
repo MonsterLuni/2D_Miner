@@ -30,6 +30,8 @@ public class Player extends Living {
         this.offsetY = 900;
         this.ui = ui;
         this.color = Color.blue;
+        this.maxHealth = 20;
+        this.health = maxHealth;
         width = defaultWidth;
         height = defaultHeight;
         X = ui.screenWidth/2;

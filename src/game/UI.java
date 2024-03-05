@@ -7,18 +7,21 @@ import listener.KeyListener;
 import listener.MouseListener;
 import listener.MouseMotionListener;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class UI extends JFrame {
-
     long lastTime;
     boolean running = true;
     int defaultHeight = 720;
     int defaultWidth = 1280;
+    public int menuSelected = 0;
     public int screenHeight = defaultHeight;
     public int screenWidth = defaultWidth;
     public Player p;
@@ -36,21 +39,24 @@ public class UI extends JFrame {
     public MouseMotionListener mml;
     public ArrayList<String> messages = new ArrayList<>(4);
     public ArrayList<Integer> liveTime = new ArrayList<>(4);
-    public KeyListener kl;
-    public final static int gameState = 0;
-    public final static int inventoryState = 1;
-    public final static int interactState = 2;
     public BLK_INTERACTIVE_FURNACE interactStateFurnace;
-    public int currentInteractState = 0;
+    public KeyListener kl;
+    public Image heart_full, heart_half, heart_empty;
+    public final static int menuState = 0;
+    public final static int loadingState = 1;
+    public final static int gameState = 2;
+    public final static int inventoryState = 3;
+    public final static int interactState = 4;
+    public final static int deathState = 5;
+    public int currentState = menuState;
     public final static int furnaceInteractState = 1;
-    public int currentState = gameState;
+    public int currentInteractState = 0;
     LIV_ZOMBIE zombie;
+    String currentText = "";
+    String currentPercent = "0%";
     Color background = new Color(211, 244, 244);
     public UI(){
         kl  = new KeyListener(this);
-        ml  = new MouseListener(this);
-        mml = new MouseMotionListener(this);
-        map = new Map(this);
         setSize(screenWidth, screenHeight);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -58,15 +64,7 @@ public class UI extends JFrame {
         setUndecorated(true);
         setVisible(true);
         addKeyListener(kl);
-        addMouseListener(ml);
-        addMouseMotionListener(mml);
         setFocusTraversalKeysEnabled(false);
-        p = new Player(this,kl);
-        kl.primaryInv = p.inv;
-        kl.secondaryInv = p.hotbar;
-        map.loadMap();
-        map.loadHitBoxes();
-        zombie = new LIV_ZOMBIE(this);
         lastTime = System.currentTimeMillis();
         fpsLimiter();
     }
@@ -86,12 +84,130 @@ public class UI extends JFrame {
         }
     }
     public void update(){
-        clearWindow(background);
         switch (currentState){
+            case menuState -> drawMenuState();
+            case loadingState -> drawLoadingState();
             case gameState -> drawGameState();
             case inventoryState -> drawInventoryState();
             case interactState -> drawInteractiveState();
+            case deathState -> drawDeathState();
         }
+    }
+    private void drawLoadingState() {
+        clearWindow(Color.black);
+        imageG.setColor(Color.white);
+        Font f = new Font("Arial",Font.ITALIC, 60);
+        imageG.setFont(f);
+        imageG.drawString(currentPercent,calculateCenterX(currentPercent,f),250);
+        f = new Font("Arial",Font.ITALIC, 50);
+        imageG.setFont(f);
+        imageG.drawString(currentText,calculateCenterX(currentText,f),300);
+        drawToImage();
+    }
+    private void drawDeathState() {
+        clearWindow(background);
+        imageG.setColor(Color.black);
+        imageG.drawString("DU BIST TOT",screenWidth/2,screenHeight/2);
+        drawToImage();
+    }
+    public void startGame(){
+        currentState = loadingState;
+        updateLoading("Loading MouseListener","0%");
+        ml  = new MouseListener(this);
+        updateLoading("Loading MouseMotionListener","5%");
+        mml = new MouseMotionListener(this);
+        updateLoading("Loading Player","20%");
+        p = new Player(this,kl);
+        kl.primaryInv = p.inv;
+        kl.secondaryInv = p.hotbar;
+        updateLoading("Loading Zombie","40%");
+        zombie = new LIV_ZOMBIE(this);
+        updateLoading("Loading Heart Images","60%");
+        try {
+            this.heart_full = ImageIO.read(new File("assets/heart_full.png"));
+            this.heart_half = ImageIO.read(new File("assets/heart_half.png"));
+            this.heart_empty = ImageIO.read(new File("assets/heart_empty.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        updateLoading("Loading Map","80%");
+        map = new Map(this);
+        map.loadMap();
+        updateLoading("Loading Hotboxes","90%");
+        map.loadHitBoxes();
+        updateLoading("Setting GameState","100%");
+        addMouseListener(ml);
+        addMouseMotionListener(mml);
+        currentState = gameState;
+    }
+    private void updateLoading(String text, String percent) {
+        currentText = text;
+        currentPercent = percent;
+        drawLoadingState();
+    }
+    private void drawMenuState(){
+        clearWindow(background);
+        int i = 0;
+        int startingpoint = 250;
+
+        clearWindow(Color.black);
+        imageG.setColor(Color.white);
+
+        Font f = new Font("Arial",Font.ITALIC, 50);
+        imageG.setFont(f);
+        imageG.drawString("2D Miner",calculateCenterX("2D Miner",f),150);
+        f = new Font("Arial",Font.ITALIC, 30);
+        imageG.setFont(f);
+
+        imageG.drawString("PLAY",calculateCenterX("PLAY",f),startingpoint);
+
+        i++;
+
+        imageG.drawString("SETTINGS",calculateCenterX("SETTINGS",f),startingpoint + (i * 50));
+
+        i++;
+
+        imageG.drawString("MANUAL",calculateCenterX("MANUAL",f),startingpoint + (i * 50));
+
+        i++;
+
+        imageG.drawString("QUIT",calculateCenterX("QUIT",f),startingpoint + (i * 50));
+
+        imageG.drawString(">",calculateCenterX(">",f) - 100,startingpoint + (menuSelected * 50));
+
+        drawToImage();
+    }
+    private int calculateCenterX(String text, Font font) {
+        FontMetrics fontMetrics = imageG.getFontMetrics(font);
+        int stringWidth = fontMetrics.stringWidth(text);
+        return (screenWidth - stringWidth) / 2;
+    }
+    public void addMessage(String message, int time){
+        if(messages.size() < 5){
+            messages.add(message);
+            liveTime.add(time);
+        }
+    }
+    public void toggleFullscreen() {
+        if(fullscreen){
+            screenHeight = defaultHeight;
+            screenWidth = defaultWidth;
+            setSize(screenWidth, screenHeight);
+            setExtendedState(JFrame.NORMAL);
+            setLocationRelativeTo(null);
+            imageG = bufferedImage.getGraphics();
+        }
+        else{
+            GraphicsDevice currentMonitor = MouseInfo.getPointerInfo().getDevice();
+            screenWidth = currentMonitor.getDisplayMode().getWidth();
+            screenHeight = currentMonitor.getDisplayMode().getHeight();
+            fullscreenBuffer = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
+            imageG = fullscreenBuffer.getGraphics();
+            setSize(screenWidth, screenHeight);
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+            map.loadMap();
+        }
+        fullscreen = !fullscreen;
     }
     private void clearWindow(Color col){
         imageG.clearRect(0,0,screenWidth,screenHeight);
@@ -99,6 +215,7 @@ public class UI extends JFrame {
         imageG.fillRect(0,0,screenWidth,screenHeight);
     }
     private void drawGameState(){
+        clearWindow(background);
         map.drawMap(imageG);
         if(debug){
             drawDebug();
@@ -109,17 +226,6 @@ public class UI extends JFrame {
         drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
         drawToImage();
     }
-    private void updateMonsters(){
-        zombie.draw(imageG, p);
-        zombie.gravity();
-        zombie.walk();
-    }
-    private void drawInteractiveState() {
-        switch (currentInteractState) {
-            case furnaceInteractState -> furnaceInteractiveState();
-            case 2 -> System.out.println("kommt noch nh");
-        }
-    }
     private void furnaceInteractiveState() {
         drawAnyInventory(p.inv,(screenHeight - 250)/2,100);
         drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
@@ -129,11 +235,24 @@ public class UI extends JFrame {
         drawToImage();
         interactStateFurnace.checkFurnace();
     }
-
-    public void addMessage(String message, int time){
-        if(messages.size() < 5){
-            messages.add(message);
-            liveTime.add(time);
+    private void updatePlayer() {
+        p.draw(imageG,p);
+        p.drawSelected(imageG);
+        p.jump();
+        p.walk();
+        p.gravity();
+        drawPlayerHealth();
+    }
+    private void updateMonsters(){
+        zombie.draw(imageG, p);
+        zombie.gravity();
+        zombie.walk();
+    }
+    private void drawInteractiveState() {
+        clearWindow(background);
+        switch (currentInteractState) {
+            case furnaceInteractState -> furnaceInteractiveState();
+            case 2 -> System.out.println("kommt noch nh");
         }
     }
     private void drawMessage(){
@@ -187,7 +306,24 @@ public class UI extends JFrame {
             }
         }
     }
+    private void drawPlayerHealth(){
+        for (double i = 2; i < p.maxHealth; i += 2){
+            if(i <= p.health){
+                imageG.drawImage(heart_full, (int) (screenWidth - 300 + (i*12.5)),50,null);
+            }
+            else if(i - 1 == p.health){
+                imageG.drawImage(heart_half, (int) (screenWidth - 300 + (i*12.5)),50,null);
+            }
+            else{
+                imageG.drawImage(heart_empty, (int) (screenWidth - 300 + (i*12.5)),50,null);
+            }
+        }
+        if(p.health <= 0){
+            currentState = deathState;
+        }
+    }
     private void drawInventoryState(){
+        clearWindow(background);
         drawAnyInventory(p.inv,(screenHeight - 250)/2,100);
         drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
         drawToImage();
@@ -215,33 +351,5 @@ public class UI extends JFrame {
         imageG.drawString("Player Coordinates: [X:" + (p.X - p.offsetX) + " Y:" + (p.Y + p.offsetY) + "]" ,10,125);
         imageG.drawString("Draw Grid [F2]: " + map.vertices,10,150);
         imageG.drawString("Specific Block [F4]" + map.specificBlockShown, 10, 175);
-    }
-    private void updatePlayer() {
-        p.draw(imageG,p);
-        p.drawSelected(imageG);
-        p.jump();
-        p.walk();
-        p.gravity();
-    }
-    public void toggleFullscreen() {
-        if(fullscreen){
-            screenHeight = defaultHeight;
-            screenWidth = defaultWidth;
-            setSize(screenWidth, screenHeight);
-            setExtendedState(JFrame.NORMAL);
-            setLocationRelativeTo(null);
-            imageG = bufferedImage.getGraphics();
-        }
-        else{
-            GraphicsDevice currentMonitor = MouseInfo.getPointerInfo().getDevice();
-            screenWidth = currentMonitor.getDisplayMode().getWidth();
-            screenHeight = currentMonitor.getDisplayMode().getHeight();
-            fullscreenBuffer = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
-            imageG = fullscreenBuffer.getGraphics();
-            setSize(screenWidth, screenHeight);
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
-            map.loadMap();
-        }
-        fullscreen = !fullscreen;
     }
 }

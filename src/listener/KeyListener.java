@@ -22,11 +22,34 @@ public class KeyListener implements java.awt.event.KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (ui.currentState){
+            case UI.menuState -> menuState(e.getKeyCode());
             case UI.gameState -> gameState(e.getKeyCode());
             case UI.inventoryState -> inventoryState(e.getKeyCode());
             case UI.interactState -> interactStateSelector(e.getKeyCode());
         }
     }
+    private void menuState(int e) {
+        switch (e){
+            case KeyEvent.VK_UP -> {
+                if(ui.menuSelected - 1 != -1){
+                    ui.menuSelected--;
+                }
+            }
+            case KeyEvent.VK_DOWN -> {
+                if(ui.menuSelected + 1 != 4){
+                    ui.menuSelected++;
+                }
+            }
+            case KeyEvent.VK_SPACE -> menuActivate();
+        }
+    }
+
+    private void menuActivate() {
+        switch (ui.menuSelected){
+            case 0 -> ui.startGame();
+        }
+    }
+
     private void interactStateSelector(int keyCode) {
         switch(ui.currentInteractState){
             case UI.furnaceInteractState -> interactStateFurnace(keyCode);
@@ -103,6 +126,11 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_F2 -> {
                 if(ui.debug){
                     ui.map.vertices = !ui.map.vertices;
+                }
+            }
+            case KeyEvent.VK_F6 -> {
+                if(ui.debug){
+                    ui.p.health -= 1;
                 }
             }
             case KeyEvent.VK_F5 -> {
