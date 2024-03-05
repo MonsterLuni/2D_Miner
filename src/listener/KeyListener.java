@@ -69,9 +69,7 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
     private void inventoryToInventory(int e){
         switch (e){
-            case KeyEvent.VK_E -> {
-                ui.currentState = UI.gameState;
-            }
+            case KeyEvent.VK_E -> ui.currentState = UI.gameState;
             // --------------
             case KeyEvent.VK_W -> changeInventoryPlace(primaryInv,0,-1);
             case KeyEvent.VK_A -> changeInventoryPlace(primaryInv,-1,0);
