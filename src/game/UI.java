@@ -81,7 +81,7 @@ public class UI extends JFrame {
                 try {
                     Thread.sleep(sleepTime);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    e.getStackTrace();
                 }
             }
             targetTime += 1000 / maxFps;
