@@ -18,12 +18,12 @@ public class MouseListener implements java.awt.event.MouseListener {
             case MouseEvent.BUTTON1 -> {
                 leftButtonPressed = true;
                 if(ui.currentState == UI.gameState){
-                    ui.map.findBlock(e.getLocationOnScreen());
+                    ui.map.findBlock(e.getPoint());
                 }
             }
             case MouseEvent.BUTTON3 -> {
                 if(ui.currentState == UI.gameState) {
-                    ui.map.interactWorld(e.getLocationOnScreen(), ui.p.hotbar.getKeyFromCoordinates(ui.p.hotbar.inventorySpaceX, 0));
+                    ui.map.interactWorld(e.getPoint(), ui.p.hotbar.getKeyFromCoordinates(ui.p.hotbar.inventorySpaceX, 0));
                 }
             }
         }

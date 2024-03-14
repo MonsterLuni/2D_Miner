@@ -266,7 +266,7 @@ public class Map {
         Point mouseC = ui.mml.getMouseBlockHover(mouseCoordinates);
         for(int i=0; i< ui.blocks.size(); i++){
             if(ui.p.getOnlyVisibleBlocks(i)){
-                if(mouseC.x - 150 == ui.blocks.get(i).point.x && mouseC.y - 50 == ui.blocks.get(i).point.y){
+                if(mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y){
                     if(ui.blocks.get(i).breakable){
                         if(ui.blocks.get(i).health - ui.p.currentMiningDamage <= 0){
                             if(ui.blocks.get(i).harvestable(ui.p)){
