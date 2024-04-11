@@ -54,7 +54,7 @@ public class UI extends JFrame {
     LIV_ZOMBIE zombie;
     String currentText = "";
     String currentPercent = "0%";
-    static final Color background = new Color(211, 244, 244);
+    public final Color background = new Color(173, 240, 240);
     public UI(){
         kl  = new KeyListener(this);
         setSize(screenWidth, screenHeight);
@@ -200,11 +200,9 @@ public class UI extends JFrame {
         drawLoadingState();
     }
     private void drawMenuState(){
-        clearWindow(background);
+        clearWindow(Color.BLACK);
         int i = 0;
         int startingpoint = 250;
-
-        clearWindow(Color.black);
         imageG.setColor(Color.white);
 
         Font f = new Font("Arial",Font.ITALIC, 50);

@@ -137,7 +137,7 @@ public class Map {
                     return stone;
                 }
                 case 3 -> {
-                    return air;
+                    return null;
                 }
                 case 4 -> {
                     return bedrock;
@@ -311,7 +311,7 @@ public class Map {
     public void interactBlock(Point mouseC){
         for(int i=0; i< ui.blocks.size(); i++){
             if(ui.p.getOnlyVisibleBlocks(i)) {
-                if (mouseC.x - 150 == ui.blocks.get(i).point.x && mouseC.y - 50 == ui.blocks.get(i).point.y) {
+                if (mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y) {
                     if(ui.blocks.get(i).interactive){
                         ui.blocks.get(i).interact(ui);
                     }
@@ -322,12 +322,12 @@ public class Map {
     public void placeBlock(Point mouseC, Entity entity){
         for(int i=0; i< ui.blocks.size(); i++){
             if(ui.p.getOnlyVisibleBlocks(i)){
-                if(mouseC.x - 150 == ui.blocks.get(i).point.x && mouseC.y - 50 == ui.blocks.get(i).point.y){
+                if(mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y){
                     if(Objects.equals(ui.blocks.get(i).getName(), "air")){
                         ui.blocks.remove(i);
                         entity.X = 0;
                         entity.Y = 0;
-                        blockSelector(entity.id,(mouseC.x - 150) / 25,(mouseC.y - 50)/25);
+                        blockSelector(entity.id,(mouseC.x) / 25,(mouseC.y)/25);
                         updateHitBoxes();
                         for (java.util.Map.Entry<Entity, Integer> entry : ui.p.hotbar.inventory.entrySet()) {
                             if(entry.getKey().inventoryX == ui.p.hotbar.inventorySpaceX){

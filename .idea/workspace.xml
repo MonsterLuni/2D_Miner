@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="#21 implemented load and save mechanic, not yet in ui">
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="fixed mouse point. (issue was e.getLocationOnScreen(). should have used e.getPoint())">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -140,6 +140,17 @@
       <workItem from="1709386512446" duration="7184000" />
       <workItem from="1709477016573" duration="3389000" />
       <workItem from="1709624191596" duration="23964000" />
+      <workItem from="1710433712376" duration="2241000" />
+      <workItem from="1711215553474" duration="593000" />
+      <workItem from="1711219973769" duration="594000" />
+      <workItem from="1711559494361" duration="574000" />
+      <workItem from="1711703219046" duration="593000" />
+      <workItem from="1711724375731" duration="7000" />
+      <workItem from="1711802377840" duration="8000" />
+      <workItem from="1711909840320" duration="8000" />
+      <workItem from="1711910633734" duration="3000" />
+      <workItem from="1712671485408" duration="3160000" />
+      <workItem from="1712836130547" duration="2193000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -469,14 +480,21 @@
       <option name="project" value="LOCAL" />
       <updated>1709651508091</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="fixed mouse point. (issue was e.getLocationOnScreen(). should have used e.getPoint())">
+      <option name="closed" value="true" />
+      <created>1710433655908</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1710433655908</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add Iron_ore (not spawning at the moment) + try to add an Inventory System (very bad at the moment)" />
     <MESSAGE value="Improved the mouse block finding system" />
     <MESSAGE value="fix: Issue #2 hitbox with gravity now works as expected" />
     <MESSAGE value="fix: Issue #1 hitbox with head of the player now works" />
@@ -501,7 +519,8 @@
     <MESSAGE value="add Health System #17 + Add Menu Screen" />
     <MESSAGE value="Made map loading about 10 times faster by removing the sprite from the entity" />
     <MESSAGE value="#21 implemented load and save mechanic, not yet in ui" />
-    <option name="LAST_COMMIT_MESSAGE" value="#21 implemented load and save mechanic, not yet in ui" />
+    <MESSAGE value="fixed mouse point. (issue was e.getLocationOnScreen(). should have used e.getPoint())" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed mouse point. (issue was e.getLocationOnScreen(). should have used e.getPoint())" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
