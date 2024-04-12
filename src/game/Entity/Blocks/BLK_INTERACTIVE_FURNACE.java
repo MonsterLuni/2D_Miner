@@ -5,11 +5,18 @@ import game.Inventory;
 import game.UI;
 
 public class BLK_INTERACTIVE_FURNACE extends Entity {
-    public Inventory invTop = new Inventory(1,1);
-    public Inventory invFuel = new Inventory(1,1);
-    public Inventory invOutput = new Inventory(1,1);
     UI ui;
-    public BLK_INTERACTIVE_FURNACE(){
+    @Override
+    public void interact(UI ui) {
+        this.ui = ui;
+        ui.interactStateFurnace = this;
+        ui.currentState = UI.interactState;
+        ui.currentInteractState = UI.furnaceInteractState;
+    }
+    public Inventory invTop;
+    public Inventory invFuel;
+    public Inventory invOutput;
+    public BLK_INTERACTIVE_FURNACE(UI ui){
         this.height = 25;
         this.id = 7;
         this.width = 25;
@@ -20,15 +27,11 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
         this.health = 50;
         this.stackSize = 1;
         this.name = "furnace";
-        invFuel.maxSize = 1;
-        invTop.maxSize = 1;
-    }
-    @Override
-    public void interact(UI ui) {
         this.ui = ui;
-        ui.interactStateFurnace = this;
-        ui.currentState = UI.interactState;
-        ui.currentInteractState = UI.furnaceInteractState;
+        invTop = new Inventory(1,1,ui);
+        invFuel = new Inventory(1,1,ui);
+        invOutput = new Inventory(1,1,ui);
+        invTop.maxSize = 1;
     }
     public void checkFurnace() {
         if(invTop.getKeyFromCoordinates(0,0) != null && invFuel.getKeyFromCoordinates(0,0) != null) {

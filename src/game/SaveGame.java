@@ -2,8 +2,10 @@ package game;
 
 import game.Entity.Entity;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SaveGame implements Serializable {
     public int offsetX;
@@ -16,5 +18,5 @@ public class SaveGame implements Serializable {
     public int health;
     public Inventory inv;
     public Inventory hotbar;
-    public ArrayList<Entity> blocks;
+    public HashMap<Point, Entity> blocks;
 }

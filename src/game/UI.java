@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UI extends JFrame {
     private long lastTime;
@@ -26,7 +27,7 @@ public class UI extends JFrame {
     public int screenWidth = defaultWidth;
     public Player p;
     public Map map;
-    public ArrayList<Entity> blocks;
+    public HashMap<Point,Entity> blocks;
     public BufferedImage bufferedImage = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
     public BufferedImage fullscreenBuffer;
     public Graphics imageG = bufferedImage.getGraphics();
@@ -119,15 +120,9 @@ public class UI extends JFrame {
         currentState = loadingState;
         updateLoading("Loading MouseListener","0%");
         ml  = new MouseListener(this);
-        updateLoading("Loading MouseMotionListener","5%");
+        updateLoading("Loading MouseMotionListener","20%");
         mml = new MouseMotionListener(this);
-        updateLoading("Loading Player","20%");
-        p = new Player(this,kl);
-        kl.primaryInv = p.inv;
-        kl.secondaryInv = p.hotbar;
-        updateLoading("Loading Zombie","40%");
-        zombie = new LIV_ZOMBIE(this);
-        updateLoading("Loading Heart Images","60%");
+        updateLoading("Loading Heart Images","40%");
         try {
             this.heart_full = ImageIO.read(new File("assets/heart_full.png"));
             this.heart_half = ImageIO.read(new File("assets/heart_half.png"));
@@ -135,12 +130,18 @@ public class UI extends JFrame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        updateLoading("Loading Map","80%");
+        updateLoading("Loading Map","60%");
         map = new Map(this);
         map.getImages();
         map.loadMap();
-        updateLoading("Loading Hotboxes","90%");
-        map.loadHitBoxes();
+        updateLoading("Loading Zombie","65%");
+        zombie = new LIV_ZOMBIE(this);
+        updateLoading("Loading Player","80%");
+        p = new Player(this,kl);
+        kl.primaryInv = p.inv;
+        kl.secondaryInv = p.hotbar;
+        updateLoading("Loading Hitboxes","90%");
+        map.updateHitBoxes();
         updateLoading("Setting GameState","100%");
         addMouseListener(ml);
         addMouseMotionListener(mml);
@@ -324,16 +325,17 @@ public class UI extends JFrame {
         }
     }
     private void drawAnyInventory(Inventory inv, int height, int width){
+        int spacing = 3;
         imageG.setColor(Color.gray);
-        imageG.fillRect(width,height,(28 * inv.width/25),(28 * inv.height/25));
+        imageG.fillRect(width,height,((map.tileSize + spacing) * inv.width/map.tileSize),((map.tileSize + spacing) * inv.height/map.tileSize));
         imageG.setColor(Color.black);
-        for (int i = 0; i < inv.width/25; i++){
-            for (int l = 0; l < inv.height/25; l++) {
+        for (int i = 0; i < inv.width/map.tileSize; i++){
+            for (int l = 0; l < inv.height/map.tileSize; l++) {
                 if(inv == kl.primaryInv || inv == kl.secondaryInv){
                     if(inv.activeInventorySpace.x == i && inv.activeInventorySpace.y == l){
                         imageG.setColor(Color.yellow);
-                        imageG.fillRect(width + (i*28),height + (l*28),25,25);
-                        imageG.drawRect(width + (i*28),height + (l*28),25,25);
+                        imageG.fillRect(width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)),map.tileSize,map.tileSize);
+                        imageG.drawRect(width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)),map.tileSize,map.tileSize);
                     }
                     else{
                         if(inv.inventorySpaceX == i && inv.inventorySpaceY == l){
@@ -344,13 +346,13 @@ public class UI extends JFrame {
                         }
                     }
                 }
-                imageG.drawRect(width + (i*28),height + (l*28),25,25);
+                imageG.drawRect(width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)),map.tileSize,map.tileSize);
                 for (java.util.Map.Entry<Entity, Integer> entry : inv.inventory.entrySet()) {
                     if(entry.getKey() != null){
                         if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
-                            imageG.drawImage(map.getPictureForID(entry.getKey().id),width + (i*28),height + (l*28),null);
+                            imageG.drawImage(map.getPictureForID(entry.getKey().id),width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)),null);
                             if(entry.getValue() > 1){
-                                imageG.drawString(String.valueOf(entry.getValue()),width + (i*28),height + (l*28) + 25);
+                                imageG.drawString(String.valueOf(entry.getValue()),width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)) + map.tileSize);
                             }
                         }
                     }
@@ -393,13 +395,7 @@ public class UI extends JFrame {
         imageG.setFont(getFont().deriveFont(Font.ITALIC,20f));
         imageG.drawString("FPS: " + df.format(fps),10,50);
         imageG.drawString("Loaded Blocks: " + blocks.size(),10,75);
-        int number = 0;
-        for (int i = 0 ; i < blocks.size(); i++){
-            if(map.ui.p.getOnlyVisibleBlocks(i)){
-                number++;
-            }
-        }
-        imageG.drawString("Updated Blocks: " + number,10,100);
+        imageG.drawString("Updated Blocks: " + p.getOnlyVisibleBlocks().length,10,100);
         imageG.drawString("Player Coordinates: [X:" + (p.X - p.offsetX) + " Y:" + (p.Y + p.offsetY) + "]" ,10,125);
         imageG.drawString("Draw Grid [F2]: " + map.vertices,10,150);
         imageG.drawString("Specific Block [F4]" + map.specificBlockShown, 10, 175);

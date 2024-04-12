@@ -38,16 +38,16 @@ public abstract class Entity implements Serializable{
     }
     public void drawHitBox(Graphics g, Player p){
         if(hitTop){
-            g.drawLine(X + p.offsetX, Y - p.offsetY,X + p.offsetX + 25,Y - p.offsetY);
+            g.drawLine(X + p.offsetX, Y - p.offsetY,X + p.offsetX + p.ui.map.tileSize,Y - p.offsetY);
         }
         if(hitBottom){
-            g.drawLine(X + p.offsetX, Y - p.offsetY + 25,X + p.offsetX + 25,Y - p.offsetY + 25);
+            g.drawLine(X + p.offsetX, Y - p.offsetY + p.ui.map.tileSize,X + p.offsetX + p.ui.map.tileSize,Y - p.offsetY + p.ui.map.tileSize);
         }
         if(hitRight){
-            g.drawLine(X + p.offsetX + 25, Y - p.offsetY,X + p.offsetX + 25,Y - p.offsetY + 25);
+            g.drawLine(X + p.offsetX + p.ui.map.tileSize, Y - p.offsetY,X + p.offsetX + p.ui.map.tileSize,Y - p.offsetY + p.ui.map.tileSize);
         }
         if(hitLeft){
-            g.drawLine(X + p.offsetX, Y - p.offsetY,X + p.offsetX,Y - p.offsetY + 25);
+            g.drawLine(X + p.offsetX, Y - p.offsetY,X + p.offsetX,Y - p.offsetY + p.ui.map.tileSize);
         }
     }
     public void breakBlock(Map map, String blockName){
@@ -69,7 +69,7 @@ public abstract class Entity implements Serializable{
         g.drawRect(X + p.offsetX, Y - p.offsetY, width, height);
     }
     public void drawBlockSpecial(Graphics g, Player p){
-        g.drawRect(X + p.offsetX, Y - p.offsetY, 25, 25);
+        g.drawRect(X + p.offsetX, Y - p.offsetY, p.ui.map.tileSize, p.ui.map.tileSize);
     }
     public String getName() {
         return name;

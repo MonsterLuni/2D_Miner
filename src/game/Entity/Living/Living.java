@@ -10,7 +10,7 @@ public abstract class Living extends Entity {
     public Color color;
     public UI ui;
     public int health,maxHealth;
-    public int IndexBlockRight, IndexBlockMiddle;
+    public Entity IndexBlockRight, IndexBlockMiddle;
     public int jumpSpeed = 10;
     int counterSeconds = 0;
     int counterInterval = 0;
@@ -22,50 +22,52 @@ public abstract class Living extends Entity {
     public abstract void draw(Graphics g, Player p);
     public void gravity(){
         updateIndex();
-        if(IndexBlockMiddle != -10 || IndexBlockRight != -10){
-            if(IndexBlockMiddle != -10){
-                offsetY = ui.blocks.get(IndexBlockMiddle).Y - (height + Y);
+        if(IndexBlockMiddle != null || IndexBlockRight != null){
+            if(IndexBlockMiddle != null){
+                offsetY = IndexBlockMiddle.Y - (height + Y);
             }
             else{
-                offsetY = ui.blocks.get(IndexBlockRight).Y - (height + Y);
+                offsetY = IndexBlockRight.Y - (height + Y);
             }
         }
         else{
             offsetY += gravitySpeed;
         }
     }
-    public int getBlockFromLiving(int X, int Y){
-        for (int i = 0; i < ui.blocks.size(); i++){
-            if(getOnlyVisibleBlocks(i)){
-                if(ui.blocks.get(i).X == X && ui.blocks.get(i).Y == Y + height){
-                    if(ui.blocks.get(i).hitTop){
-                        return i;
-                    }
-                }
+    public Entity getBlockFromLiving(int X, int Y){
+        Entity block = ui.blocks.get(new Point(X,Y + height));
+        if(block != null){
+            if(block.hitTop) {
+                return block;
             }
         }
-        return -10;
+        return null;
     }
     public void updateIndex(){
-        IndexBlockRight = ui.p.getBlockFromLiving((((X - offsetX) / 25) * 25) + 25,(((Y + offsetY) / 25) * 25));
-        IndexBlockMiddle = ui.p.getBlockFromLiving((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25));
+        IndexBlockRight = ui.p.getBlockFromLiving((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize) + ui.map.tileSize,(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize));
+        IndexBlockMiddle = ui.p.getBlockFromLiving((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize));
     }
-    public boolean getOnlyVisibleBlocks(int index){
-        int positionPlayer = Math.round(((X - (float) offsetX) - (30 * 25)) /25);
-        int positionPlayerY = Math.round(((Y + (float) offsetY) - (30 * 25)) /25);
-        if(ui.blocks.get(index) != null){
-            return ui.blocks.get(index).X / 25 >= positionPlayer && ui.blocks.get(index).X / 25 <= positionPlayer + 59 && ui.blocks.get(index).Y / 25 <= positionPlayerY + 54 && ui.blocks.get(index).Y / 25 >= positionPlayerY + 15;
+    private final int renderHeight = 30;
+    private final int renderWidth = 40;
+    public Entity[] getOnlyVisibleBlocks(){
+        int positionPlayer = Math.round(((X - (float) offsetX)) / ui.map.tileSize) * ui.map.tileSize;
+        int positionPlayerY = Math.round(((Y + (float) offsetY)) / ui.map.tileSize) * ui.map.tileSize;
+        Entity[] visibleBlockList = new Entity[(renderHeight*renderWidth)];
+        System.out.println(positionPlayer);
+        for (int i = 0; i < renderWidth; i++){
+            for (int l = 0; l < renderHeight; l++){
+                Entity block = ui.blocks.get(new Point(((i - (renderWidth/2)) * ui.map.tileSize) + positionPlayer,((l - (renderHeight/2)) * ui.map.tileSize) + positionPlayerY));
+                visibleBlockList[(i * renderHeight) + l] = block;
+            }
         }
-        else{
-            return false;
-        }
+        return visibleBlockList;
     }
-    public boolean checkOverlapX(int index, int overlap, boolean right){
+    public boolean checkOverlapX(Entity index, int overlap, boolean right){
         if(right){
-            return X - offsetX - overlap + 5 <= ui.blocks.get(index).X;
+            return X - offsetX - overlap + 5 <= index.X;
         }
         else {
-            return X - offsetX - overlap >= ui.blocks.get(index).X;
+            return X - offsetX - overlap >= index.X;
         }
     }
     public abstract void walk();
@@ -94,9 +96,6 @@ public abstract class Living extends Entity {
     public String getName() {
         return null;
     }
-
     @Override
-    public void interact(UI ui) {
-
-    }
+    public void interact(UI ui) {}
 }

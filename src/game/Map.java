@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Map {
@@ -18,62 +18,63 @@ public class Map {
     public boolean vertices;
     public int worldWidth;
     public int worldHeight;
+    public int tileSize = 25;
     Image grass, dirt,stone,barrier,bedrock, air,iron_ore, furnace,coal_ore,iron_bar,pickaxe_bedrock,pickaxe_feather,pickaxe_wood;
     public int blockNumberFromFirstGround;
     int[] mapHeightTest;
     int[] mapHeightPerColumn = {100, 125, 150, 175, 200, 225, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 225, 200, 150, 0, -50, -100, -200, -225, -250, -300, -300, -275, -250, -250, -175, -150, -100, -50, -25, 100, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300,300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250, 300, 300, 250, 250, 250, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 250, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300};
     public Map(UI ui) {
         this.ui = ui;
-        worldWidth = ui.screenWidth*5;
-        worldHeight = ui.screenHeight*3;
+        worldWidth = ui.screenWidth*50;
+        worldHeight = ui.screenHeight*50;
         mapHeightTest = new int[worldWidth];
-        ui.blocks = new ArrayList<>((worldWidth / 25) * (worldHeight / 25));
+        ui.blocks = new HashMap<>((worldWidth / tileSize) * (worldHeight / tileSize));
     }
     public void loadMap() {
-        for (int i = 0; i < worldWidth / 25; i++) {
-            ui.updateLoading("Loading Map" + " " + (int)(i * ((double)100/(worldWidth/25))) + "%","80%");
+        for (int i = 0; i < worldWidth / tileSize; i++) {
+            ui.updateLoading("Loading Map" + " " + (int)(i * ((double)100/(worldWidth/tileSize))) + "%","80%");
             first = true;
             blockNumberFromFirstGround = 0;
-            for (int l = 0; l < worldHeight / 25; l++) {
+            for (int l = 0; l < worldHeight / tileSize; l++) {
                 blockSelector(blockSelectingMechanism(i,l),i,l);
             }
         }
     }
-    public void randomMapHeight(){
+    public int randomMapHeight(){
         int offset = 0;
         int oneBefore = offset;
-        for(int i = 0; i < worldWidth; i++){
-            double rand = Math.random();
-            if(rand > 0.67){
-                if(rand > 0.80){
-                    offset = 0;
-                }
-                else {
-                    offset = -25;
-                }
+        double rand = Math.random();
+        if(rand > 0.67){
+            if(rand > 0.80){
+                offset = 0;
             }
             else {
-                if(rand > 0.20){
-                    offset = 0;
-                }
-                else {
-                    offset = 25;
-                }
+                offset = -tileSize;
             }
-            mapHeightTest[i] = oneBefore + offset;
-            oneBefore = mapHeightTest[i];
         }
+        else {
+            if(rand > 0.20){
+                offset = 0;
+            }
+            else {
+                offset = tileSize;
+            }
+        }
+        return offset;
 
     }
     private int blockSelectingMechanism(int i, int l) {
         if(i + 1 == worldWidth / 25 || i == 0){
             return 5; // barrier
         }
-        else if (l * 25 >= mapHeightPerColumn[i] + 1000) {
+        else if (l * 25 >= randomMapHeight() + 1000) {
             blockNumberFromFirstGround++;
             if (first) {
                 first = false;
                 return 0; // grass
+            }
+            else if(l + 1 == worldHeight / 25){
+                return 4; // bedrock
             }
             else if (blockNumberFromFirstGround > 3){
                 if(blockNumberFromFirstGround < 8){
@@ -88,9 +89,6 @@ public class Map {
                     return 2; // stone
                 }
             }
-            else if(l + 1 == worldHeight / 25){
-                return 4; // bedrock
-            }
             else{
                 return 1; // dirt
             }
@@ -104,7 +102,7 @@ public class Map {
         temporaryEntity.X = i*25;
         temporaryEntity.Y = l*25;
         temporaryEntity.point = new Point(temporaryEntity.X,temporaryEntity.Y);
-        ui.blocks.add(temporaryEntity);
+        ui.blocks.put(temporaryEntity.point,temporaryEntity);
     }
     public void getImages(){
         try {
@@ -193,7 +191,7 @@ public class Map {
                 return new BLK_IRON_ORE();
             }
             case 7 -> {
-                return new BLK_INTERACTIVE_FURNACE();
+                return new BLK_INTERACTIVE_FURNACE(ui);
             }
             case 8 -> {
                 return new BLK_COAL_ORE();
@@ -204,55 +202,58 @@ public class Map {
         }
         return null;
     }
-    public void loadHitBoxes() {
-        for (int i = 0; i < ui.blocks.size(); i++){
-            checkHitBoxFromBlock(i);
-        }
-    }
     public void updateHitBoxes(){
-        for (int i = 0; i < ui.blocks.size(); i++){
-            if(ui.p.getOnlyVisibleBlocks(i)){
-                checkHitBoxFromBlock(i);
+        for (Entity block: ui.p.getOnlyVisibleBlocks()) {
+            if(block != null){
+                if(!block.deactivateHitBox){
+                    checkHitBoxFromBlock(block.point);
+                }
             }
         }
     }
-    public void checkHitBoxFromBlock(int i){
-        if(!ui.blocks.get(i).deactivateHitBox && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X,ui.blocks.get(i).Y - 25)).deactivateHitBox){
-            ui.blocks.get(i).hitTop = true;
-        }
-        if(!ui.blocks.get(i).deactivateHitBox && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X,ui.blocks.get(i).Y + 25)).deactivateHitBox){
-            ui.blocks.get(i).hitBottom = true;
-        }
-        if(!ui.blocks.get(i).deactivateHitBox && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X + 25,ui.blocks.get(i).Y)).deactivateHitBox){
-            ui.blocks.get(i).hitRight = true;
-        }
-        if(!ui.blocks.get(i).deactivateHitBox && ui.blocks.get(getBlockFromCoordinates(ui.blocks.get(i).X - 25,ui.blocks.get(i).Y)).deactivateHitBox){
-            ui.blocks.get(i).hitLeft = true;
-        }
-    }
-    public int getBlockFromCoordinates(int X, int Y){
-        for (int i = 0; i < ui.blocks.size(); i++){
-            if (ui.blocks.get(i).X == X && ui.blocks.get(i).Y == Y) {
-                return i;
+    public void checkHitBoxFromBlock(Point i){
+        if(getBlockFromCoordinates(ui.blocks.get(i).X,ui.blocks.get(i).Y - 25) != null){
+            if(getBlockFromCoordinates(ui.blocks.get(i).X,ui.blocks.get(i).Y - 25).deactivateHitBox){
+                ui.blocks.get(i).hitTop = true;
             }
         }
-        return 1;
+        if(getBlockFromCoordinates(ui.blocks.get(i).X,ui.blocks.get(i).Y + 25) != null){
+            if(getBlockFromCoordinates(ui.blocks.get(i).X,ui.blocks.get(i).Y + 25).deactivateHitBox){
+                ui.blocks.get(i).hitBottom = true;
+            }
+        }
+        if(getBlockFromCoordinates(ui.blocks.get(i).X + 25,ui.blocks.get(i).Y) != null){
+            if(getBlockFromCoordinates(ui.blocks.get(i).X + 25,ui.blocks.get(i).Y).deactivateHitBox){
+                ui.blocks.get(i).hitRight = true;
+            }
+        }
+        if(getBlockFromCoordinates(ui.blocks.get(i).X - 25,ui.blocks.get(i).Y) != null){
+            if(getBlockFromCoordinates(ui.blocks.get(i).X - 25,ui.blocks.get(i).Y).deactivateHitBox){
+                ui.blocks.get(i).hitLeft = true;
+            }
+        }
+    }
+    public Entity getBlockFromCoordinates(int X, int Y){
+        if (ui.blocks.get(new Point(X,Y)) != null) {
+            return ui.blocks.get(new Point(X,Y));
+        }
+        return null;
     }
     public void drawMap(Graphics g){
-        for(int i = 0; i < ui.blocks.size(); i++) {
-            if(ui.p.getOnlyVisibleBlocks(i)){
+        for (Entity block: ui.p.getOnlyVisibleBlocks()) {
+            if(block != null){
                 g.setColor(Color.blue);
-                ui.blocks.get(i).drawBlock(g,ui.p,ui);
+                block.drawBlock(g,ui.p,ui);
                 if(ui.debug){
                     g.setColor(Color.red);
-                    ui.blocks.get(i).drawHitBox(g,ui.p);
+                    block.drawHitBox(g,ui.p);
                     g.setColor(Color.blue);
                     if(vertices){
-                        ui.blocks.get(i).drawBlockVertices(g,ui.p);
+                        block.drawBlockVertices(g,ui.p);
                     }
                     if(specificBlockShown){
                         try {
-                            ui.blocks.get(ui.map.getBlockFromCoordinates((((ui.p.X - ui.p.offsetX) / 25) * 25),(((ui.p.Y + ui.p.offsetY) / 25) * 25) + (ui.p.height - 25))).drawBlockSpecial(g,ui.p);
+                            ui.map.getBlockFromCoordinates((((ui.p.X - ui.p.offsetX) / 25) * 25),(((ui.p.Y + ui.p.offsetY) / 25) * 25) + (ui.p.height - 25)).drawBlockSpecial(g,ui.p);
                         }
                         catch (Exception e){
                             System.out.println("Out of Bounds");
@@ -261,41 +262,63 @@ public class Map {
                 }
             }
         }
+        /*for (int i = 0; i < worldWidth; i += 25) {
+            for (int l = 0; l < worldHeight; l += 25) {
+                Entity block = ui.blocks.get(new Point(i,l));
+                if(block != null){
+                    if(ui.p.getOnlyVisibleBlocks(block.point)){
+                        g.setColor(Color.blue);
+                        block.drawBlock(g,ui.p,ui);
+                        if(ui.debug){
+                            g.setColor(Color.red);
+                            block.drawHitBox(g,ui.p);
+                            g.setColor(Color.blue);
+                            if(vertices){
+                                block.drawBlockVertices(g,ui.p);
+                            }
+                            if(specificBlockShown){
+                                try {
+                                    ui.map.getBlockFromCoordinates((((ui.p.X - ui.p.offsetX) / 25) * 25),(((ui.p.Y + ui.p.offsetY) / 25) * 25) + (ui.p.height - 25)).drawBlockSpecial(g,ui.p);
+                                }
+                                catch (Exception e){
+                                    System.out.println("Out of Bounds");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }*/
     }
     public void findBlock(Point mouseCoordinates) {
         Point mouseC = ui.mml.getMouseBlockHover(mouseCoordinates);
-        for(int i=0; i< ui.blocks.size(); i++){
-            if(ui.p.getOnlyVisibleBlocks(i)){
-                if(mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y){
-                    if(ui.blocks.get(i).breakable){
-                        if(ui.blocks.get(i).health - ui.p.currentMiningDamage <= 0){
-                            if(ui.blocks.get(i).harvestable(ui.p)){
-                                ui.addMessage("Harvested " + ui.blocks.get(i).getName(),120);
-                                Entity currentEntity = null;
-                                switch (ui.blocks.get(i).name){
-                                    case "grass" -> currentEntity = new BLK_GRASS();
-                                    case "dirt" -> currentEntity = new BLK_DIRT();
-                                    case "stone" -> currentEntity = new BLK_STONE();
-                                    case "iron_ore" -> currentEntity = new BLK_IRON_ORE();
-                                }
-                                if(currentEntity != null){
-                                    currentEntity.inventoryX = ui.p.inv.getFirstFreeInventorySpace().x;
-                                    currentEntity.inventoryY = ui.p.inv.getFirstFreeInventorySpace().y;
-                                    ui.p.inv.inventory.put(currentEntity,currentEntity.dropAmount);
-                                    ui.p.inv.sortInventory(currentEntity);
-                                }
-                            }
-                            ui.blocks.get(i).breakBlock(this, "air");
+        Entity block = ui.blocks.get(mouseC);
+        if(block != null){
+            if (block.breakable) {
+                if (block.health - ui.p.currentMiningDamage <= 0) {
+                    if (block.harvestable(ui.p)) {
+                        ui.addMessage("Harvested " + block.getName(), 120);
+                        Entity currentEntity = null;
+                        switch (block.name) {
+                            case "grass" -> currentEntity = new BLK_GRASS();
+                            case "dirt" -> currentEntity = new BLK_DIRT();
+                            case "stone" -> currentEntity = new BLK_STONE();
+                            case "iron_ore" -> currentEntity = new BLK_IRON_ORE();
                         }
-                        else{
-                            ui.blocks.get(i).health -= ui.p.currentMiningDamage;
-                            ui.addMessage("Hat noch leben: " + ui.blocks.get(i).health,120);
+                        if (currentEntity != null) {
+                            currentEntity.inventoryX = ui.p.inv.getFirstFreeInventorySpace().x;
+                            currentEntity.inventoryY = ui.p.inv.getFirstFreeInventorySpace().y;
+                            ui.p.inv.inventory.put(currentEntity, currentEntity.dropAmount);
+                            ui.p.inv.sortInventory(currentEntity);
                         }
                     }
-                    else{
-                        ui.addMessage("You can't break " + ui.blocks.get(i).getName(),60);
-                    }
+                    block.breakBlock(this, "air");
+                } else {
+                    block.health -= ui.p.currentMiningDamage;
+                    ui.addMessage("Hat noch leben: " + block.health, 120);
                 }
+            } else {
+                ui.addMessage("You can't break " + block.getName(), 60);
             }
         }
     }
@@ -309,39 +332,59 @@ public class Map {
         }
     }
     public void interactBlock(Point mouseC){
-        for(int i=0; i< ui.blocks.size(); i++){
-            if(ui.p.getOnlyVisibleBlocks(i)) {
-                if (mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y) {
-                    if(ui.blocks.get(i).interactive){
-                        ui.blocks.get(i).interact(ui);
-                    }
-                }
+        Entity block = ui.blocks.get(mouseC);
+        if(block != null){
+            if(block.interactive){
+                block.interact(ui);
             }
         }
     }
     public void placeBlock(Point mouseC, Entity entity){
-        for(int i=0; i< ui.blocks.size(); i++){
-            if(ui.p.getOnlyVisibleBlocks(i)){
-                if(mouseC.x == ui.blocks.get(i).point.x && mouseC.y == ui.blocks.get(i).point.y){
-                    if(Objects.equals(ui.blocks.get(i).getName(), "air")){
-                        ui.blocks.remove(i);
-                        entity.X = 0;
-                        entity.Y = 0;
-                        blockSelector(entity.id,(mouseC.x) / 25,(mouseC.y)/25);
-                        updateHitBoxes();
-                        for (java.util.Map.Entry<Entity, Integer> entry : ui.p.hotbar.inventory.entrySet()) {
-                            if(entry.getKey().inventoryX == ui.p.hotbar.inventorySpaceX){
-                                if(entry.getValue() - 1 <= 0){
-                                    ui.p.hotbar.inventory.remove(entry.getKey());
-                                }
-                                else{
-                                    entry.setValue(entry.getValue() - 1);
-                                }
+        for (Entity block: ui.p.getOnlyVisibleBlocks()) {
+            if(mouseC.x == block.point.x && mouseC.y == block.point.y){
+                if(Objects.equals(block.getName(), "air")){
+                    ui.blocks.remove(block.point);
+                    entity.X = 0;
+                    entity.Y = 0;
+                    blockSelector(entity.id,(mouseC.x) / 25,(mouseC.y)/25);
+                    updateHitBoxes();
+                    for (java.util.Map.Entry<Entity, Integer> entry : ui.p.hotbar.inventory.entrySet()) {
+                        if(entry.getKey().inventoryX == ui.p.hotbar.inventorySpaceX){
+                            if(entry.getValue() - 1 <= 0){
+                                ui.p.hotbar.inventory.remove(entry.getKey());
+                            }
+                            else{
+                                entry.setValue(entry.getValue() - 1);
                             }
                         }
                     }
                 }
             }
         }
+        /*for (int i = 0; i < worldWidth; i += 25) {
+            for (int l = 0; l < worldHeight; l += 25) {
+                if(ui.p.getOnlyVisibleBlocks(new Point(i,l))){
+                    if(mouseC.x == ui.blocks.get(new Point(i,l)).point.x && mouseC.y == ui.blocks.get(new Point(i,l)).point.y){
+                        if(Objects.equals(ui.blocks.get(new Point(i,l)).getName(), "air")){
+                            ui.blocks.remove(new Point(i,l));
+                            entity.X = 0;
+                            entity.Y = 0;
+                            blockSelector(entity.id,(mouseC.x) / 25,(mouseC.y)/25);
+                            updateHitBoxes();
+                            for (java.util.Map.Entry<Entity, Integer> entry : ui.p.hotbar.inventory.entrySet()) {
+                                if(entry.getKey().inventoryX == ui.p.hotbar.inventorySpaceX){
+                                    if(entry.getValue() - 1 <= 0){
+                                        ui.p.hotbar.inventory.remove(entry.getKey());
+                                    }
+                                    else{
+                                        entry.setValue(entry.getValue() - 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }*/
     }
 }

@@ -17,8 +17,8 @@ import java.awt.image.BufferedImage;
 public class Player extends Living {
     public KeyListener kh;
     public Inventory inv;
-    public Inventory hotbar = new Inventory(1,5);
-    public int defaultWidth = 25;
+    public Inventory hotbar;
+    public int defaultWidth;
     public int hardness = 1;
     public int miningDamage = 2;
     public int currentHardness = hardness;
@@ -29,6 +29,8 @@ public class Player extends Living {
         this.kh = kh;
         this.offsetY = 900;
         this.ui = ui;
+        defaultWidth = ui.map.tileSize;
+        hotbar = new Inventory(1,5,ui);
         this.color = Color.blue;
         this.maxHealth = 20;
         this.health = maxHealth;
@@ -37,7 +39,7 @@ public class Player extends Living {
         X = ui.screenWidth/2;
         Y = ui.screenHeight/2 - defaultHeight;
         hotbar.inventory.put(new ITM_PICKAXE_BEDROCK(),1);
-        inv = new Inventory(10,10);
+        inv = new Inventory(10,10,ui);
         inv.inventory.put(new ITM_PICKAXE_FEATHER(),1);
         Entity entity = new BLK_COAL_ORE();
         entity.inventoryX = 3;
@@ -45,10 +47,10 @@ public class Player extends Living {
         entity = new BLK_IRON_ORE();
         entity.inventoryX = 2;
         inv.inventory.put(entity,1);
-        entity = new BLK_INTERACTIVE_FURNACE();
+        entity = new BLK_INTERACTIVE_FURNACE(ui);
         entity.inventoryX = 1;
         inv.inventory.put(entity,1);
-        entity = new BLK_INTERACTIVE_FURNACE();
+        entity = new BLK_INTERACTIVE_FURNACE(ui);
         entity.inventoryX = 4;
         inv.inventory.put(entity,1);
         switchHotbar(hotbar.inventorySpaceX);
@@ -111,13 +113,13 @@ public class Player extends Living {
     }
     public void jump(){
         if(jumping){
-            int index = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 50));
-            if(ui.blocks.get(index).hitBottom){
-                if(Y - offsetY + 1 + height <= ui.blocks.get(index).Y){
+            Entity index = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - 50));
+            if(index.hitBottom){
+                if(Y - offsetY + 1 + height <= index.Y){
                     if(height == defaultHeight){
-                        offsetY = ui.blocks.get(ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25))).Y - Y - 6;
+                        offsetY = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize)).Y - Y - 6;
                     }else {
-                        offsetY = ui.blocks.get(ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25))).Y - Y - 5;
+                        offsetY = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize)).Y - Y - 5;
                     }
                 }
                 else {
@@ -130,10 +132,11 @@ public class Player extends Living {
         }
     }
     public void walk(){
-        int index = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25),(((Y + offsetY) / 25) * 25) + (height - 25));
+        ui.map.updateHitBoxes();
+        Entity index = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize));
         if(left){
-            int index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25) - 25,(((Y + offsetY) / 25) * 25) + (height - 25));
-            if(ui.blocks.get(index2).hitRight){
+            Entity index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize) - ui.map.tileSize,(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize));
+            if(index2.hitRight){
                 if(checkOverlapX(index,1,false)){
                     offsetX += walkSpeed;
                 }
@@ -142,8 +145,8 @@ public class Player extends Living {
                 offsetX += walkSpeed;
             }
         } else if (right) {
-            int index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / 25) * 25) + 25,(((Y + offsetY) / 25) * 25) + (height - 25));
-            if(ui.blocks.get(index2).hitLeft){
+            Entity index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize) + ui.map.tileSize,(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize));
+            if(index2.hitLeft){
                 if(checkOverlapX(index,0,true)){
                     offsetX -= walkSpeed;
                 }
