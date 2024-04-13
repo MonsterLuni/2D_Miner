@@ -42,21 +42,14 @@ public class Map {
     }
     public int randomMapHeight(){
         int offset = 0;
-        int oneBefore = offset;
         double rand = Math.random();
         if(rand > 0.67){
-            if(rand > 0.80){
-                offset = 0;
-            }
-            else {
+            if(rand < 0.80){
                 offset = -tileSize;
             }
         }
         else {
-            if(rand > 0.20){
-                offset = 0;
-            }
-            else {
+            if(rand < 0.20){
                 offset = tileSize;
             }
         }
@@ -262,33 +255,6 @@ public class Map {
                 }
             }
         }
-        /*for (int i = 0; i < worldWidth; i += 25) {
-            for (int l = 0; l < worldHeight; l += 25) {
-                Entity block = ui.blocks.get(new Point(i,l));
-                if(block != null){
-                    if(ui.p.getOnlyVisibleBlocks(block.point)){
-                        g.setColor(Color.blue);
-                        block.drawBlock(g,ui.p,ui);
-                        if(ui.debug){
-                            g.setColor(Color.red);
-                            block.drawHitBox(g,ui.p);
-                            g.setColor(Color.blue);
-                            if(vertices){
-                                block.drawBlockVertices(g,ui.p);
-                            }
-                            if(specificBlockShown){
-                                try {
-                                    ui.map.getBlockFromCoordinates((((ui.p.X - ui.p.offsetX) / 25) * 25),(((ui.p.Y + ui.p.offsetY) / 25) * 25) + (ui.p.height - 25)).drawBlockSpecial(g,ui.p);
-                                }
-                                catch (Exception e){
-                                    System.out.println("Out of Bounds");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
     }
     public void findBlock(Point mouseCoordinates) {
         Point mouseC = ui.mml.getMouseBlockHover(mouseCoordinates);
@@ -361,30 +327,5 @@ public class Map {
                 }
             }
         }
-        /*for (int i = 0; i < worldWidth; i += 25) {
-            for (int l = 0; l < worldHeight; l += 25) {
-                if(ui.p.getOnlyVisibleBlocks(new Point(i,l))){
-                    if(mouseC.x == ui.blocks.get(new Point(i,l)).point.x && mouseC.y == ui.blocks.get(new Point(i,l)).point.y){
-                        if(Objects.equals(ui.blocks.get(new Point(i,l)).getName(), "air")){
-                            ui.blocks.remove(new Point(i,l));
-                            entity.X = 0;
-                            entity.Y = 0;
-                            blockSelector(entity.id,(mouseC.x) / 25,(mouseC.y)/25);
-                            updateHitBoxes();
-                            for (java.util.Map.Entry<Entity, Integer> entry : ui.p.hotbar.inventory.entrySet()) {
-                                if(entry.getKey().inventoryX == ui.p.hotbar.inventorySpaceX){
-                                    if(entry.getValue() - 1 <= 0){
-                                        ui.p.hotbar.inventory.remove(entry.getKey());
-                                    }
-                                    else{
-                                        entry.setValue(entry.getValue() - 1);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
     }
 }

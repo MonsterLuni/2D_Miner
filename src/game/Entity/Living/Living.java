@@ -47,13 +47,12 @@ public abstract class Living extends Entity {
         IndexBlockRight = ui.p.getBlockFromLiving((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize) + ui.map.tileSize,(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize));
         IndexBlockMiddle = ui.p.getBlockFromLiving((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize));
     }
-    private final int renderHeight = 30;
-    private final int renderWidth = 40;
+    private final int renderHeight = 34;
+    private final int renderWidth = 52;
     public Entity[] getOnlyVisibleBlocks(){
         int positionPlayer = Math.round(((X - (float) offsetX)) / ui.map.tileSize) * ui.map.tileSize;
         int positionPlayerY = Math.round(((Y + (float) offsetY)) / ui.map.tileSize) * ui.map.tileSize;
         Entity[] visibleBlockList = new Entity[(renderHeight*renderWidth)];
-        System.out.println(positionPlayer);
         for (int i = 0; i < renderWidth; i++){
             for (int l = 0; l < renderHeight; l++){
                 Entity block = ui.blocks.get(new Point(((i - (renderWidth/2)) * ui.map.tileSize) + positionPlayer,((l - (renderHeight/2)) * ui.map.tileSize) + positionPlayerY));

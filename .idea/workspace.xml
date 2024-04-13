@@ -6,17 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_GRASS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_GRASS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/LIV_ZOMBIE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/LIV_ZOMBIE.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Living/Living.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Living/Living.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Inventory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/SaveGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/SaveGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +150,9 @@
       <workItem from="1711910633734" duration="3000" />
       <workItem from="1712671485408" duration="3160000" />
       <workItem from="1712836130547" duration="9131000" />
-      <workItem from="1712920022354" duration="12702000" />
+      <workItem from="1712920022354" duration="12750000" />
+      <workItem from="1712952255150" duration="156000" />
+      <workItem from="1713018557686" duration="745000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -505,14 +498,21 @@
       <option name="project" value="LOCAL" />
       <updated>1712850762472</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="optimised game wyldly. Maps can now be almost as large as you want (100x100) and more">
+      <option name="closed" value="true" />
+      <created>1712947450056</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1712947450056</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: Issue #2 hitbox with gravity now works as expected" />
     <MESSAGE value="fix: Issue #1 hitbox with head of the player now works" />
     <MESSAGE value="fix: Issue #8 Blocks now have a harvestability score so that loot only drops if the players harvest stat is greater than its score." />
     <MESSAGE value="fix: Issue #9 Messages added at the bottom left corner of the screen" />
@@ -537,7 +537,8 @@
     <MESSAGE value="#21 implemented load and save mechanic, not yet in ui" />
     <MESSAGE value="fixed mouse point. (issue was e.getLocationOnScreen(). should have used e.getPoint())" />
     <MESSAGE value="block placement now also works exactly now" />
-    <option name="LAST_COMMIT_MESSAGE" value="block placement now also works exactly now" />
+    <MESSAGE value="optimised game wyldly. Maps can now be almost as large as you want (100x100) and more" />
+    <option name="LAST_COMMIT_MESSAGE" value="optimised game wyldly. Maps can now be almost as large as you want (100x100) and more" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
