@@ -7,6 +7,7 @@ import game.Entity.Items.ITM_PICKAXE_BEDROCK;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
 import game.Entity.Living.Living;
 import game.Inventory;
+import game.PerlinNoise1D;
 import game.UI;
 import listener.KeyListener;
 
@@ -27,7 +28,8 @@ public class Player extends Living {
     public boolean lookDirection = true;
     public Player(UI ui,KeyListener kh){
         this.kh = kh;
-        this.offsetY = 900;
+        this.offsetY = (int) (((PerlinNoise1D.perlinNoise(((((double) ui.map.worldWidth /2) + ((double) ui.screenWidth /2)) * ui.intervalOfSeed),ui.seed)) * 25) + 950) - (ui.screenHeight/2);
+        this.offsetX = -(ui.map.worldWidth/2) + (ui.screenWidth/2);
         this.ui = ui;
         defaultWidth = ui.map.tileSize;
         hotbar = new Inventory(1,5,ui);
@@ -114,7 +116,7 @@ public class Player extends Living {
     public void jump(){
         if(jumping){
             Entity index = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - 50));
-            if(index.hitBottom){
+            if(index != null && index.hitBottom){
                 if(Y - offsetY + 1 + height <= index.Y){
                     if(height == defaultHeight){
                         offsetY = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize)).Y - Y - 6;
@@ -136,7 +138,7 @@ public class Player extends Living {
         Entity index = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize));
         if(left){
             Entity index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize) - ui.map.tileSize,(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize));
-            if(index2.hitRight){
+            if(index2 != null && index2.hitRight){
                 if(checkOverlapX(index,1,false)){
                     offsetX += walkSpeed;
                 }
@@ -146,7 +148,7 @@ public class Player extends Living {
             }
         } else if (right) {
             Entity index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize) + ui.map.tileSize,(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize));
-            if(index2.hitLeft){
+            if(index != null && index2.hitLeft){
                 if(checkOverlapX(index,0,true)){
                     offsetX -= walkSpeed;
                 }

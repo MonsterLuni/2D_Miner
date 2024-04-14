@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/game/PerlinNoise1D.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Living/Living.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Living/Living.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +155,8 @@
       <workItem from="1712836130547" duration="9131000" />
       <workItem from="1712920022354" duration="12750000" />
       <workItem from="1712952255150" duration="156000" />
-      <workItem from="1713018557686" duration="745000" />
+      <workItem from="1713018557686" duration="6462000" />
+      <workItem from="1713076850436" duration="5615000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -506,14 +510,21 @@
       <option name="project" value="LOCAL" />
       <updated>1712947450056</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="#5 now using hashmap to store blocks">
+      <option name="closed" value="true" />
+      <created>1713019383386</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1713019383386</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: Issue #1 hitbox with head of the player now works" />
     <MESSAGE value="fix: Issue #8 Blocks now have a harvestability score so that loot only drops if the players harvest stat is greater than its score." />
     <MESSAGE value="fix: Issue #9 Messages added at the bottom left corner of the screen" />
     <MESSAGE value="fix: Issue #8 Add health to blocks." />
@@ -538,7 +549,8 @@
     <MESSAGE value="fixed mouse point. (issue was e.getLocationOnScreen(). should have used e.getPoint())" />
     <MESSAGE value="block placement now also works exactly now" />
     <MESSAGE value="optimised game wyldly. Maps can now be almost as large as you want (100x100) and more" />
-    <option name="LAST_COMMIT_MESSAGE" value="optimised game wyldly. Maps can now be almost as large as you want (100x100) and more" />
+    <MESSAGE value="#5 now using hashmap to store blocks" />
+    <option name="LAST_COMMIT_MESSAGE" value="#5 now using hashmap to store blocks" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

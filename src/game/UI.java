@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class UI extends JFrame {
@@ -52,6 +53,8 @@ public class UI extends JFrame {
     public int currentState = menuState;
     public final static int furnaceInteractState = 1;
     public int currentInteractState = 0;
+    public long seed = 99999999;
+    public double intervalOfSeed = 0.09;
     LIV_ZOMBIE zombie;
     String currentText = "";
     String currentPercent = "0%";
@@ -100,15 +103,17 @@ public class UI extends JFrame {
         }
     }
     private void drawLoadingState() {
-        clearWindow(Color.black);
-        imageG.setColor(Color.white);
-        Font f = new Font("Arial",Font.ITALIC, 60);
-        imageG.setFont(f);
-        imageG.drawString(currentPercent,calculateCenterX(currentPercent,f),250);
-        f = new Font("Arial",Font.ITALIC, 50);
-        imageG.setFont(f);
-        imageG.drawString(currentText,calculateCenterX(currentText,f),300);
-        drawToImage();
+        if(imageG != null){
+            clearWindow(Color.black);
+            imageG.setColor(Color.white);
+            Font f = new Font("Arial",Font.ITALIC, 60);
+            imageG.setFont(f);
+            imageG.drawString(currentPercent,calculateCenterX(currentPercent,f),250);
+            f = new Font("Arial",Font.ITALIC, 50);
+            imageG.setFont(f);
+            imageG.drawString(currentText,calculateCenterX(currentText,f),300);
+            drawToImage();
+        }
     }
     private void drawDeathState() {
         clearWindow(background);
@@ -169,7 +174,7 @@ public class UI extends JFrame {
             System.out.println("Game Saved");
         }catch (Exception e){
             System.out.println("Serialization Error! Can't save data\n"
-                    +e.getClass() + ": " + e.getMessage() + "\n");
+                    +e.getClass() + ": " + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         }
     }
     public void loadGame(int num){
