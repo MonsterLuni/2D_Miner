@@ -275,13 +275,7 @@ public class Map {
                 if (block.health - ui.p.currentMiningDamage <= 0) {
                     if (block.harvestable(ui.p)) {
                         ui.addMessage("Harvested " + block.getName(), 120);
-                        Entity currentEntity = null;
-                        switch (block.name) {
-                            case "grass" -> currentEntity = new BLK_GRASS();
-                            case "dirt" -> currentEntity = new BLK_DIRT();
-                            case "stone" -> currentEntity = new BLK_STONE();
-                            case "iron_ore" -> currentEntity = new BLK_IRON_ORE();
-                        }
+                        Entity currentEntity = getNewBlockFromID(block.id);
                         if (currentEntity != null) {
                             currentEntity.inventoryX = ui.p.inv.getFirstFreeInventorySpace().x;
                             currentEntity.inventoryY = ui.p.inv.getFirstFreeInventorySpace().y;

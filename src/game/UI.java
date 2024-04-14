@@ -53,7 +53,7 @@ public class UI extends JFrame {
     public final static int furnaceInteractState = 1;
     public int currentInteractState = 0;
     public long seed = 99999970;
-    public double intervalOfSeed = 0.06;
+    public double intervalOfSeed = 0.07;
     LIV_ZOMBIE zombie;
     String currentText = "";
     String currentPercent = "0%";

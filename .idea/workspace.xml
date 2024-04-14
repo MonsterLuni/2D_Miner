@@ -4,21 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Add Procedural Generation with PerlinNoise1D.">
-      <change afterPath="$PROJECT_DIR$/assets/tiles/sand.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/tiles/water.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_SAND.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_WATER.java" afterDir="false" />
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Add Water and Sand to world generation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Inventory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/PerlinNoise1D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/PerlinNoise1D.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/SaveGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/SaveGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +157,9 @@
       <workItem from="1712952255150" duration="156000" />
       <workItem from="1713018557686" duration="6462000" />
       <workItem from="1713076850436" duration="11255000" />
-      <workItem from="1713102141116" duration="6323000" />
+      <workItem from="1713102141116" duration="6958000" />
+      <workItem from="1713115672888" duration="1203000" />
+      <workItem from="1713116995455" duration="301000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -538,14 +529,21 @@
       <option name="project" value="LOCAL" />
       <updated>1713089316093</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Add Water and Sand to world generation">
+      <option name="closed" value="true" />
+      <created>1713108565714</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1713108565714</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: Issue #9 Messages added at the bottom left corner of the screen" />
     <MESSAGE value="fix: Issue #8 Add health to blocks." />
     <MESSAGE value="fix: Issue #10 included hotbar in which items can be held. Those Items can increase hardness and miningDamage stats of player." />
     <MESSAGE value="changed how blocks are being added to the game, each block now has it's own file in which the most important values can be changed" />
@@ -570,7 +568,8 @@
     <MESSAGE value="optimised game wyldly. Maps can now be almost as large as you want (100x100) and more" />
     <MESSAGE value="#5 now using hashmap to store blocks" />
     <MESSAGE value="Add Procedural Generation with PerlinNoise1D." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Procedural Generation with PerlinNoise1D." />
+    <MESSAGE value="Add Water and Sand to world generation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Water and Sand to world generation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
