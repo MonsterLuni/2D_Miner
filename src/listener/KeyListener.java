@@ -92,8 +92,10 @@ public class KeyListener implements java.awt.event.KeyListener {
         chosenOne++;
     }
     private void resetActiveInventorySpace(Inventory inv){
-        inv.activeInventorySpace = new Point(-1,-1);
-        inv.activeInventorySpaceTwo = new Point(-1,-1);
+        inv.activeInventorySpace.x = -1;
+        inv.activeInventorySpace.y = -1;
+        inv.activeInventorySpaceTwo.x = -1;
+        inv.activeInventorySpaceTwo.y = -1;
     }
     private void changeInventoryPlace(Inventory inv, int x, int y) {
         if(inv.inventorySpaceX + x >= 0 && inv.inventorySpaceX + x <= (inv.width/25) - 1){
@@ -177,10 +179,12 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
     private void selectInventoryPlace(Inventory inv) {
         if(inv.activeInventorySpace.x == -1){
-            inv.activeInventorySpace = new Point(inv.inventorySpaceX,inv.inventorySpaceY);
+            inv.activeInventorySpace.x = inv.inventorySpaceX;
+            inv.activeInventorySpace.y = inv.inventorySpaceY;
         }
         else{
-            inv.activeInventorySpaceTwo = new Point(inv.inventorySpaceX,inv.inventorySpaceY);
+            inv.activeInventorySpaceTwo.x = inv.inventorySpaceX;
+            inv.activeInventorySpaceTwo.y = inv.inventorySpaceY;
             inv.changeItemInInventory();
             resetActiveInventorySpace(inv);
         }

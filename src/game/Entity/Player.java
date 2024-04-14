@@ -32,7 +32,7 @@ public class Player extends Living {
         this.offsetX = -(ui.map.worldWidth/2) + (ui.screenWidth/2);
         this.ui = ui;
         defaultWidth = ui.map.tileSize;
-        hotbar = new Inventory(1,5,ui);
+        hotbar = new Inventory(1,5);
         this.color = Color.blue;
         this.maxHealth = 20;
         this.health = maxHealth;
@@ -41,7 +41,7 @@ public class Player extends Living {
         X = ui.screenWidth/2;
         Y = ui.screenHeight/2 - defaultHeight;
         hotbar.inventory.put(new ITM_PICKAXE_BEDROCK(),1);
-        inv = new Inventory(10,10,ui);
+        inv = new Inventory(10,10);
         inv.inventory.put(new ITM_PICKAXE_FEATHER(),1);
         Entity entity = new BLK_COAL_ORE();
         entity.inventoryX = 3;

@@ -28,9 +28,9 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
         this.stackSize = 1;
         this.name = "furnace";
         this.ui = ui;
-        invTop = new Inventory(1,1,ui);
-        invFuel = new Inventory(1,1,ui);
-        invOutput = new Inventory(1,1,ui);
+        invTop = new Inventory(1,1);
+        invFuel = new Inventory(1,1);
+        invOutput = new Inventory(1,1);
         invTop.maxSize = 1;
     }
     public void checkFurnace() {

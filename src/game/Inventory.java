@@ -2,7 +2,7 @@ package game;
 
 import game.Entity.Entity;
 
-import java.awt.*;
+import java.awt.Point;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -11,15 +11,13 @@ public class Inventory implements Serializable{
     public Point activeInventorySpace = new Point(-1,-1);
     public Point activeInventorySpaceTwo = new Point(-1,-1);
     public int inventorySpaceX;
-    public UI ui;
     public int inventorySpaceY;
     public int height;
     public int width;
     public int maxSize;
-    public Inventory(int height, int width, UI ui){
-        this.ui = ui;
-        this.height = height * ui.map.tileSize;
-        this.width = width * ui.map.tileSize;
+    public Inventory(int height, int width){
+        this.height = height * 25;
+        this.width = width * 25;
         this.maxSize = height*width;
         inventory = new LinkedHashMap<>(maxSize);
     }
@@ -129,3 +127,4 @@ public class Inventory implements Serializable{
         return null;
     }
 }
+

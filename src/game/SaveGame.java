@@ -4,8 +4,8 @@ import game.Entity.Entity;
 
 import java.awt.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class SaveGame implements Serializable {
     public int offsetX;

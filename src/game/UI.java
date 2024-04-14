@@ -15,7 +15,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class UI extends JFrame {
@@ -53,8 +52,8 @@ public class UI extends JFrame {
     public int currentState = menuState;
     public final static int furnaceInteractState = 1;
     public int currentInteractState = 0;
-    public long seed = 99999999;
-    public double intervalOfSeed = 0.09;
+    public long seed = 99999970;
+    public double intervalOfSeed = 0.06;
     LIV_ZOMBIE zombie;
     String currentText = "";
     String currentPercent = "0%";
@@ -152,7 +151,7 @@ public class UI extends JFrame {
         addMouseMotionListener(mml);
         currentState = gameState;
     }
-    public void saveGame(int num){
+    public void saveGame(int num) {
         SaveGame sg = new SaveGame();
         sg.offsetX = p.offsetX;
         sg.offsetY = p.offsetY;
@@ -174,7 +173,7 @@ public class UI extends JFrame {
             System.out.println("Game Saved");
         }catch (Exception e){
             System.out.println("Serialization Error! Can't save data\n"
-                    +e.getClass() + ": " + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+                    +e.getClass() + ": " + e.getMessage() + "\n");
         }
     }
     public void loadGame(int num){
@@ -337,7 +336,7 @@ public class UI extends JFrame {
         for (int i = 0; i < inv.width/map.tileSize; i++){
             for (int l = 0; l < inv.height/map.tileSize; l++) {
                 if(inv == kl.primaryInv || inv == kl.secondaryInv){
-                    if(inv.activeInventorySpace.x == i && inv.activeInventorySpace.y == l){
+                    if(inv.activeInventorySpace != null && inv.activeInventorySpace.x == i && inv.activeInventorySpace.y == l){
                         imageG.setColor(Color.yellow);
                         imageG.fillRect(width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)),map.tileSize,map.tileSize);
                         imageG.drawRect(width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)),map.tileSize,map.tileSize);

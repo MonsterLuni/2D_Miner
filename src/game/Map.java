@@ -14,23 +14,24 @@ import java.util.Objects;
 public class Map {
     public UI ui;
     public boolean specificBlockShown;
-    boolean first;
+    boolean first, waterCalculate;
     public boolean vertices;
     public int worldWidth;
     public int worldHeight;
     public int tileSize = 25;
-    Image grass, dirt,stone,barrier,bedrock, air,iron_ore, furnace,coal_ore,iron_bar,pickaxe_bedrock,pickaxe_feather,pickaxe_wood;
+    Image grass, dirt,stone,barrier,bedrock, air,iron_ore, furnace,coal_ore,iron_bar,pickaxe_bedrock,pickaxe_feather,pickaxe_wood,sand,water;
     public int blockNumberFromFirstGround;
     public Map(UI ui) {
         this.ui = ui;
-        worldWidth = ui.screenWidth*5;
-        worldHeight = ui.screenHeight*5;
+        worldWidth = ui.screenWidth*20;
+        worldHeight = ui.screenHeight*10;
         ui.blocks = new HashMap<>((worldWidth / tileSize) * (worldHeight / tileSize));
     }
     public void loadMap() {
         for (int i = 0; i < worldWidth / tileSize; i++) {
             ui.updateLoading("Loading Map" + " " + (int)(i * ((double)100/(worldWidth/tileSize))) + "%","80%");
             first = true;
+            waterCalculate = true;
             blockNumberFromFirstGround = 0;
             for (int l = 0; l < worldHeight / tileSize; l++) {
                 blockSelector(blockSelectingMechanism(i,l),i,l);
@@ -45,8 +46,14 @@ public class Map {
         else if (l * 25 >= (height * 25) + 1000) {
             blockNumberFromFirstGround++;
             if (first) {
-                first = false;
-                return 0; // grass
+                if((height * 25) + 1000 < 200 + 1000){
+                    first = false;
+                    return 0; // grass
+                }
+                else{
+                    first = false;
+                    return 13; // sand
+                }
             }
             else if(l + 1 == worldHeight / 25){
                 return 4; // bedrock
@@ -65,6 +72,14 @@ public class Map {
                 }
             }
             else{
+                if(waterCalculate){
+                    waterCalculate = false;
+                    for (int j = 0; ui.blocks.get(new Point(i*25,(l - 1)*25)).Y + (j * 25) > 200 + 1000; j--){
+                        if(!Objects.equals(ui.blocks.get(new Point(i*25,(l + j - 1)*25)).getName(), "sand")){
+                            blockSelector(14,i,l + j - 1); // water
+                        }
+                    }
+                }
                 return 1; // dirt
             }
         }
@@ -94,6 +109,8 @@ public class Map {
             pickaxe_bedrock = ImageIO.read(new File("assets/items/pickaxe_bedrock.png"));
             pickaxe_feather = ImageIO.read(new File("assets/items/pickaxe_feather.png"));
             pickaxe_wood = ImageIO.read(new File("assets/items/pickaxe_wood.png"));
+            sand = ImageIO.read(new File("assets/tiles/sand.png"));
+            water = ImageIO.read(new File("assets/tiles/water.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -139,6 +156,12 @@ public class Map {
                 case 12 -> {
                     return pickaxe_wood;
                 }
+                case 13 -> {
+                    return sand;
+                }
+                case 14 -> {
+                    return water;
+                }
             }
         return null;
     }
@@ -173,6 +196,12 @@ public class Map {
             }
             case 9 -> {
                 return new ITM_IRON_BAR();
+            }
+            case 13 -> {
+                return new BLK_SAND();
+            }
+            case 14 -> {
+                return new BLK_WATER();
             }
         }
         return null;

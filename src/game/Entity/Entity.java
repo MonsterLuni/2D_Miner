@@ -31,7 +31,6 @@ public abstract class Entity implements Serializable{
     public boolean breakable;
     public boolean deactivateHitBox;
     public int health;
-    //public Image sprite;
     public abstract void interact(UI ui);
     public boolean harvestable(Player p) {
         return p.currentHardness >= hardness;
