@@ -6,6 +6,7 @@ import game.Entity.Blocks.BLK_IRON_ORE;
 import game.Entity.Items.ITM_PICKAXE_BEDROCK;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
 import game.Entity.Living.Living;
+import game.GameManager;
 import game.Inventory;
 import game.PerlinNoise1D;
 import game.UI;
@@ -26,20 +27,20 @@ public class Player extends Living {
     public int currentMiningDamage = miningDamage;
     /* true == right, false == left */
     public boolean lookDirection = true;
-    public Player(UI ui,KeyListener kh){
+    public Player(GameManager gm, KeyListener kh){
         this.kh = kh;
-        this.offsetY = (int) (((PerlinNoise1D.perlinNoise(((((double) ui.map.worldWidth /2) + ((double) ui.screenWidth /2)) * ui.intervalOfSeed),ui.seed)) * 25) + 950) - (ui.screenHeight/2);
-        this.offsetX = -(ui.map.worldWidth/2) + (ui.screenWidth/2);
-        this.ui = ui;
-        defaultWidth = ui.map.tileSize;
+        this.offsetY = (int) (((PerlinNoise1D.perlinNoise(((((double) gm.map.worldWidth /2) + ((double) gm.ui.screenWidth /2)) * gm.intervalOfSeed),gm.seed)) * 25) + 950) - (gm.ui.screenHeight/2);
+        this.offsetX = -(gm.map.worldWidth/2) + (gm.ui.screenWidth/2);
+        this.gm = gm;
+        defaultWidth = gm.map.tileSize;
         hotbar = new Inventory(1,5);
         this.color = Color.blue;
         this.maxHealth = 20;
         this.health = maxHealth;
         width = defaultWidth;
         height = defaultHeight;
-        X = ui.screenWidth/2;
-        Y = ui.screenHeight/2 - defaultHeight;
+        X = gm.ui.screenWidth/2;
+        Y = gm.ui.screenHeight/2 - defaultHeight;
         hotbar.inventory.put(new ITM_PICKAXE_BEDROCK(),1);
         inv = new Inventory(10,10);
         inv.inventory.put(new ITM_PICKAXE_FEATHER(),1);
@@ -49,10 +50,10 @@ public class Player extends Living {
         entity = new BLK_IRON_ORE();
         entity.inventoryX = 2;
         inv.inventory.put(entity,1);
-        entity = new BLK_INTERACTIVE_FURNACE(ui);
+        entity = new BLK_INTERACTIVE_FURNACE(gm);
         entity.inventoryX = 1;
         inv.inventory.put(entity,1);
-        entity = new BLK_INTERACTIVE_FURNACE(ui);
+        entity = new BLK_INTERACTIVE_FURNACE(gm);
         entity.inventoryX = 4;
         inv.inventory.put(entity,1);
         switchHotbar(hotbar.inventorySpaceX);
@@ -84,19 +85,19 @@ public class Player extends Living {
         Entity hotbarElement = hotbar.getKeyFromCoordinates(hotbar.inventorySpaceX,0);
         if(hotbarElement != null){
             if (lookDirection) {
-                spriteSelected = ui.map.getPictureForID(hotbarElement.id);
-                if (ui.ml.leftButtonPressed) {
-                    g2d.rotate(Math.toRadians(35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+                spriteSelected = gm.map.getPictureForID(hotbarElement.id);
+                if (gm.ml.leftButtonPressed) {
+                    g2d.rotate(Math.toRadians(35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
                 } else {
-                    g2d.rotate(Math.toRadians(25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+                    g2d.rotate(Math.toRadians(25), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
                 }
             } else {
-                spriteSelected = flipHorizontal(ui.map.getPictureForID(hotbarElement.id));
+                spriteSelected = flipHorizontal(gm.map.getPictureForID(hotbarElement.id));
                 spriteY += 10;
-                if (ui.ml.leftButtonPressed) {
-                    g2d.rotate(Math.toRadians(-35), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+                if (gm.ml.leftButtonPressed) {
+                    g2d.rotate(Math.toRadians(-35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
                 } else {
-                    g2d.rotate(Math.toRadians(-25), (double) ui.screenWidth / 2, (double) ui.screenHeight / 2);
+                    g2d.rotate(Math.toRadians(-25), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
                 }
             }
             g2d.drawImage(spriteSelected,spriteX,spriteY,hotbarElement.width,hotbarElement.height,null);
@@ -115,13 +116,13 @@ public class Player extends Living {
     }
     public void jump(){
         if(jumping){
-            Entity index = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - 50));
+            Entity index = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - 50));
             if(index != null && index.hitBottom){
                 if(Y - offsetY + 1 + height <= index.Y){
                     if(height == defaultHeight){
-                        offsetY = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize)).Y - Y - 6;
+                        offsetY = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 6;
                     }else {
-                        offsetY = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize)).Y - Y - 5;
+                        offsetY = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 5;
                     }
                 }
                 else {
@@ -134,10 +135,10 @@ public class Player extends Living {
         }
     }
     public void walk(){
-        ui.map.updateHitBoxes();
-        Entity index = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize));
+        gm.map.updateHitBoxes();
+        Entity index = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
         if(left){
-            Entity index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize) - ui.map.tileSize,(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize));
+            Entity index2 = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) - gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
             if(index2 != null && index2.hitRight){
                 if(checkOverlapX(index,1,false)){
                     offsetX += walkSpeed;
@@ -147,7 +148,7 @@ public class Player extends Living {
                 offsetX += walkSpeed;
             }
         } else if (right) {
-            Entity index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize) + ui.map.tileSize,(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize) + (height - ui.map.tileSize));
+            Entity index2 = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) + gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
             if(index != null && index2.hitLeft){
                 if(checkOverlapX(index,0,true)){
                     offsetX -= walkSpeed;

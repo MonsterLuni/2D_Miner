@@ -14,8 +14,4 @@ public class BLK_WATER extends Entity {
         this.health = 0;
         this.name = "water";
     }
-    @Override
-    public void interact(UI ui) {
-
-    }
 }

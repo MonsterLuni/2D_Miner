@@ -15,8 +15,4 @@ public class ITM_PICKAXE_FEATHER extends Entity {
     public String getName() {
         return "Pickaxe_feather";
     }
-    @Override
-    public void interact(UI ui) {
-
-    }
 }

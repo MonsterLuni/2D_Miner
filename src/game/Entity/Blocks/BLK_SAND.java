@@ -14,8 +14,4 @@ public class BLK_SAND extends Entity {
         this.health = 5;
         this.name = "sand";
     }
-    @Override
-    public void interact(UI ui) {
-
-    }
 }

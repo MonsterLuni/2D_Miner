@@ -15,8 +15,4 @@ public class BLK_COAL_ORE extends Entity {
         this.health = 50;
         this.name = "coal_ore";
     }
-    @Override
-    public void interact(UI ui) {
-
-    }
 }

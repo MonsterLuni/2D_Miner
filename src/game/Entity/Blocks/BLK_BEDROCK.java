@@ -15,8 +15,4 @@ public class BLK_BEDROCK extends Entity {
         this.health = 100;
         this.name = "bedrock";
     }
-    @Override
-    public void interact(UI ui) {
-
-    }
 }

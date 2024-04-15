@@ -1,5 +1,6 @@
 package listener;
 
+import game.GameManager;
 import game.Inventory;
 import game.UI;
 
@@ -7,13 +8,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class KeyListener implements java.awt.event.KeyListener {
-    public UI ui;
+    public GameManager gm;
     public Inventory primaryInv;
     public Inventory secondaryInv;
     public Inventory[] choosableInventories = new Inventory[4];
     public int chosenOne = 0;
-    public KeyListener(UI ui){
-        this.ui = ui;
+    public KeyListener(GameManager gm){
+        this.gm = gm;
     }
     @Override
     public void keyTyped(KeyEvent e) {
@@ -21,55 +22,55 @@ public class KeyListener implements java.awt.event.KeyListener {
     }
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (ui.currentState){
-            case UI.menuState -> menuState(e.getKeyCode());
-            case UI.gameState -> gameState(e.getKeyCode());
-            case UI.inventoryState -> inventoryState(e.getKeyCode());
-            case UI.interactState -> interactStateSelector(e.getKeyCode());
+        switch (gm.currentState){
+            case GameManager.menuState -> menuState(e.getKeyCode());
+            case GameManager.gameState -> gameState(e.getKeyCode());
+            case GameManager.inventoryState -> inventoryState(e.getKeyCode());
+            case GameManager.interactState -> interactStateSelector(e.getKeyCode());
         }
     }
     private void menuState(int e) {
         switch (e){
             case KeyEvent.VK_UP -> {
-                if(ui.menuSelected - 1 != -1){
-                    ui.menuSelected--;
+                if(gm.menuSelected - 1 != -1){
+                    gm.menuSelected--;
                 }
             }
             case KeyEvent.VK_DOWN -> {
-                if(ui.menuSelected + 1 != 4){
-                    ui.menuSelected++;
+                if(gm.menuSelected + 1 != 4){
+                    gm.menuSelected++;
                 }
             }
             case KeyEvent.VK_SPACE -> menuActivate();
         }
     }
     private void menuActivate() {
-        switch (ui.menuSelected){
-            case 0 -> ui.startGame();
-            case 3 -> ui.running = false;
+        switch (gm.menuSelected){
+            case 0 -> gm.startGame();
+            case 3 -> gm.running = false;
         }
     }
     private void interactStateSelector(int keyCode) {
-        switch(ui.currentInteractState){
-            case UI.furnaceInteractState -> interactStateFurnace(keyCode);
+        switch(gm.currentInteractState){
+            case GameManager.furnaceInteractState -> interactStateFurnace(keyCode);
         }
     }
     private void interactStateFurnace(int e) {
-        primaryInv = ui.p.inv;
-        choosableInventories[0] = ui.interactStateFurnace.invTop;
-        choosableInventories[1] = ui.interactStateFurnace.invFuel;
-        choosableInventories[2] = ui.interactStateFurnace.invOutput;
-        choosableInventories[3] = ui.p.hotbar;
+        primaryInv = gm.p.inv;
+        choosableInventories[0] = gm.interactStateFurnace.invTop;
+        choosableInventories[1] = gm.interactStateFurnace.invFuel;
+        choosableInventories[2] = gm.interactStateFurnace.invOutput;
+        choosableInventories[3] = gm.p.hotbar;
         inventoryToInventory(e);
     }
     private void inventoryState(int e) {
-        primaryInv = ui.p.inv;
-        secondaryInv = ui.p.hotbar;
+        primaryInv = gm.p.inv;
+        secondaryInv = gm.p.hotbar;
         inventoryToInventory(e);
     }
     private void inventoryToInventory(int e){
         switch (e){
-            case KeyEvent.VK_E -> ui.currentState = UI.gameState;
+            case KeyEvent.VK_E -> gm.currentState = GameManager.gameState;
             // --------------
             case KeyEvent.VK_W -> changeInventoryPlace(primaryInv,0,-1);
             case KeyEvent.VK_A -> changeInventoryPlace(primaryInv,-1,0);
@@ -104,76 +105,76 @@ public class KeyListener implements java.awt.event.KeyListener {
         if(inv.inventorySpaceY + y >= 0 && inv.inventorySpaceY + y <= (inv.height/25) - 1){
             inv.inventorySpaceY += y;
         }
-        ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
+        gm.p.switchHotbar(gm.p.hotbar.inventorySpaceX);
     }
     private void gameState(int e) {
-        primaryInv = ui.p.inv;
-        secondaryInv = ui.p.hotbar;
+        primaryInv = gm.p.inv;
+        secondaryInv = gm.p.hotbar;
         switch (e){
             case KeyEvent.VK_RIGHT -> {
-                if(ui.p.hotbar.inventorySpaceX + 1 <= ui.p.hotbar.maxSize - 1){
-                    ui.p.hotbar.inventorySpaceX += 1;
-                    ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
+                if(gm.p.hotbar.inventorySpaceX + 1 <= gm.p.hotbar.maxSize - 1){
+                    gm.p.hotbar.inventorySpaceX += 1;
+                    gm.p.switchHotbar(gm.p.hotbar.inventorySpaceX);
                 }
             }
             case KeyEvent.VK_LEFT -> {
-                if(ui.p.hotbar.inventorySpaceX - 1 >= 0){
-                    ui.p.hotbar.inventorySpaceX -= 1;
-                    ui.p.switchHotbar(ui.p.hotbar.inventorySpaceX);
+                if(gm.p.hotbar.inventorySpaceX - 1 >= 0){
+                    gm.p.hotbar.inventorySpaceX -= 1;
+                    gm.p.switchHotbar(gm.p.hotbar.inventorySpaceX);
                 }
             }
             case KeyEvent.VK_F2 -> {
-                if(ui.debug){
-                    ui.map.vertices = !ui.map.vertices;
+                if(gm.debug){
+                    gm.map.vertices = !gm.map.vertices;
                 }
             }
             case KeyEvent.VK_F6 -> {
-                if(ui.debug){
-                    ui.p.health -= 1;
+                if(gm.debug){
+                    gm.p.health -= 1;
                 }
             }
             case KeyEvent.VK_F5 -> {
-                if(ui.debug){
-                    ui.map.specificBlockShown = !ui.map.specificBlockShown;
+                if(gm.debug){
+                    gm.map.specificBlockShown = !gm.map.specificBlockShown;
                 }
             }
             case KeyEvent.VK_A -> {
-                ui.p.left = true;
-                ui.p.lookDirection = false;
+                gm.p.left = true;
+                gm.p.lookDirection = false;
             }
             case KeyEvent.VK_S -> {
-                if(ui.p.height == ui.p.defaultHeight) {
-                    ui.p.Y += 25;
-                    ui.p.height = 25;
+                if(gm.p.height == gm.p.defaultHeight) {
+                    gm.p.Y += 25;
+                    gm.p.height = 25;
                 }
             }
-            case KeyEvent.VK_F8 -> ui.saveGame(1);
-            case KeyEvent.VK_F9 -> ui.loadGame(1);
+            case KeyEvent.VK_F8 -> gm.saveGame(1);
+            case KeyEvent.VK_F9 -> gm.loadGame(1);
             case KeyEvent.VK_D -> {
-                ui.p.right = true;
-                ui.p.lookDirection = true;
+                gm.p.right = true;
+                gm.p.lookDirection = true;
             }
-            case KeyEvent.VK_E -> ui.currentState = UI.inventoryState;
-            case KeyEvent.VK_F3 -> ui.debug = !ui.debug;
-            case KeyEvent.VK_F11 -> ui.toggleFullscreen();
-            case KeyEvent.VK_SPACE -> ui.p.jumping = true;
+            case KeyEvent.VK_E -> gm.currentState = GameManager.inventoryState;
+            case KeyEvent.VK_F3 -> gm.debug = !gm.debug;
+            case KeyEvent.VK_F11 -> gm.ui.toggleFullscreen();
+            case KeyEvent.VK_SPACE -> gm.p.jumping = true;
         }
     }
     @Override
     public void keyReleased(KeyEvent e) {
-        switch (ui.currentState){
-            case UI.gameState -> gameStateReleased(e.getKeyCode());
-            case UI.inventoryState -> System.out.println("Kommt noch");
+        switch (gm.currentState){
+            case GameManager.gameState -> gameStateReleased(e.getKeyCode());
+            case GameManager.inventoryState -> System.out.println("Kommt noch");
         }
     }
     private void gameStateReleased(int e) {
         switch (e){
-            case KeyEvent.VK_A -> ui.p.left = false;
-            case KeyEvent.VK_D -> ui.p.right = false;
-            case KeyEvent.VK_SPACE -> ui.p.jumping = false;
+            case KeyEvent.VK_A -> gm.p.left = false;
+            case KeyEvent.VK_D -> gm.p.right = false;
+            case KeyEvent.VK_SPACE -> gm.p.jumping = false;
             case KeyEvent.VK_S -> {
-                ui.p.Y -= 25;
-                ui.p.height = ui.p.defaultHeight;
+                gm.p.Y -= 25;
+                gm.p.height = gm.p.defaultHeight;
             }
         }
     }

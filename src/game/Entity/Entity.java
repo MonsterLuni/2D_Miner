@@ -1,5 +1,6 @@
 package game.Entity;
 
+import game.GameManager;
 import game.Map;
 import game.UI;
 
@@ -31,22 +32,22 @@ public abstract class Entity implements Serializable{
     public boolean breakable;
     public boolean deactivateHitBox;
     public int health;
-    public abstract void interact(UI ui);
+    public void interact(GameManager gm){};
     public boolean harvestable(Player p) {
         return p.currentHardness >= hardness;
     }
     public void drawHitBox(Graphics g, Player p){
         if(hitTop){
-            g.drawLine(X + p.offsetX, Y - p.offsetY,X + p.offsetX + p.ui.map.tileSize,Y - p.offsetY);
+            g.drawLine(X + p.offsetX, Y - p.offsetY,X + p.offsetX + p.gm.map.tileSize,Y - p.offsetY);
         }
         if(hitBottom){
-            g.drawLine(X + p.offsetX, Y - p.offsetY + p.ui.map.tileSize,X + p.offsetX + p.ui.map.tileSize,Y - p.offsetY + p.ui.map.tileSize);
+            g.drawLine(X + p.offsetX, Y - p.offsetY + p.gm.map.tileSize,X + p.offsetX + p.gm.map.tileSize,Y - p.offsetY + p.gm.map.tileSize);
         }
         if(hitRight){
-            g.drawLine(X + p.offsetX + p.ui.map.tileSize, Y - p.offsetY,X + p.offsetX + p.ui.map.tileSize,Y - p.offsetY + p.ui.map.tileSize);
+            g.drawLine(X + p.offsetX + p.gm.map.tileSize, Y - p.offsetY,X + p.offsetX + p.gm.map.tileSize,Y - p.offsetY + p.gm.map.tileSize);
         }
         if(hitLeft){
-            g.drawLine(X + p.offsetX, Y - p.offsetY,X + p.offsetX,Y - p.offsetY + p.ui.map.tileSize);
+            g.drawLine(X + p.offsetX, Y - p.offsetY,X + p.offsetX,Y - p.offsetY + p.gm.map.tileSize);
         }
     }
     public void breakBlock(Map map, String blockName){
@@ -60,15 +61,15 @@ public abstract class Entity implements Serializable{
         name = blockName;
         map.updateHitBoxes();
     }
-    public void drawBlock(Graphics g, Player p, UI ui) {
-        g.drawImage(ui.map.getPictureForID(id),(X + p.offsetX),(Y - p.offsetY),null);
+    public void drawBlock(Graphics g, Player p, GameManager gm) {
+        g.drawImage(gm.map.getPictureForID(id),(X + p.offsetX),(Y - p.offsetY),null);
     }
     public void drawBlockVertices(Graphics g, Player p){
         g.setColor(Color.BLUE);
         g.drawRect(X + p.offsetX, Y - p.offsetY, width, height);
     }
     public void drawBlockSpecial(Graphics g, Player p){
-        g.drawRect(X + p.offsetX, Y - p.offsetY, p.ui.map.tileSize, p.ui.map.tileSize);
+        g.drawRect(X + p.offsetX, Y - p.offsetY, p.gm.map.tileSize, p.gm.map.tileSize);
     }
     public String getName() {
         return name;

@@ -1,14 +1,15 @@
 package listener;
 
+import game.GameManager;
 import game.UI;
 
 import java.awt.event.MouseEvent;
 
 public class MouseListener implements java.awt.event.MouseListener {
-    public UI ui;
+    public GameManager gm;
     public boolean leftButtonPressed;
-    public MouseListener(UI ui){
-        this.ui = ui;
+    public MouseListener(GameManager gm){
+        this.gm = gm;
     }
     @Override
     public void mouseClicked(MouseEvent e) {}
@@ -17,13 +18,13 @@ public class MouseListener implements java.awt.event.MouseListener {
         switch (e.getButton()){
             case MouseEvent.BUTTON1 -> {
                 leftButtonPressed = true;
-                if(ui.currentState == UI.gameState){
-                    ui.map.findBlock(e.getPoint());
+                if(gm.currentState == GameManager.gameState){
+                    gm.map.findBlock(e.getPoint());
                 }
             }
             case MouseEvent.BUTTON3 -> {
-                if(ui.currentState == UI.gameState) {
-                    ui.map.interactWorld(e.getPoint(), ui.p.hotbar.getKeyFromCoordinates(ui.p.hotbar.inventorySpaceX, 0));
+                if(gm.currentState == GameManager.gameState) {
+                    gm.map.interactWorld(e.getPoint(), gm.p.hotbar.getKeyFromCoordinates(gm.p.hotbar.inventorySpaceX, 0));
                 }
             }
         }

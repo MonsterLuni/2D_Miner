@@ -15,9 +15,4 @@ public class ITM_PICKAXE_BEDROCK extends Entity {
     public String getName() {
         return "Pickaxe_bedrock";
     }
-
-    @Override
-    public void interact(UI ui) {
-
-    }
 }

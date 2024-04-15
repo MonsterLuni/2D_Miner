@@ -1,6 +1,7 @@
 package game.Entity.Blocks;
 
 import game.Entity.Entity;
+import game.GameManager;
 import game.UI;
 
 public class BLK_AIR extends Entity {
@@ -15,7 +16,7 @@ public class BLK_AIR extends Entity {
         this.name = "air";
     }
     @Override
-    public void interact(UI ui) {
+    public void interact(GameManager gm) {
 
     }
 }

@@ -1,65 +1,27 @@
 package game;
-import game.Entity.Blocks.BLK_INTERACTIVE_FURNACE;
-import game.Entity.Entity;
-import game.Entity.LIV_ZOMBIE;
-import game.Entity.Player;
-import listener.KeyListener;
-import listener.MouseListener;
-import listener.MouseMotionListener;
 
-import javax.imageio.ImageIO;
+import game.Entity.Entity;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class UI extends JFrame {
-    private long lastTime;
-    public boolean running = true;
+    GameManager gm;
     private final int defaultHeight = 720;
     private final int defaultWidth = 1280;
-    public int menuSelected = 0;
     public int screenHeight = defaultHeight;
     public int screenWidth = defaultWidth;
-    public Player p;
-    public Map map;
-    public HashMap<Point,Entity> blocks;
     public BufferedImage bufferedImage = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
     public BufferedImage fullscreenBuffer;
     public Graphics imageG = bufferedImage.getGraphics();
     private static final DecimalFormat df = new DecimalFormat("0.00");
     public boolean fullscreen = false;
-    public boolean debug = false;
-    public double fps = 0;
-    public int maxFps = 60;
-    public MouseListener ml;
-    public MouseMotionListener mml;
-    private final ArrayList<String> messages = new ArrayList<>(4);
-    private final ArrayList<Integer> liveTime = new ArrayList<>(4);
-    public BLK_INTERACTIVE_FURNACE interactStateFurnace;
-    public KeyListener kl;
-    private Image heart_full, heart_half, heart_empty;
-    public final static int menuState = 0;
-    public final static int loadingState = 1;
-    public final static int gameState = 2;
-    public final static int inventoryState = 3;
-    public final static int interactState = 4;
-    public final static int deathState = 5;
-    public int currentState = menuState;
-    public final static int furnaceInteractState = 1;
-    public int currentInteractState = 0;
-    public long seed = 99999970;
-    public double intervalOfSeed = 0.07;
-    LIV_ZOMBIE zombie;
-    String currentText = "";
-    String currentPercent = "0%";
-    public final Color background = new Color(173, 240, 240);
-    public UI(){
-        kl  = new KeyListener(this);
+    public final Color gameBackground = new Color(173, 240, 240);
+    public final Color menuBackground = new Color(0,0,0);
+    public UI(GameManager gm){
+        this.gm = gm;
         setSize(screenWidth, screenHeight);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -67,144 +29,29 @@ public class UI extends JFrame {
         setUndecorated(true);
         setIconImage(new ImageIcon("assets/logo.png").getImage());
         setVisible(true);
-        addKeyListener(kl);
+        addKeyListener(gm.kl);
         setFocusTraversalKeysEnabled(false);
-        lastTime = System.currentTimeMillis();
-        fpsLimiter();
     }
-    public void fpsLimiter() {
-        long targetTime = System.currentTimeMillis() + (long) (1000 / maxFps);
-        while (running) {
-            long now = System.currentTimeMillis();
-            fps = 1000 / (double)(now - lastTime);
-            update();
-            lastTime = now;
-            long sleepTime = targetTime - System.currentTimeMillis();
-            if (sleepTime > 0) {
-                try {
-                    Thread.sleep(sleepTime);
-                } catch (InterruptedException e) {
-                    e.getStackTrace();
-                }
-            }
-            targetTime += 1000 / maxFps;
-        }
-        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-    }
-    public void update(){
-        switch (currentState){
-            case menuState -> drawMenuState();
-            case loadingState -> drawLoadingState();
-            case gameState -> drawGameState();
-            case inventoryState -> drawInventoryState();
-            case interactState -> drawInteractiveState();
-            case deathState -> drawDeathState();
-        }
-    }
-    private void drawLoadingState() {
+    public void drawLoadingState() {
         if(imageG != null){
-            clearWindow(Color.black);
+            clearWindow(menuBackground); //wtf
             imageG.setColor(Color.white);
             Font f = new Font("Arial",Font.ITALIC, 60);
             imageG.setFont(f);
-            imageG.drawString(currentPercent,calculateCenterX(currentPercent,f),250);
+            imageG.drawString(gm.currentPercent,calculateCenterX(gm.currentPercent,f),250);
             f = new Font("Arial",Font.ITALIC, 50);
             imageG.setFont(f);
-            imageG.drawString(currentText,calculateCenterX(currentText,f),300);
+            imageG.drawString(gm.currentText,calculateCenterX(gm.currentText,f),300);
             drawToImage();
         }
     }
-    private void drawDeathState() {
-        clearWindow(background);
+    public void drawDeathState() {
+        clearWindow(gameBackground);
         imageG.setColor(Color.black);
         imageG.drawString("DU BIST TOT",screenWidth/2,screenHeight/2);
         drawToImage();
     }
-    public void startGame(){
-        currentState = loadingState;
-        updateLoading("Loading MouseListener","0%");
-        ml  = new MouseListener(this);
-        updateLoading("Loading MouseMotionListener","20%");
-        mml = new MouseMotionListener(this);
-        updateLoading("Loading Heart Images","40%");
-        try {
-            this.heart_full = ImageIO.read(new File("assets/heart_full.png"));
-            this.heart_half = ImageIO.read(new File("assets/heart_half.png"));
-            this.heart_empty = ImageIO.read(new File("assets/heart_empty.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        updateLoading("Loading Map","60%");
-        map = new Map(this);
-        map.getImages();
-        map.loadMap();
-        updateLoading("Loading Zombie","65%");
-        zombie = new LIV_ZOMBIE(this);
-        updateLoading("Loading Player","80%");
-        p = new Player(this,kl);
-        kl.primaryInv = p.inv;
-        kl.secondaryInv = p.hotbar;
-        updateLoading("Loading Hitboxes","90%");
-        map.updateHitBoxes();
-        updateLoading("Setting GameState","100%");
-        addMouseListener(ml);
-        addMouseMotionListener(mml);
-        currentState = gameState;
-    }
-    public void saveGame(int num) {
-        SaveGame sg = new SaveGame();
-        sg.offsetX = p.offsetX;
-        sg.offsetY = p.offsetY;
-        sg.hardness = p.hardness;
-        sg.miningDamage = p.miningDamage;
-        sg.currentHardness = p.currentHardness;
-        sg.currentMiningDamage = p .currentMiningDamage;
-        sg.maxHealth = p .maxHealth;
-        sg.health = p.health;
-        sg.inv = p.inv;
-        sg.hotbar = p.hotbar;
-        sg.blocks = blocks;
-        try{
-            FileOutputStream fos = new FileOutputStream("Game"+ num +".sav");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(sg);
-            oos.flush();
-            oos.close();
-            System.out.println("Game Saved");
-        }catch (Exception e){
-            System.out.println("Serialization Error! Can't save data\n"
-                    +e.getClass() + ": " + e.getMessage() + "\n");
-        }
-    }
-    public void loadGame(int num){
-        try{
-            FileInputStream fis = new FileInputStream("Game"+ num +".sav");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            SaveGame sg = (SaveGame) ois.readObject();
-            p.offsetX = sg.offsetX;
-            p.offsetY = sg.offsetY;
-            p.hardness = sg.hardness;
-            p.miningDamage = sg.miningDamage;
-            p.currentHardness = sg.currentHardness;
-            p .currentMiningDamage = sg.currentMiningDamage;
-            p.maxHealth = sg.maxHealth;
-            p.health = sg.health;
-            p.inv = sg.inv;
-            p.hotbar = sg.hotbar;
-            blocks =  sg.blocks;
-            ois.close();
-            System.out.println("Game Loaded");
-        }catch (Exception e){
-            System.out.println("Serialization Error! Can't save data\n"
-                    +e.getClass() + ": " + e.getMessage() + "\n");
-        }
-    }
-    public void updateLoading(String text, String percent) {
-        currentText = text;
-        currentPercent = percent;
-        drawLoadingState();
-    }
-    private void drawMenuState(){
+    public void drawMenuState(){
         clearWindow(Color.BLACK);
         int i = 0;
         int startingpoint = 250;
@@ -230,20 +77,26 @@ public class UI extends JFrame {
 
         imageG.drawString("QUIT",calculateCenterX("QUIT",f),startingpoint + (i * 50));
 
-        imageG.drawString(">",calculateCenterX(">",f) - 100,startingpoint + (menuSelected * 50));
+        imageG.drawString(">",calculateCenterX(">",f) - 100,startingpoint + (gm.menuSelected * 50));
 
+        drawToImage();
+    }
+    public void drawGameState(){
+        clearWindow(gameBackground);
+        gm.map.drawMap(imageG);
+        if(gm.debug){
+            drawDebug();
+        }
+        updatePlayer();
+        updateMonsters();
+        drawMessage();
+        drawAnyInventory(gm.p.hotbar,screenHeight - 50,(screenWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
         drawToImage();
     }
     private int calculateCenterX(String text, Font font) {
         FontMetrics fontMetrics = imageG.getFontMetrics(font);
         int stringWidth = fontMetrics.stringWidth(text);
         return (screenWidth - stringWidth) / 2;
-    }
-    public void addMessage(String message, int time){
-        if(messages.size() < 5){
-            messages.add(message);
-            liveTime.add(time);
-        }
     }
     public void toggleFullscreen() {
         if(fullscreen){
@@ -262,68 +115,56 @@ public class UI extends JFrame {
             imageG = fullscreenBuffer.getGraphics();
             setSize(screenWidth, screenHeight);
             setExtendedState(JFrame.MAXIMIZED_BOTH);
-            map.loadMap();
+            gm.map.loadMap();
         }
         fullscreen = !fullscreen;
     }
-    private void clearWindow(Color col){
+    void clearWindow(Color col){
         imageG.clearRect(0,0,screenWidth,screenHeight);
         imageG.setColor(col);
         imageG.fillRect(0,0,screenWidth,screenHeight);
     }
-    private void drawGameState(){
-        clearWindow(background);
-        map.drawMap(imageG);
-        if(debug){
-            drawDebug();
-        }
-        updatePlayer();
-        updateMonsters();
-        drawMessage();
-        drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
-        drawToImage();
-    }
     private void furnaceInteractiveState() {
-        drawAnyInventory(p.inv,(screenHeight - 250)/2,100);
-        drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
-        drawAnyInventory(interactStateFurnace.invTop,(screenHeight - 250)/2,900);
-        drawAnyInventory(interactStateFurnace.invFuel,(screenHeight - 250)/2 + 50,900);
-        drawAnyInventory(interactStateFurnace.invOutput,(screenHeight - 250)/2 + 25,950);
+        drawAnyInventory(gm.p.inv,(screenHeight - 250)/2,100);
+        drawAnyInventory(gm.p.hotbar,screenHeight - 50,(screenWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
+        drawAnyInventory(gm.interactStateFurnace.invTop,(screenHeight - 250)/2,900);
+        drawAnyInventory(gm.interactStateFurnace.invFuel,(screenHeight - 250)/2 + 50,900);
+        drawAnyInventory(gm.interactStateFurnace.invOutput,(screenHeight - 250)/2 + 25,950);
         drawToImage();
-        interactStateFurnace.checkFurnace();
+        gm.interactStateFurnace.checkFurnace();
     }
     private void updatePlayer() {
-        p.draw(imageG,p);
-        p.drawSelected(imageG);
-        p.jump();
-        p.walk();
-        p.gravity();
+        gm.p.draw(imageG,gm.p);
+        gm.p.drawSelected(imageG);
+        gm.p.jump();
+        gm.p.walk();
+        gm.p.gravity();
         drawPlayerHealth();
     }
     private void updateMonsters(){
-        zombie.draw(imageG, p);
-        zombie.gravity();
-        zombie.walk();
+        gm.zombie.draw(imageG, gm.p);
+        gm.zombie.gravity();
+        gm.zombie.walk();
     }
-    private void drawInteractiveState() {
-        clearWindow(background);
-        switch (currentInteractState) {
-            case furnaceInteractState -> furnaceInteractiveState();
+    public void drawInteractiveState() {
+        clearWindow(gameBackground);
+        switch (gm.currentInteractState) {
+            case GameManager.furnaceInteractState -> furnaceInteractiveState();
             case 2 -> System.out.println("kommt noch nh");
         }
     }
     private void drawMessage(){
         imageG.setFont(getFont().deriveFont(Font.ITALIC,20));
         imageG.setColor(Color.black);
-        for(int i = 0; i < messages.size(); i++){
-            if(messages.get(i) != null){
-                imageG.drawString(messages.get(i),50,screenHeight-100 + (i*20));
-                if(liveTime.get(i) - 1 == 0){
-                    liveTime.remove(i);
-                    messages.remove(i);
+        for(int i = 0; i < gm.messages.size(); i++){
+            if(gm.messages.get(i) != null){
+                imageG.drawString(gm.messages.get(i),50,screenHeight-100 + (i*20));
+                if(gm.liveTime.get(i) - 1 == 0){
+                    gm.liveTime.remove(i);
+                    gm.messages.remove(i);
                 }
                 else {
-                    liveTime.set(i,liveTime.get(i) - 1);
+                    gm.liveTime.set(i,gm.liveTime.get(i) - 1);
                 }
             }
         }
@@ -331,15 +172,15 @@ public class UI extends JFrame {
     private void drawAnyInventory(Inventory inv, int height, int width){
         int spacing = 3;
         imageG.setColor(Color.gray);
-        imageG.fillRect(width,height,((map.tileSize + spacing) * inv.width/map.tileSize),((map.tileSize + spacing) * inv.height/map.tileSize));
+        imageG.fillRect(width,height,((gm.map.tileSize + spacing) * inv.width/gm.map.tileSize),((gm.map.tileSize + spacing) * inv.height/gm.map.tileSize));
         imageG.setColor(Color.black);
-        for (int i = 0; i < inv.width/map.tileSize; i++){
-            for (int l = 0; l < inv.height/map.tileSize; l++) {
-                if(inv == kl.primaryInv || inv == kl.secondaryInv){
+        for (int i = 0; i < inv.width/gm.map.tileSize; i++){
+            for (int l = 0; l < inv.height/gm.map.tileSize; l++) {
+                if(inv == gm.kl.primaryInv || inv == gm.kl.secondaryInv){
                     if(inv.activeInventorySpace != null && inv.activeInventorySpace.x == i && inv.activeInventorySpace.y == l){
                         imageG.setColor(Color.yellow);
-                        imageG.fillRect(width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)),map.tileSize,map.tileSize);
-                        imageG.drawRect(width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)),map.tileSize,map.tileSize);
+                        imageG.fillRect(width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),gm.map.tileSize,gm.map.tileSize);
+                        imageG.drawRect(width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),gm.map.tileSize,gm.map.tileSize);
                     }
                     else{
                         if(inv.inventorySpaceX == i && inv.inventorySpaceY == l){
@@ -350,13 +191,13 @@ public class UI extends JFrame {
                         }
                     }
                 }
-                imageG.drawRect(width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)),map.tileSize,map.tileSize);
+                imageG.drawRect(width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),gm.map.tileSize,gm.map.tileSize);
                 for (java.util.Map.Entry<Entity, Integer> entry : inv.inventory.entrySet()) {
                     if(entry.getKey() != null){
                         if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
-                            imageG.drawImage(map.getPictureForID(entry.getKey().id),width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)),null);
+                            imageG.drawImage(gm.map.getPictureForID(entry.getKey().id),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),null);
                             if(entry.getValue() > 1){
-                                imageG.drawString(String.valueOf(entry.getValue()),width + (i*(map.tileSize + spacing)),height + (l*(map.tileSize + spacing)) + map.tileSize);
+                                imageG.drawString(String.valueOf(entry.getValue()),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)) + gm.map.tileSize);
                             }
                         }
                     }
@@ -365,25 +206,25 @@ public class UI extends JFrame {
         }
     }
     private void drawPlayerHealth(){
-        for (double i = 2; i < p.maxHealth; i += 2){
-            if(i <= p.health){
-                imageG.drawImage(heart_full, (int) (screenWidth - 300 + (i*12.5)),50,null);
+        for (double i = 2; i < gm.p.maxHealth; i += 2){
+            if(i <= gm.p.health){
+                imageG.drawImage(gm.ah.heart_full, (int) (screenWidth - 300 + (i*12.5)),50,null);
             }
-            else if(i - 1 == p.health){
-                imageG.drawImage(heart_half, (int) (screenWidth - 300 + (i*12.5)),50,null);
+            else if(i - 1 == gm.p.health){
+                imageG.drawImage(gm.ah.heart_half, (int) (screenWidth - 300 + (i*12.5)),50,null);
             }
             else{
-                imageG.drawImage(heart_empty, (int) (screenWidth - 300 + (i*12.5)),50,null);
+                imageG.drawImage(gm.ah.heart_empty, (int) (screenWidth - 300 + (i*12.5)),50,null);
             }
         }
-        if(p.health <= 0){
-            currentState = deathState;
+        if(gm.p.health <= 0){
+            gm.currentState = GameManager.deathState;
         }
     }
-    private void drawInventoryState(){
-        clearWindow(background);
-        drawAnyInventory(p.inv,(screenHeight - 250)/2,100);
-        drawAnyInventory(p.hotbar,screenHeight - 50,(screenWidth/2 - (p.hotbar.maxSize/2 * 28)));
+    public void drawInventoryState(){
+        clearWindow(gameBackground);
+        drawAnyInventory(gm.p.inv,(screenHeight - 250)/2,100);
+        drawAnyInventory(gm.p.hotbar,screenHeight - 50,(screenWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
         drawToImage();
     }
     private void drawToImage(){
@@ -397,11 +238,11 @@ public class UI extends JFrame {
     private void drawDebug(){
         imageG.setColor(Color.black);
         imageG.setFont(getFont().deriveFont(Font.ITALIC,20f));
-        imageG.drawString("FPS: " + df.format(fps),10,50);
-        imageG.drawString("Loaded Blocks: " + blocks.size(),10,75);
-        imageG.drawString("Updated Blocks: " + p.getOnlyVisibleBlocks().length,10,100);
-        imageG.drawString("Player Coordinates: [X:" + (p.X - p.offsetX) + " Y:" + (p.Y + p.offsetY) + "]" ,10,125);
-        imageG.drawString("Draw Grid [F2]: " + map.vertices,10,150);
-        imageG.drawString("Specific Block [F4]" + map.specificBlockShown, 10, 175);
+        imageG.drawString("FPS: " + df.format(gm.fps),10,50);
+        imageG.drawString("Loaded Blocks: " + gm.blocks.size(),10,75);
+        imageG.drawString("Updated Blocks: " + gm.p.getOnlyVisibleBlocks().length,10,100);
+        imageG.drawString("Player Coordinates: [X:" + (gm.p.X - gm.p.offsetX) + " Y:" + (gm.p.Y + gm.p.offsetY) + "]" ,10,125);
+        imageG.drawString("Draw Grid [F2]: " + gm.map.vertices,10,150);
+        imageG.drawString("Specific Block [F4]" + gm.map.specificBlockShown, 10, 175);
     }
 }

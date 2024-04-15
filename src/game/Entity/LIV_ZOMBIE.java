@@ -1,6 +1,7 @@
 package game.Entity;
 
 import game.Entity.Living.Living;
+import game.GameManager;
 import game.UI;
 import java.awt.*;
 
@@ -9,9 +10,9 @@ public class LIV_ZOMBIE extends Living {
     public int hardness = 1;
     double rand = 0;
     Player p;
-    public LIV_ZOMBIE(UI ui){
-        this.ui = ui;
-        defaultWidth = ui.map.tileSize;
+    public LIV_ZOMBIE(GameManager gm){
+        this.gm = gm;
+        defaultWidth = gm.map.tileSize;
         this.color = Color.gray;
         this.walkSpeed = 1;
         width = defaultWidth;
@@ -25,9 +26,9 @@ public class LIV_ZOMBIE extends Living {
             rand = Math.random();
         }
         if(waitForInterval(2)){
-            Entity index = ui.map.getBlockFromCoordinates((((X - offsetX) / ui.map.tileSize) * p.ui.map.tileSize),(((Y + offsetY) / p.ui.map.tileSize) * p.ui.map.tileSize) + (height - p.ui.map.tileSize));
+            Entity index = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * p.gm.map.tileSize),(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
             if(rand > 0.5){
-                Entity index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / p.ui.map.tileSize) * p.ui.map.tileSize) - p.ui.map.tileSize,(((Y + offsetY) / p.ui.map.tileSize) * p.ui.map.tileSize) + (height - p.ui.map.tileSize));
+                Entity index2 = gm.map.getBlockFromCoordinates((((X - offsetX) / p.gm.map.tileSize) * p.gm.map.tileSize) - p.gm.map.tileSize,(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
                 if(index2 != null && index2.hitRight){
                     if(checkOverlapX(index,1,false)){
                         offsetX += walkSpeed;
@@ -37,7 +38,7 @@ public class LIV_ZOMBIE extends Living {
                     offsetX += walkSpeed;
                 }
             } else {
-                Entity index2 = ui.map.getBlockFromCoordinates((((X - offsetX) / p.ui.map.tileSize) * p.ui.map.tileSize) + p.ui.map.tileSize,(((Y + offsetY) / p.ui.map.tileSize) * p.ui.map.tileSize) + (height - p.ui.map.tileSize));
+                Entity index2 = gm.map.getBlockFromCoordinates((((X - offsetX) / p.gm.map.tileSize) * p.gm.map.tileSize) + p.gm.map.tileSize,(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
                 if(index2 != null && index2.hitLeft){
                     if(checkOverlapX(index,0,true)){
                         offsetX -= walkSpeed;
@@ -58,9 +59,5 @@ public class LIV_ZOMBIE extends Living {
     @Override
     public String getName() {
         return "Zombie";
-    }
-    @Override
-    public void interact(UI ui) {
-
     }
 }

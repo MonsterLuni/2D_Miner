@@ -2,13 +2,14 @@ package game.Entity.Living;
 
 import game.Entity.Entity;
 import game.Entity.Player;
+import game.GameManager;
 import game.UI;
 
 import java.awt.*;
 
 public abstract class Living extends Entity {
     public Color color;
-    public UI ui;
+    public GameManager gm;
     public int health,maxHealth;
     public Entity IndexBlockRight, IndexBlockMiddle;
     public int jumpSpeed = 10;
@@ -35,7 +36,7 @@ public abstract class Living extends Entity {
         }
     }
     public Entity getBlockFromLiving(int X, int Y){
-        Entity block = ui.blocks.get(new Point(X,Y + height));
+        Entity block = gm.blocks.get(new Point(X,Y + height));
         if(block != null){
             if(block.hitTop) {
                 return block;
@@ -44,18 +45,18 @@ public abstract class Living extends Entity {
         return null;
     }
     public void updateIndex(){
-        IndexBlockRight = ui.p.getBlockFromLiving((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize) + ui.map.tileSize,(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize));
-        IndexBlockMiddle = ui.p.getBlockFromLiving((((X - offsetX) / ui.map.tileSize) * ui.map.tileSize),(((Y + offsetY) / ui.map.tileSize) * ui.map.tileSize));
+        IndexBlockRight = gm.p.getBlockFromLiving((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) + gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize));
+        IndexBlockMiddle = gm.p.getBlockFromLiving((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize));
     }
     private final int renderHeight = 34;
     private final int renderWidth = 52;
     public Entity[] getOnlyVisibleBlocks(){
-        int positionPlayer = Math.round(((X - (float) offsetX)) / ui.map.tileSize) * ui.map.tileSize;
-        int positionPlayerY = Math.round(((Y + (float) offsetY)) / ui.map.tileSize) * ui.map.tileSize;
+        int positionPlayer = Math.round(((X - (float) offsetX)) / gm.map.tileSize) * gm.map.tileSize;
+        int positionPlayerY = Math.round(((Y + (float) offsetY)) / gm.map.tileSize) * gm.map.tileSize;
         Entity[] visibleBlockList = new Entity[(renderHeight*renderWidth)];
         for (int i = 0; i < renderWidth; i++){
             for (int l = 0; l < renderHeight; l++){
-                Entity block = ui.blocks.get(new Point(((i - (renderWidth/2)) * ui.map.tileSize) + positionPlayer,((l - (renderHeight/2)) * ui.map.tileSize) + positionPlayerY));
+                Entity block = gm.blocks.get(new Point(((i - (renderWidth/2)) * gm.map.tileSize) + positionPlayer,((l - (renderHeight/2)) * gm.map.tileSize) + positionPlayerY));
                 visibleBlockList[(i * renderHeight) + l] = block;
             }
         }
@@ -71,7 +72,7 @@ public abstract class Living extends Entity {
     }
     public abstract void walk();
     public boolean waitforSeconds(int seconds){
-        int sec = seconds*ui.maxFps;
+        int sec = seconds*gm.maxFps;
         if(counterSeconds > sec){
             counterSeconds = 0;
             return true;
@@ -80,7 +81,7 @@ public abstract class Living extends Entity {
         return false;
     }
     public boolean waitForInterval(int seconds){
-        int sec = seconds*ui.maxFps;
+        int sec = seconds*gm.maxFps;
         if(counterInterval > sec){
             if(counterInterval > sec*2){
                 counterInterval = 0;
@@ -96,5 +97,5 @@ public abstract class Living extends Entity {
         return null;
     }
     @Override
-    public void interact(UI ui) {}
+    public void interact(GameManager gm) {}
 }

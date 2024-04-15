@@ -15,9 +15,4 @@ public class ITM_IRON_BAR extends Entity {
     public String getName() {
         return "iron_bar";
     }
-
-    @Override
-    public void interact(UI ui) {
-
-    }
 }
