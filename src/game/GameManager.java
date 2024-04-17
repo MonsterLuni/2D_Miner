@@ -8,18 +8,16 @@ import listener.KeyListener;
 import listener.MouseListener;
 import listener.MouseMotionListener;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class GameManager {
     public UI ui;
     private long lastTime;
-    public int maxFps = 120;
+    public int maxFps = 60;
     public double fps = 0;
     public boolean running = true;
     public boolean debug = false;

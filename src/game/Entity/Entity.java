@@ -20,6 +20,8 @@ public abstract class Entity implements Serializable{
     public int inventoryY;
     public boolean interactive;
     public boolean smeltable;
+    public boolean gravity;
+    public boolean flow;
     public boolean fuel;
     public int id;
     public int width;

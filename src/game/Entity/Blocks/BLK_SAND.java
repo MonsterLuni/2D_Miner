@@ -12,6 +12,7 @@ public class BLK_SAND extends Entity {
         this.deactivateHitBox = false;
         this.hardness = 1;
         this.health = 5;
+        this.gravity = true;
         this.name = "sand";
     }
 }

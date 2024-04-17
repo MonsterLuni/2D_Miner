@@ -1,7 +1,6 @@
 package game.Entity.Blocks;
 
 import game.Entity.Entity;
-import game.UI;
 
 public class BLK_WATER extends Entity {
     public BLK_WATER(){
@@ -11,6 +10,8 @@ public class BLK_WATER extends Entity {
         this.breakable = false;
         this.deactivateHitBox = true;
         this.hardness = 0;
+        this.gravity = true;
+        this.flow = true;
         this.health = 0;
         this.name = "water";
     }

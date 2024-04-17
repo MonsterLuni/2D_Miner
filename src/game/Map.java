@@ -4,10 +4,7 @@ import game.Entity.Blocks.*;
 import game.Entity.Entity;
 import game.Entity.Items.ITM_IRON_BAR;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 
