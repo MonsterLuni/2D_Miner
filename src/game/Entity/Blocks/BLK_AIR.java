@@ -2,7 +2,6 @@ package game.Entity.Blocks;
 
 import game.Entity.Entity;
 import game.GameManager;
-import game.UI;
 
 public class BLK_AIR extends Entity {
     public BLK_AIR(){
@@ -10,7 +9,7 @@ public class BLK_AIR extends Entity {
         this.width = 25;
         this.id = 3;
         this.breakable = false;
-        this.deactivateHitBox = true;
+        this.penetrable = true;
         this.hardness = 0;
         this.health = 0;
         this.name = "air";

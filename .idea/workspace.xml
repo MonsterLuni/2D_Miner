@@ -6,6 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Water won't disappear in each other anymore.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_AIR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_AIR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BARRIER.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BARRIER.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BEDROCK.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_BEDROCK.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_COAL_ORE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_COAL_ORE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_DIRT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_DIRT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_GRASS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_GRASS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_IRON_ORE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_IRON_ORE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_SAND.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_SAND.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_STONE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_STONE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_WATER.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_WATER.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -165,6 +180,7 @@
       <workItem from="1713347579126" duration="8997000" />
       <workItem from="1713418795902" duration="2550000" />
       <workItem from="1713423005445" duration="10010000" />
+      <workItem from="1713461041352" duration="1715000" />
     </task>
     <task id="LOCAL-00002" summary="added fullscreen">
       <option name="closed" value="true" />

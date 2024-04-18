@@ -3,7 +3,6 @@ package game.Entity.Blocks;
 import game.Entity.Entity;
 import game.GameManager;
 import game.Inventory;
-import game.UI;
 
 public class BLK_INTERACTIVE_FURNACE extends Entity {
     GameManager gm;
@@ -23,7 +22,7 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
         this.width = 25;
         this.interactive = true;
         this.breakable = true;
-        this.deactivateHitBox = false;
+        this.penetrable = false;
         this.hardness = 3;
         this.health = 50;
         this.stackSize = 1;

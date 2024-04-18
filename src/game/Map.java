@@ -184,7 +184,7 @@ public class Map {
     public void updateHitBoxes(){
         for (Entity block: gm.p.getOnlyVisibleBlocks()) {
             if(block != null){
-                if(!block.deactivateHitBox){
+                if(!block.penetrable){
                     checkHitBoxFromBlock(block.point);
                 }
             }
@@ -192,22 +192,22 @@ public class Map {
     }
     public void checkHitBoxFromBlock(Point i){
         if(getBlockFromCoordinates(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25) != null){
-            if(getBlockFromCoordinates(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).deactivateHitBox){
+            if(getBlockFromCoordinates(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).penetrable){
                 gm.blocks.get(i).hitTop = true;
             }
         }
         if(getBlockFromCoordinates(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25) != null){
-            if(getBlockFromCoordinates(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).deactivateHitBox){
+            if(getBlockFromCoordinates(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).penetrable){
                 gm.blocks.get(i).hitBottom = true;
             }
         }
         if(getBlockFromCoordinates(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y) != null){
-            if(getBlockFromCoordinates(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).deactivateHitBox){
+            if(getBlockFromCoordinates(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).penetrable){
                 gm.blocks.get(i).hitRight = true;
             }
         }
         if(getBlockFromCoordinates(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y) != null){
-            if(getBlockFromCoordinates(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).deactivateHitBox){
+            if(getBlockFromCoordinates(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).penetrable){
                 gm.blocks.get(i).hitLeft = true;
             }
         }

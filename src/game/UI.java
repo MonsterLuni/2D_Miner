@@ -5,12 +5,10 @@ import game.Entity.Entity;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class UI extends JFrame {
     GameManager gm;
@@ -27,7 +25,6 @@ public class UI extends JFrame {
     public final Color gameBackground = new Color(173, 240, 240);
     public final Color menuBackground = new Color(0,0,0);
     private final Wait wfFOne = new Wait();
-    private final Wait wfFTwo = new Wait();
     public UI(GameManager gm){
         this.gm = gm;
         setSize(screenWidth, screenHeight);
@@ -157,19 +154,18 @@ public class UI extends JFrame {
     }
     public void updateGravity(){
         List<Integer[]> updateList = new ArrayList<>();
-        if(wfFOne.waitForFrames(10)){
+        if(wfFOne.waitForFrames(5)){
             for (Entity block: gm.p.getOnlyVisibleBlocks()){
-                    if (block.gravity && block.flow) {
-                        if (gm.blocks.get(new Point(block.X, block.Y + 25)) != null
-                                && gm.blocks.get(new Point(block.X, block.Y + 25)).deactivateHitBox
-                                && !gm.blocks.get(new Point(block.X, block.Y + 25)).flow) {
+                    if (block != null && block.isLiquid) {
+                        if (gm.getBlock(block.X, block.Y + 25) != null && !gm.getBlock(block.X, block.Y + 25).isLiquid && gm.getBlock(block.X, block.Y + 25).penetrable) {
                             updateList.add(new Integer[]{block.id, block.X / 25, (block.Y / 25) + 1, 3, block.X / 25, block.Y / 25});
-                        } else if(gm.blocks.get(new Point(block.X + 25, block.Y)) != null
-                                && gm.blocks.get(new Point(block.X + 25, block.Y)).deactivateHitBox
-                                && !gm.blocks.get(new Point(block.X + 25, block.Y)).flow
-                                && gm.blocks.get(new Point(block.X - 25, block.Y)) != null
-                                && gm.blocks.get(new Point(block.X - 25, block.Y)).deactivateHitBox
-                                && !gm.blocks.get(new Point(block.X - 25, block.Y)).flow){
+                        }
+                        else if(gm.getBlock(block.X + 25, block.Y) != null
+                                && gm.getBlock(block.X - 25, block.Y) != null
+                                && gm.getBlock(block.X + 25, block.Y).penetrable
+                                && !gm.getBlock(block.X+ 25, block.Y).isLiquid
+                                && gm.getBlock(block.X - 25, block.Y).penetrable
+                                && !gm.getBlock(block.X - 25, block.Y).isLiquid){
                                 double random = Math.random();
                                 if(random < 0.5){
                                     updateList.add(new Integer[]{block.id, (block.X / 25) + 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
@@ -177,32 +173,29 @@ public class UI extends JFrame {
                                 else{
                                     updateList.add(new Integer[]{block.id, (block.X / 25) - 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
                                 }
-                        } else if (gm.blocks.get(new Point(block.X + 25, block.Y)) != null
-                                && gm.blocks.get(new Point(block.X + 25, block.Y)).deactivateHitBox
-                                && !gm.blocks.get(new Point(block.X + 25, block.Y)).flow) {
+                        }
+                        else if (gm.getBlock(block.X + 25, block.Y) != null && gm.getBlock(block.X + 25, block.Y).penetrable && !gm.getBlock(block.X+ 25, block.Y).isLiquid) {
                             updateList.add(new Integer[]{block.id, (block.X / 25) + 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
-                        } else if (gm.blocks.get(new Point(block.X - 25, block.Y)) != null
-                                && gm.blocks.get(new Point(block.X - 25, block.Y)).deactivateHitBox
-                                && !gm.blocks.get(new Point(block.X - 25, block.Y)).flow) {
+                        }
+                        else if (gm.getBlock(block.X - 25, block.Y) != null && gm.getBlock(block.X - 25, block.Y).penetrable && !gm.getBlock(block.X - 25, block.Y).isLiquid) {
                             updateList.add(new Integer[]{block.id, (block.X / 25) - 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
                         }
-                    } else if (block.gravity) {
-                        if (gm.blocks.get(new Point(block.X, block.Y + 25)) != null) {
-                            if (gm.blocks.get(new Point(block.X, block.Y + 25)).deactivateHitBox) {
+                    } else if (block != null && block.isFalling) {
+                        if (gm.getBlock(block.X, block.Y + 25) != null) {
+                            if (gm.getBlock(block.X, block.Y + 25).penetrable) {
                                 updateList.add(new Integer[]{block.id, block.X / 25, (block.Y / 25) + 1, 3, block.X / 25, block.Y / 25});
                             }
                         }
                     }
             }
+            // 1,2,3 -> BLOCK ZU DEM ES GEHT, mit ID von block der dort sein soll; 4,5,6 -> BLOCK VON DEM ES IST;
             List<Integer[]> uniqueUpdateList = new ArrayList<>();
             for (Integer[] ints : updateList) {
                 boolean foundDuplicate = false;
                 for (Integer[] existing : uniqueUpdateList) {
                     if (ints[1].equals(existing[1]) && ints[2].equals(existing[2])) {
-                        if(Objects.equals(gm.blocks.get(new Point(ints[4] * 25, ints[5] * 25)).name, gm.blocks.get(new Point(existing[4] * 25, existing[5] * 25)).name)){
-                            System.out.println("Water double found" + "ID: " + ints[0]);
-                            uniqueUpdateList.add(new Integer[]{ints[0],ints[1],ints[2]});
-                        }
+                        uniqueUpdateList.add(new Integer[]{existing[0],existing[1],existing[2]});
+                        existing[0] = -1;
                         foundDuplicate = true;
                         break;
                     }
@@ -213,10 +206,11 @@ public class UI extends JFrame {
             }
             waterUpdateCount = uniqueUpdateList.size();
             for (Integer[] ints: uniqueUpdateList){
-                gm.map.blockSelector(ints[0],ints[1],ints[2]);
-                if(ints.length > 3){
-                    //System.out.println("Water");
-                    gm.map.blockSelector(ints[3],ints[4],ints[5]);
+                if(ints[0] != -1){
+                    gm.map.blockSelector(ints[0],ints[1],ints[2]);
+                    if(ints.length > 3){
+                        gm.map.blockSelector(ints[3],ints[4],ints[5]);
+                    }
                 }
             }
         }

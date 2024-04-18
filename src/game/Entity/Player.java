@@ -3,6 +3,7 @@ package game.Entity;
 import game.Entity.Blocks.BLK_COAL_ORE;
 import game.Entity.Blocks.BLK_INTERACTIVE_FURNACE;
 import game.Entity.Blocks.BLK_IRON_ORE;
+import game.Entity.Blocks.BLK_WATER;
 import game.Entity.Items.ITM_PICKAXE_BEDROCK;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
 import game.Entity.Living.Living;
@@ -56,6 +57,9 @@ public class Player extends Living {
         entity = new BLK_INTERACTIVE_FURNACE(gm);
         entity.inventoryX = 4;
         inv.inventory.put(entity,1);
+        entity = new BLK_WATER();
+        entity.inventoryX = 5;
+        inv.inventory.put(entity,10);
         switchHotbar(hotbar.inventorySpaceX);
     }
     public static BufferedImage flipHorizontal(Image image) {

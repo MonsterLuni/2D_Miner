@@ -2,7 +2,6 @@ package game.Entity;
 
 import game.GameManager;
 import game.Map;
-import game.UI;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -20,8 +19,8 @@ public abstract class Entity implements Serializable{
     public int inventoryY;
     public boolean interactive;
     public boolean smeltable;
-    public boolean gravity;
-    public boolean flow;
+    public boolean isFalling;
+    public boolean isLiquid;
     public boolean fuel;
     public int id;
     public int width;
@@ -32,7 +31,7 @@ public abstract class Entity implements Serializable{
     public int hardness = 0;
     public int stackSize = 64;
     public boolean breakable;
-    public boolean deactivateHitBox;
+    public boolean penetrable;
     public int health;
     public void interact(GameManager gm){};
     public boolean harvestable(Player p) {
@@ -57,7 +56,7 @@ public abstract class Entity implements Serializable{
         hitBottom = false;
         hitRight = false;
         hitLeft = false;
-        deactivateHitBox = true;
+        penetrable = true;
         id = 3;
         breakable = false;
         name = blockName;

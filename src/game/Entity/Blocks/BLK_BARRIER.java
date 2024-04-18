@@ -1,7 +1,6 @@
 package game.Entity.Blocks;
 
 import game.Entity.Entity;
-import game.UI;
 
 public class BLK_BARRIER extends Entity {
     public BLK_BARRIER(){
@@ -9,7 +8,7 @@ public class BLK_BARRIER extends Entity {
         this.width = 25;
         this.id = 5;
         this.breakable = false;
-        this.deactivateHitBox = false;
+        this.penetrable = false;
         this.hardness = 10;
         this.health = 100;
         this.name = "barrier";

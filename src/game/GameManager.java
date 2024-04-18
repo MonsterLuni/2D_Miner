@@ -56,6 +56,9 @@ public class GameManager {
         ah.loadHearts();
         fpsLimiter();
     }
+    public Entity getBlock(int x, int y){
+        return blocks.get(new Point(x,y));
+    }
     public void addMessage(String message, int time){
         if(messages.size() < 5){
             messages.add(message);
