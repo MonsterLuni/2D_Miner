@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Add Sand physics and water (not fully implemented)">
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Water won't disappear in each other anymore.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
     </list>
@@ -164,15 +164,7 @@
       <workItem from="1713338083844" duration="2985000" />
       <workItem from="1713347579126" duration="8997000" />
       <workItem from="1713418795902" duration="2550000" />
-      <workItem from="1713423005445" duration="5919000" />
-    </task>
-    <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
-      <option name="closed" value="true" />
-      <created>1704034942070</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1704034942070</updated>
+      <workItem from="1713423005445" duration="10010000" />
     </task>
     <task id="LOCAL-00002" summary="added fullscreen">
       <option name="closed" value="true" />
@@ -558,14 +550,21 @@
       <option name="project" value="LOCAL" />
       <updated>1713363739494</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Water won't disappear in each other anymore.">
+      <option name="closed" value="true" />
+      <created>1713437009081</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1713437009082</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="changed how blocks are being added to the game, each block now has it's own file in which the most important values can be changed" />
     <MESSAGE value="add sprite of selected hotbar entity to player so that the player holds them" />
     <MESSAGE value="save" />
     <MESSAGE value="cleaned up code a bit" />
@@ -590,7 +589,8 @@
     <MESSAGE value="Add Water and Sand to world generation" />
     <MESSAGE value="Add GameManager" />
     <MESSAGE value="Add Sand physics and water (not fully implemented)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Sand physics and water (not fully implemented)" />
+    <MESSAGE value="Water won't disappear in each other anymore." />
+    <option name="LAST_COMMIT_MESSAGE" value="Water won't disappear in each other anymore." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

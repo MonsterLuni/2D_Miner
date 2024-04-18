@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UI extends JFrame {
     GameManager gm;
@@ -198,6 +199,10 @@ public class UI extends JFrame {
                 boolean foundDuplicate = false;
                 for (Integer[] existing : uniqueUpdateList) {
                     if (ints[1].equals(existing[1]) && ints[2].equals(existing[2])) {
+                        if(Objects.equals(gm.blocks.get(new Point(ints[4] * 25, ints[5] * 25)).name, gm.blocks.get(new Point(existing[4] * 25, existing[5] * 25)).name)){
+                            System.out.println("Water double found" + "ID: " + ints[0]);
+                            uniqueUpdateList.add(new Integer[]{ints[0],ints[1],ints[2]});
+                        }
                         foundDuplicate = true;
                         break;
                     }
@@ -209,7 +214,10 @@ public class UI extends JFrame {
             waterUpdateCount = uniqueUpdateList.size();
             for (Integer[] ints: uniqueUpdateList){
                 gm.map.blockSelector(ints[0],ints[1],ints[2]);
-                gm.map.blockSelector(ints[3],ints[4],ints[5]);
+                if(ints.length > 3){
+                    //System.out.println("Water");
+                    gm.map.blockSelector(ints[3],ints[4],ints[5]);
+                }
             }
         }
     }
