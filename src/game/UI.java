@@ -5,16 +5,17 @@ import game.Entity.Entity;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class UI extends JFrame {
     GameManager gm;
     private final int defaultHeight = 720;
     private final int defaultWidth = 1280;
+    private int waterUpdateCount = 0;
     public int screenHeight = defaultHeight;
     public int screenWidth = defaultWidth;
     public BufferedImage bufferedImage = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
@@ -24,8 +25,8 @@ public class UI extends JFrame {
     public boolean fullscreen = false;
     public final Color gameBackground = new Color(173, 240, 240);
     public final Color menuBackground = new Color(0,0,0);
-    private Wait wfFOne = new Wait();
-    private Wait wfFTwo = new Wait();
+    private final Wait wfFOne = new Wait();
+    private final Wait wfFTwo = new Wait();
     public UI(GameManager gm){
         this.gm = gm;
         setSize(screenWidth, screenHeight);
@@ -157,21 +158,37 @@ public class UI extends JFrame {
         List<Integer[]> updateList = new ArrayList<>();
         if(wfFOne.waitForFrames(10)){
             for (Entity block: gm.p.getOnlyVisibleBlocks()){
-                    if(block.gravity && block.flow){
-                        if(gm.blocks.get(new Point(block.X,block.Y + 25)) != null && gm.blocks.get(new Point(block.X, block.Y + 25)).deactivateHitBox && !gm.blocks.get(new Point(block.X, block.Y + 25)).flow) {
-                            updateList.add(new Integer[]{block.id,block.X / 25,(block.Y / 25) + 1,3,block.X / 25,block.Y / 25});
+                    if (block.gravity && block.flow) {
+                        if (gm.blocks.get(new Point(block.X, block.Y + 25)) != null
+                                && gm.blocks.get(new Point(block.X, block.Y + 25)).deactivateHitBox
+                                && !gm.blocks.get(new Point(block.X, block.Y + 25)).flow) {
+                            updateList.add(new Integer[]{block.id, block.X / 25, (block.Y / 25) + 1, 3, block.X / 25, block.Y / 25});
+                        } else if(gm.blocks.get(new Point(block.X + 25, block.Y)) != null
+                                && gm.blocks.get(new Point(block.X + 25, block.Y)).deactivateHitBox
+                                && !gm.blocks.get(new Point(block.X + 25, block.Y)).flow
+                                && gm.blocks.get(new Point(block.X - 25, block.Y)) != null
+                                && gm.blocks.get(new Point(block.X - 25, block.Y)).deactivateHitBox
+                                && !gm.blocks.get(new Point(block.X - 25, block.Y)).flow){
+                                double random = Math.random();
+                                if(random < 0.5){
+                                    updateList.add(new Integer[]{block.id, (block.X / 25) + 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
+                                }
+                                else{
+                                    updateList.add(new Integer[]{block.id, (block.X / 25) - 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
+                                }
+                        } else if (gm.blocks.get(new Point(block.X + 25, block.Y)) != null
+                                && gm.blocks.get(new Point(block.X + 25, block.Y)).deactivateHitBox
+                                && !gm.blocks.get(new Point(block.X + 25, block.Y)).flow) {
+                            updateList.add(new Integer[]{block.id, (block.X / 25) + 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
+                        } else if (gm.blocks.get(new Point(block.X - 25, block.Y)) != null
+                                && gm.blocks.get(new Point(block.X - 25, block.Y)).deactivateHitBox
+                                && !gm.blocks.get(new Point(block.X - 25, block.Y)).flow) {
+                            updateList.add(new Integer[]{block.id, (block.X / 25) - 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
                         }
-                        else if (gm.blocks.get(new Point(block.X + 25,block.Y + 25)) != null && gm.blocks.get(new Point(block.X + 25,block.Y)) != null && gm.blocks.get(new Point(block.X + 25,block.Y)).deactivateHitBox && gm.blocks.get(new Point(block.X + 25, block.Y + 25)).deactivateHitBox && !gm.blocks.get(new Point(block.X + 25, block.Y + 25)).flow){
-                            updateList.add(new Integer[]{block.id,(block.X / 25) + 1,block.Y / 25,3,block.X / 25,block.Y / 25});
-                        }
-                        else if (gm.blocks.get(new Point(block.X - 25,block.Y + 25)) != null && gm.blocks.get(new Point(block.X - 25,block.Y)) != null && gm.blocks.get(new Point(block.X - 25,block.Y)).deactivateHitBox && gm.blocks.get(new Point(block.X - 25, block.Y + 25)).deactivateHitBox && !gm.blocks.get(new Point(block.X - 25, block.Y + 25)).flow){
-                            updateList.add(new Integer[]{block.id,(block.X / 25) - 1,block.Y / 25,3,block.X / 25,block.Y / 25});
-                        }
-                    }
-                    else if(block.gravity){
-                        if(gm.blocks.get(new Point(block.X,block.Y + 25)) != null) {
-                            if (gm.blocks.get(new Point(block.X,block.Y + 25)).deactivateHitBox) {
-                                updateList.add(new Integer[]{block.id,block.X / 25,(block.Y / 25) + 1,3,block.X / 25,block.Y / 25});
+                    } else if (block.gravity) {
+                        if (gm.blocks.get(new Point(block.X, block.Y + 25)) != null) {
+                            if (gm.blocks.get(new Point(block.X, block.Y + 25)).deactivateHitBox) {
+                                updateList.add(new Integer[]{block.id, block.X / 25, (block.Y / 25) + 1, 3, block.X / 25, block.Y / 25});
                             }
                         }
                     }
@@ -189,6 +206,7 @@ public class UI extends JFrame {
                     uniqueUpdateList.add(ints);
                 }
             }
+            waterUpdateCount = uniqueUpdateList.size();
             for (Integer[] ints: uniqueUpdateList){
                 gm.map.blockSelector(ints[0],ints[1],ints[2]);
                 gm.map.blockSelector(ints[3],ints[4],ints[5]);
@@ -290,8 +308,9 @@ public class UI extends JFrame {
         imageG.drawString("FPS: " + df.format(gm.fps),10,50);
         imageG.drawString("Loaded Blocks: " + gm.blocks.size(),10,75);
         imageG.drawString("Updated Blocks: " + gm.p.getOnlyVisibleBlocks().length,10,100);
-        imageG.drawString("Player Coordinates: [X:" + (gm.p.X - gm.p.offsetX) + " Y:" + (gm.p.Y + gm.p.offsetY) + "]" ,10,125);
-        imageG.drawString("Draw Grid [F2]: " + gm.map.vertices,10,150);
-        imageG.drawString("Specific Block [F4]" + gm.map.specificBlockShown, 10, 175);
+        imageG.drawString("Updated [Flow & Gravity] Blocks: " +  waterUpdateCount ,10,125);
+        imageG.drawString("Player Coordinates: [X:" + (gm.p.X - gm.p.offsetX) + " Y:" + (gm.p.Y + gm.p.offsetY) + "]" ,10,150);
+        imageG.drawString("Draw Grid [F2]: " + gm.map.vertices,10,175);
+        imageG.drawString("Specific Block [F4]" + gm.map.specificBlockShown, 10, 200);
     }
 }

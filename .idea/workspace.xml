@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Add GameManager">
-      <change afterPath="$PROJECT_DIR$/src/game/Wait.java" afterDir="false" />
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Add Sand physics and water (not fully implemented)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_SAND.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_SAND.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_WATER.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_WATER.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/GameManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -168,7 +162,9 @@
       <workItem from="1713245961002" duration="2895000" />
       <workItem from="1713332364148" duration="878000" />
       <workItem from="1713338083844" duration="2985000" />
-      <workItem from="1713347579126" duration="8673000" />
+      <workItem from="1713347579126" duration="8997000" />
+      <workItem from="1713418795902" duration="2550000" />
+      <workItem from="1713423005445" duration="5919000" />
     </task>
     <task id="LOCAL-00001" summary="Stopped the Flickering of the background :D &#10;+ everything else">
       <option name="closed" value="true" />
@@ -554,14 +550,21 @@
       <option name="project" value="LOCAL" />
       <updated>1713190755942</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Add Sand physics and water (not fully implemented)">
+      <option name="closed" value="true" />
+      <created>1713363739494</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1713363739494</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: Issue #10 included hotbar in which items can be held. Those Items can increase hardness and miningDamage stats of player." />
     <MESSAGE value="changed how blocks are being added to the game, each block now has it's own file in which the most important values can be changed" />
     <MESSAGE value="add sprite of selected hotbar entity to player so that the player holds them" />
     <MESSAGE value="save" />
@@ -586,7 +589,8 @@
     <MESSAGE value="Add Procedural Generation with PerlinNoise1D." />
     <MESSAGE value="Add Water and Sand to world generation" />
     <MESSAGE value="Add GameManager" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add GameManager" />
+    <MESSAGE value="Add Sand physics and water (not fully implemented)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Sand physics and water (not fully implemented)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
