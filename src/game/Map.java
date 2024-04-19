@@ -19,7 +19,7 @@ public class Map {
     public int blockNumberFromFirstGround;
     public Map(GameManager gm) {
         this.gm = gm;
-        worldWidth = gm.ui.screenWidth*20;
+        worldWidth = gm.ui.screenWidth*50;
         worldHeight = gm.ui.screenHeight*10;
         gm.blocks = new HashMap<>((worldWidth / tileSize) * (worldHeight / tileSize));
     }
@@ -258,9 +258,11 @@ public class Map {
                             gm.p.inv.sortInventory(currentEntity);
                         }
                     }
+                    gm.playSound("attackBlock.wav");
                     block.breakBlock(this, "air");
                 } else {
                     block.health -= gm.p.currentMiningDamage;
+                    gm.playSound("click.wav");
                     gm.addMessage("Hat noch leben: " + block.health, 120);
                 }
             } else {
@@ -272,6 +274,7 @@ public class Map {
         Point mouseC = gm.mml.getMouseBlockHover(mouseCoordinates);
         if(gm.p.hotbar.getKeyFromCoordinates(gm.p.hotbar.inventorySpaceX,0) != null){
             placeBlock(mouseC,entity);
+            gm.playSound("place.wav");
         }
         else{
             interactBlock(mouseC);

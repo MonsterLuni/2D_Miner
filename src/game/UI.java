@@ -41,7 +41,6 @@ public class UI extends JFrame {
         setFocusTraversalKeysEnabled(false);
     }
     public void drawLoadingState() {
-        if(imageG != null){
             clearWindow(menuBackground); //wtf
             imageG.setColor(Color.white);
             Font f = new Font("Arial",Font.ITALIC, 60);
@@ -51,7 +50,6 @@ public class UI extends JFrame {
             imageG.setFont(f);
             imageG.drawString(gm.currentText,calculateCenterX(gm.currentText,f),300);
             drawToImage();
-        }
     }
     public void drawDeathState() {
         clearWindow(gameBackground);
@@ -60,7 +58,7 @@ public class UI extends JFrame {
         drawToImage();
     }
     public void drawMenuState(){
-        clearWindow(Color.BLACK);
+        clearWindow(menuBackground);
         int i = 0;
         int startingpoint = 250;
         imageG.setColor(Color.white);
@@ -142,6 +140,7 @@ public class UI extends JFrame {
         drawToImage();
         gm.interactStateFurnace.checkFurnace();
     }
+    public boolean soundPlayed = false;
     private void updatePlayer() {
         gm.p.draw(imageG,gm.p);
         gm.p.drawSelected(imageG);
@@ -149,13 +148,19 @@ public class UI extends JFrame {
         gm.p.walk();
         gm.p.gravity();
         drawPlayerHealth();
+
         if(gm.getBlock((((gm.p.X - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.Y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize)) != null){
             if(gm.getBlock((((gm.p.X - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.Y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize)).isLiquid){
+                if(!soundPlayed){
+                    gm.playSound("water_entry.wav");
+                    soundPlayed = true;
+                }
                 drawPlayerBreath();
                 if(wfFTwo.waitForFrames(30)){
                     gm.p.oxygen--;
                 }
             }else if (gm.p.oxygen < gm.p.maxOxygen){
+                soundPlayed = false;
                 drawPlayerBreath();
                 if(wfFThree.waitForFrames(15)){
                     gm.p.oxygen++;
@@ -292,7 +297,7 @@ public class UI extends JFrame {
         }
     }
     private void drawPlayerHealth(){
-        for (double i = 2; i < gm.p.maxHealth; i += 2){
+        for (double i = 2; i <= gm.p.maxHealth; i += 2){
             if(i <= gm.p.health){
                 imageG.drawImage(gm.ah.heart_full, (int) (screenWidth - 300 + (i*12.5)),50,new Color(0,0,0,0),null);
             }
@@ -308,7 +313,7 @@ public class UI extends JFrame {
         }
     }
     private void drawPlayerBreath(){
-        for (double i = 2; i < gm.p.maxOxygen; i += 2){
+        for (double i = 2; i <= gm.p.maxOxygen; i += 2){
             if(i <= gm.p.oxygen){
                 imageG.drawImage(gm.ah.oxygen_full, (int) (screenWidth - 300 + (i*12.5)),100,new Color(0,0,0,0),null);
             }
@@ -322,6 +327,7 @@ public class UI extends JFrame {
         if(gm.p.oxygen <= 0){
             if(wfFFour.waitForFrames(30)){
                 gm.p.health--;
+                gm.playSound("damage.wav");
             }
         }
     }

@@ -8,10 +8,15 @@ import listener.KeyListener;
 import listener.MouseListener;
 import listener.MouseMotionListener;
 
+import javax.print.attribute.standard.Media;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class GameManager {
@@ -47,6 +52,8 @@ public class GameManager {
     public HashMap<Point, Entity> blocks;
     public final ArrayList<String> messages = new ArrayList<>(4);
     public final ArrayList<Integer> liveTime = new ArrayList<>(4);
+    Clip sound;
+    Clip effect;
     public GameManager(){
         kl  = new KeyListener(this);
         this.ui = new UI(this);
@@ -55,6 +62,7 @@ public class GameManager {
         ah.loadImages();
         ah.loadHearts();
         ah.loadOxygen();
+        loopSound("HomeScreen.wav");
         fpsLimiter();
     }
     public Entity getBlock(int x, int y){
@@ -105,6 +113,7 @@ public class GameManager {
         updateLoading("Setting GameState","100%");
         ui.addMouseListener(ml);
         ui.addMouseMotionListener(mml);
+        stopSound();
         currentState = gameState;
         ui.clearWindow(ui.gameBackground);
     }
@@ -121,7 +130,6 @@ public class GameManager {
     public void updateLoading(String text, String percent) {
         currentText = text;
         currentPercent = percent;
-        ui.drawLoadingState();
     }
     public void saveGame(int num) {
         SaveGame sg = new SaveGame();
@@ -169,6 +177,41 @@ public class GameManager {
         }catch (Exception e){
             System.out.println("Serialization Error! Can't save data\n"
                     +e.getClass() + ": " + e.getMessage() + "\n");
+        }
+    }
+    public void playSound(String soundFile) {
+        try {
+            File f = new File("assets/sounds/" + soundFile);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
+            effect = AudioSystem.getClip();
+            effect.open(audioIn);
+            effect.start();
+        }
+        catch (Exception e){
+            System.out.println(Arrays.toString(e.getMessage().toCharArray()));
+        }
+    }
+    public void loopSound(String soundFile) {
+        try {
+            File f = new File("assets/sounds/" + soundFile);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
+            sound = AudioSystem.getClip();
+            sound.open(audioIn);
+            sound.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+        catch (Exception e){
+            System.out.println(Arrays.toString(e.getMessage().toCharArray()));
+        }
+    }
+    public void stopSound() {
+        System.out.println(sound);
+        if (sound != null && sound.isRunning()) {
+            sound.stop();
+        }
+    }
+    public void stopEffect() {
+        if (effect != null && effect.isRunning()) {
+            effect.stop();
         }
     }
 }
