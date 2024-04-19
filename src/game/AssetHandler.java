@@ -6,13 +6,23 @@ import java.io.File;
 import java.io.IOException;
 
 public class AssetHandler {
-    public Image heart_full, heart_half, heart_empty;
+    public Image heart_full, heart_half, heart_empty,oxygen_full,oxygen_half,oxygen_empty;
     public static Image grass, dirt,stone,barrier,bedrock, air,iron_ore, furnace,coal_ore,iron_bar,pickaxe_bedrock,pickaxe_feather,pickaxe_wood,sand,water;
     public void loadHearts(){
         try {
             this.heart_full = ImageIO.read(new File("assets/heart_full.png"));
             this.heart_half = ImageIO.read(new File("assets/heart_half.png"));
             this.heart_empty = ImageIO.read(new File("assets/heart_empty.png"));
+        } catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void loadOxygen(){
+        try {
+            this.oxygen_full = ImageIO.read(new File("assets/oxygen_full.png"));
+            this.oxygen_half = ImageIO.read(new File("assets/oxygen_half.png"));
+            this.oxygen_empty = ImageIO.read(new File("assets/oxygen_empty.png"));
         } catch (
                 IOException e) {
             throw new RuntimeException(e);

@@ -54,6 +54,7 @@ public class GameManager {
         ah = new AssetHandler();
         ah.loadImages();
         ah.loadHearts();
+        ah.loadOxygen();
         fpsLimiter();
     }
     public Entity getBlock(int x, int y){

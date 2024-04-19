@@ -3,7 +3,6 @@ package game.Entity.Living;
 import game.Entity.Entity;
 import game.Entity.Player;
 import game.GameManager;
-import game.UI;
 
 import java.awt.*;
 
@@ -11,7 +10,8 @@ public abstract class Living extends Entity {
     public Color color;
     public GameManager gm;
     public int health,maxHealth;
-    public Entity IndexBlockRight, IndexBlockMiddle;
+    public int oxygen, maxOxygen;
+    public Entity blockRight, blockMiddle;
     public int jumpSpeed = 10;
     int counterSeconds = 0;
     int counterInterval = 0;
@@ -20,15 +20,17 @@ public abstract class Living extends Entity {
     public int walkSpeed = 5;
     public int defaultHeight = 50;
     public boolean jumping, left, right;
+    private final int renderHeight = 34;
+    private final int renderWidth = 52;
     public abstract void draw(Graphics g, Player p);
     public void gravity(){
         updateIndex();
-        if(IndexBlockMiddle != null || IndexBlockRight != null){
-            if(IndexBlockMiddle != null){
-                offsetY = IndexBlockMiddle.Y - (height + Y);
+        if(blockMiddle != null || blockRight != null){
+            if(blockMiddle != null){
+                offsetY = blockMiddle.Y - (height + Y);
             }
             else{
-                offsetY = IndexBlockRight.Y - (height + Y);
+                offsetY = blockRight.Y - (height + Y);
             }
         }
         else{
@@ -45,11 +47,9 @@ public abstract class Living extends Entity {
         return null;
     }
     public void updateIndex(){
-        IndexBlockRight = gm.p.getBlockFromLiving((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) + gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize));
-        IndexBlockMiddle = gm.p.getBlockFromLiving((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize));
+        blockRight = gm.p.getBlockFromLiving((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) + gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize));
+        blockMiddle = gm.p.getBlockFromLiving((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize));
     }
-    private final int renderHeight = 34;
-    private final int renderWidth = 52;
     public Entity[] getOnlyVisibleBlocks(){
         int positionPlayer = Math.round(((X - (float) offsetX)) / gm.map.tileSize) * gm.map.tileSize;
         int positionPlayerY = Math.round(((Y + (float) offsetY)) / gm.map.tileSize) * gm.map.tileSize;

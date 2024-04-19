@@ -25,6 +25,9 @@ public class UI extends JFrame {
     public final Color gameBackground = new Color(173, 240, 240);
     public final Color menuBackground = new Color(0,0,0);
     private final Wait wfFOne = new Wait();
+    private final Wait wfFTwo = new Wait();
+    private final Wait wfFThree = new Wait();
+    private final Wait wfFFour = new Wait();
     public UI(GameManager gm){
         this.gm = gm;
         setSize(screenWidth, screenHeight);
@@ -146,6 +149,19 @@ public class UI extends JFrame {
         gm.p.walk();
         gm.p.gravity();
         drawPlayerHealth();
+        if(gm.getBlock((((gm.p.X - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.Y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize)) != null){
+            if(gm.getBlock((((gm.p.X - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.Y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize)).isLiquid){
+                drawPlayerBreath();
+                if(wfFTwo.waitForFrames(30)){
+                    gm.p.oxygen--;
+                }
+            }else if (gm.p.oxygen < gm.p.maxOxygen){
+                drawPlayerBreath();
+                if(wfFThree.waitForFrames(15)){
+                    gm.p.oxygen++;
+                }
+            }
+        }
     }
     private void updateMonsters(){
         gm.zombie.draw(imageG, gm.p);
@@ -221,6 +237,7 @@ public class UI extends JFrame {
             case GameManager.furnaceInteractState -> furnaceInteractiveState();
             case 2 -> System.out.println("kommt noch nh");
         }
+
     }
     private void drawMessage(){
         imageG.setFont(getFont().deriveFont(Font.ITALIC,20));
@@ -288,6 +305,24 @@ public class UI extends JFrame {
         }
         if(gm.p.health <= 0){
             gm.currentState = GameManager.deathState;
+        }
+    }
+    private void drawPlayerBreath(){
+        for (double i = 2; i < gm.p.maxOxygen; i += 2){
+            if(i <= gm.p.oxygen){
+                imageG.drawImage(gm.ah.oxygen_full, (int) (screenWidth - 300 + (i*12.5)),100,new Color(0,0,0,0),null);
+            }
+            else if(i - 1 == gm.p.oxygen){
+                imageG.drawImage(gm.ah.oxygen_half, (int) (screenWidth - 300 + (i*12.5)),100,new Color(0,0,0,0),null);
+            }
+            else{
+                imageG.drawImage(gm.ah.oxygen_empty, (int) (screenWidth - 300 + (i*12.5)),100,new Color(0,0,0,0),null);
+            }
+        }
+        if(gm.p.oxygen <= 0){
+            if(wfFFour.waitForFrames(30)){
+                gm.p.health--;
+            }
         }
     }
     public void drawInventoryState(){

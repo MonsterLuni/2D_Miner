@@ -38,6 +38,8 @@ public class Player extends Living {
         this.color = Color.blue;
         this.maxHealth = 20;
         this.health = maxHealth;
+        this.maxOxygen = 10;
+        this.oxygen = maxOxygen;
         width = defaultWidth;
         height = defaultHeight;
         X = gm.ui.screenWidth/2;
