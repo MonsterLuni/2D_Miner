@@ -114,6 +114,7 @@ public class GameManager {
         ui.addMouseListener(ml);
         ui.addMouseMotionListener(mml);
         stopSound();
+        //loopSound("main.wav"); //TODO: Activate again
         currentState = gameState;
         ui.clearWindow(ui.gameBackground);
     }

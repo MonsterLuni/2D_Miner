@@ -19,7 +19,7 @@ public class Map {
     public int blockNumberFromFirstGround;
     public Map(GameManager gm) {
         this.gm = gm;
-        worldWidth = gm.ui.screenWidth*50;
+        worldWidth = gm.ui.screenWidth*10;
         worldHeight = gm.ui.screenHeight*10;
         gm.blocks = new HashMap<>((worldWidth / tileSize) * (worldHeight / tileSize));
     }
@@ -36,18 +36,18 @@ public class Map {
     }
     private int blockSelectingMechanism(int i, int l) {
         double height = (PerlinNoise1D.perlinNoise((i * gm.intervalOfSeed),gm.seed));
+        double cave = (PerlinNoise2D.perlinNoise(i * gm.intervalOfSeed,l * gm.intervalOfSeed,gm.seed));
         if(i + 1 == worldWidth / 25 || i == 0){
             return 5; // barrier
         }
         else if (l * 25 >= (height * 25) + 1000) {
             blockNumberFromFirstGround++;
             if (first) {
+                first = false;
                 if((height * 25) + 1000 < 200 + 1000){
-                    first = false;
                     return 0; // grass
                 }
                 else{
-                    first = false;
                     return 13; // sand
                 }
             }
@@ -57,14 +57,19 @@ public class Map {
             else if (blockNumberFromFirstGround > 3){
                 if(blockNumberFromFirstGround < 8){
                     if(Math.random() > 0.6){
-                        return 2; // stone
+                        return 2;
                     }
                     else {
                         return 1; // dirt
                     }
                 }
                 else{
-                    return 2; // stone
+                    if(cave > 0.24){
+                        return 3;
+                    }
+                    else{
+                        return 2; // stone
+                    }
                 }
             }
             else{
@@ -191,32 +196,26 @@ public class Map {
         }
     }
     public void checkHitBoxFromBlock(Point i){
-        if(getBlockFromCoordinates(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25) != null){
-            if(getBlockFromCoordinates(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).penetrable){
+        if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25) != null){
+            if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).penetrable){
                 gm.blocks.get(i).hitTop = true;
             }
         }
-        if(getBlockFromCoordinates(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25) != null){
-            if(getBlockFromCoordinates(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).penetrable){
+        if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25) != null){
+            if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).penetrable){
                 gm.blocks.get(i).hitBottom = true;
             }
         }
-        if(getBlockFromCoordinates(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y) != null){
-            if(getBlockFromCoordinates(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).penetrable){
+        if(gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y) != null){
+            if(gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).penetrable){
                 gm.blocks.get(i).hitRight = true;
             }
         }
-        if(getBlockFromCoordinates(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y) != null){
-            if(getBlockFromCoordinates(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).penetrable){
+        if(gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y) != null){
+            if(gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).penetrable){
                 gm.blocks.get(i).hitLeft = true;
             }
         }
-    }
-    public Entity getBlockFromCoordinates(int X, int Y){
-        if (gm.blocks.get(new Point(X,Y)) != null) {
-            return gm.blocks.get(new Point(X,Y));
-        }
-        return null;
     }
     public void drawMap(Graphics g){
         for (Entity block: gm.p.getOnlyVisibleBlocks()) {
@@ -232,7 +231,7 @@ public class Map {
                     }
                     if(specificBlockShown){
                         try {
-                            gm.map.getBlockFromCoordinates((((gm.p.X - gm.p.offsetX) / 25) * 25),(((gm.p.Y + gm.p.offsetY) / 25) * 25) + (gm.p.height - 25)).drawBlockSpecial(g,gm.p);
+                            gm.getBlock((((gm.p.X - gm.p.offsetX) / 25) * 25),(((gm.p.Y + gm.p.offsetY) / 25) * 25) + (gm.p.height - 25)).drawBlockSpecial(g,gm.p);
                         }
                         catch (Exception e){
                             System.out.println("Out of Bounds");
@@ -289,6 +288,7 @@ public class Map {
         }
     }
     public void placeBlock(Point mouseC, Entity entity){
+        updateHitBoxes();
         for (Entity block: gm.p.getOnlyVisibleBlocks()) {
             if(block != null){
                 if(mouseC.x == block.point.x && mouseC.y == block.point.y){
@@ -297,7 +297,6 @@ public class Map {
                         entity.X = 0;
                         entity.Y = 0;
                         blockSelector(entity.id,(mouseC.x) / 25,(mouseC.y)/25);
-                        updateHitBoxes();
                         for (java.util.Map.Entry<Entity, Integer> entry : gm.p.hotbar.inventory.entrySet()) {
                             if(entry.getKey().inventoryX == gm.p.hotbar.inventorySpaceX){
                                 if(entry.getValue() - 1 <= 0){

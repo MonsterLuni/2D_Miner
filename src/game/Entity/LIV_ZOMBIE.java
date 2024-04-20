@@ -3,6 +3,8 @@ package game.Entity;
 import game.Entity.Living.Living;
 import game.GameManager;
 import game.UI;
+import game.Wait;
+
 import java.awt.*;
 
 public class LIV_ZOMBIE extends Living {
@@ -10,6 +12,7 @@ public class LIV_ZOMBIE extends Living {
     public int hardness = 1;
     double rand = 0;
     Player p;
+    Wait walkCounter = new Wait();
     public LIV_ZOMBIE(GameManager gm){
         this.gm = gm;
         defaultWidth = gm.map.tileSize;
@@ -22,13 +25,13 @@ public class LIV_ZOMBIE extends Living {
     }
     @Override
     public void walk() {
-        if(waitforSeconds(4)){
+        if(walkCounter.waitforSeconds(4)){
             rand = Math.random();
         }
-        if(waitForInterval(2)){
-            Entity index = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * p.gm.map.tileSize),(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
+        if(walkCounter.waitforSeconds(2)){
+            Entity index = gm.getBlock((((X - offsetX) / gm.map.tileSize) * p.gm.map.tileSize),(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
             if(rand > 0.5){
-                Entity index2 = gm.map.getBlockFromCoordinates((((X - offsetX) / p.gm.map.tileSize) * p.gm.map.tileSize) - p.gm.map.tileSize,(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
+                Entity index2 = gm.getBlock((((X - offsetX) / p.gm.map.tileSize) * p.gm.map.tileSize) - p.gm.map.tileSize,(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
                 if(index2 != null && index2.hitRight){
                     if(checkOverlapX(index,1,false)){
                         offsetX += walkSpeed;
@@ -38,7 +41,7 @@ public class LIV_ZOMBIE extends Living {
                     offsetX += walkSpeed;
                 }
             } else {
-                Entity index2 = gm.map.getBlockFromCoordinates((((X - offsetX) / p.gm.map.tileSize) * p.gm.map.tileSize) + p.gm.map.tileSize,(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
+                Entity index2 = gm.getBlock((((X - offsetX) / p.gm.map.tileSize) * p.gm.map.tileSize) + p.gm.map.tileSize,(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
                 if(index2 != null && index2.hitLeft){
                     if(checkOverlapX(index,0,true)){
                         offsetX -= walkSpeed;

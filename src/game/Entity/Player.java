@@ -10,7 +10,6 @@ import game.Entity.Living.Living;
 import game.GameManager;
 import game.Inventory;
 import game.PerlinNoise1D;
-import game.UI;
 import listener.KeyListener;
 
 import java.awt.*;
@@ -122,13 +121,13 @@ public class Player extends Living {
     }
     public void jump(){
         if(jumping){
-            Entity index = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - 50));
+            Entity index = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - 50));
             if(index != null && index.hitBottom){
                 if(Y - offsetY + 1 + height <= index.Y){
                     if(height == defaultHeight){
-                        offsetY = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 6;
+                        offsetY = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 6;
                     }else {
-                        offsetY = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 5;
+                        offsetY = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 5;
                     }
                 }
                 else {
@@ -142,9 +141,9 @@ public class Player extends Living {
     }
     public void walk(){
         gm.map.updateHitBoxes();
-        Entity index = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
+        Entity index = gm.getBlock((((gm.p.X - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.Y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize));
         if(left){
-            Entity index2 = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) - gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
+            Entity index2 = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) - gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
             if(index2 != null && index2.hitRight){
                 if(checkOverlapX(index,1,false)){
                     offsetX += walkSpeed;
@@ -154,7 +153,7 @@ public class Player extends Living {
                 offsetX += walkSpeed;
             }
         } else if (right) {
-            Entity index2 = gm.map.getBlockFromCoordinates((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) + gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
+            Entity index2 = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) + gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
             if(index != null && index2.hitLeft){
                 if(checkOverlapX(index,0,true)){
                     offsetX -= walkSpeed;
