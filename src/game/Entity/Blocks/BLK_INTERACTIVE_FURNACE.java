@@ -3,6 +3,7 @@ package game.Entity.Blocks;
 import game.Entity.Entity;
 import game.GameManager;
 import game.Inventory;
+import game.Wait;
 
 public class BLK_INTERACTIVE_FURNACE extends Entity {
     GameManager gm;
@@ -16,6 +17,7 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
     public Inventory invTop;
     public Inventory invFuel;
     public Inventory invOutput;
+    Wait oven = new Wait();
     public BLK_INTERACTIVE_FURNACE(GameManager gm){
         this.height = 25;
         this.id = 7;
@@ -37,7 +39,9 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
         if(invTop.getKeyFromCoordinates(0,0) != null && invFuel.getKeyFromCoordinates(0,0) != null) {
             if (invTop.getKeyFromCoordinates(0, 0).smeltable && invFuel.getKeyFromCoordinates(0, 0).fuel) {
                 System.out.println("AM SCHMELZEN");
-                checkRecipe();
+                if(oven.waitForFrames(60)){
+                    checkRecipe();
+                }
             }
         }
     }
@@ -45,7 +49,12 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
         Integer[][] recipes = {{6,9}};
         for (Integer[] recipe : recipes){
             if(recipe[0] == invTop.getKeyFromCoordinates(0, 0).id){
-                invTop.inventory.remove(invTop.getKeyFromCoordinates(0, 0));
+                if(invTop.inventory.get(invTop.getKeyFromCoordinates(0,0)) - 1 > 0){
+                    invTop.inventory.replace(invTop.getKeyFromCoordinates(0,0), invTop.inventory.get(invTop.getKeyFromCoordinates(0,0)) - 1);
+                }
+                else{
+                    invTop.inventory.remove(invTop.getKeyFromCoordinates(0, 0));
+                }
                 invOutput.inventory.put(gm.map.getNewBlockFromID(recipe[1]),2);
             }
         }

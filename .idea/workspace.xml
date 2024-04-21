@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/sounds/main.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/PerlinNoise2D.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/LIV_ZOMBIE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/LIV_ZOMBIE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Living/Living.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Living/Living.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Wait.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Wait.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,15 +180,8 @@
       <workItem from="1713418795902" duration="2550000" />
       <workItem from="1713423005445" duration="10010000" />
       <workItem from="1713461041352" duration="1715000" />
-      <workItem from="1713629680314" duration="7008000" />
-    </task>
-    <task id="LOCAL-00003" summary="blocks disappear when to far away">
-      <option name="closed" value="true" />
-      <created>1704039688844</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1704039688844</updated>
+      <workItem from="1713629680314" duration="7630000" />
+      <workItem from="1713681663540" duration="10705000" />
     </task>
     <task id="LOCAL-00004" summary="camera now functions correctly">
       <option name="closed" value="true" />
@@ -579,14 +567,21 @@
       <option name="project" value="LOCAL" />
       <updated>1713550078749</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Add Cave generation and improved Code">
+      <option name="closed" value="true" />
+      <created>1713637496958</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1713637496958</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="save" />
     <MESSAGE value="cleaned up code a bit" />
     <MESSAGE value="made #11 Items in the Inventory can now be swapped, changed Inventory to LinkedHashmap" />
     <MESSAGE value="made #12 Items can now be transferred between hotbar and Inventory." />
@@ -611,7 +606,8 @@
     <MESSAGE value="Add Sand physics and water (not fully implemented)" />
     <MESSAGE value="Water won't disappear in each other anymore." />
     <MESSAGE value="Fix transparent png + add Sound System" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix transparent png + add Sound System" />
+    <MESSAGE value="Add Cave generation and improved Code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Cave generation and improved Code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

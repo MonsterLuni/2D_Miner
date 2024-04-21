@@ -19,7 +19,7 @@ public class Map {
     public int blockNumberFromFirstGround;
     public Map(GameManager gm) {
         this.gm = gm;
-        worldWidth = gm.ui.screenWidth*10;
+        worldWidth = gm.ui.screenWidth*30;
         worldHeight = gm.ui.screenHeight*10;
         gm.blocks = new HashMap<>((worldWidth / tileSize) * (worldHeight / tileSize));
     }
@@ -35,58 +35,86 @@ public class Map {
         }
     }
     private int blockSelectingMechanism(int i, int l) {
+        double Biome = (PerlinNoise1D.perlinNoise((i * gm.intervalOfSeed / 10),gm.seed));
         double height = (PerlinNoise1D.perlinNoise((i * gm.intervalOfSeed),gm.seed));
-        double cave = (PerlinNoise2D.perlinNoise(i * gm.intervalOfSeed,l * gm.intervalOfSeed,gm.seed));
-        if(i + 1 == worldWidth / 25 || i == 0){
-            return 5; // barrier
-        }
-        else if (l * 25 >= (height * 25) + 1000) {
-            blockNumberFromFirstGround++;
-            if (first) {
-                first = false;
-                if((height * 25) + 1000 < 200 + 1000){
-                    return 0; // grass
+        double cave = (PerlinNoise2D.perlinNoise(i * gm.intervalOfSeed/3,l * gm.intervalOfSeed,gm.seed));
+        double ore = (PerlinNoise2D.perlinNoise(i * gm.intervalOfSeed,l * gm.intervalOfSeed/3,gm.seed));
+        if(Biome > 5){
+            if(i + 1 == worldWidth / 25 || i == 0){
+                return 5; // barrier
+            }
+            else if (l * 25 >= (height * 25) + 1000) {
+                blockNumberFromFirstGround++;
+                if(l + 1 == worldHeight / 25){
+                    return 4; // bedrock
+                }
+                else if(cave > 0.22 && blockNumberFromFirstGround > 16) {
+                    return 3; // air
+                }
+                else if (blockNumberFromFirstGround > 12){
+                    if(ore > 0.4){
+                        return 6; // iron
+                    }else{
+                        return 2; // stone
+                    }
                 }
                 else{
                     return 13; // sand
                 }
             }
-            else if(l + 1 == worldHeight / 25){
-                return 4; // bedrock
+        }
+        else{
+            if(i + 1 == worldWidth / 25 || i == 0){
+                return 5; // barrier
             }
-            else if (blockNumberFromFirstGround > 3){
-                if(blockNumberFromFirstGround < 8){
-                    if(Math.random() > 0.6){
-                        return 2;
-                    }
-                    else {
-                        return 1; // dirt
-                    }
-                }
-                else{
-                    if(cave > 0.24){
-                        return 3;
+            else if (l * 25 >= (height * 25) + 1000) {
+                blockNumberFromFirstGround++;
+                if (first) {
+                    first = false;
+                    if((height * 25) + 1000 < 200 + 1000){
+                        return 0; // grass
                     }
                     else{
-                        return 2; // stone
+                        return 13; // sand
                     }
                 }
-            }
-            else{
-                if(waterCalculate){
-                    waterCalculate = false;
-                    for (int j = 0; gm.blocks.get(new Point(i*25,(l - 1)*25)).Y + (j * 25) > 200 + 1000; j--){
-                        if(!Objects.equals(gm.blocks.get(new Point(i*25,(l + j - 1)*25)).getName(), "sand")){
-                            blockSelector(14,i,l + j - 1); // water
+                else if(l + 1 == worldHeight / 25){
+                    return 4; // bedrock
+                }
+                else if(cave > 0.22 && blockNumberFromFirstGround > 10) {
+                    return 3; // air
+                }
+                else if (blockNumberFromFirstGround > 8){
+                    if(blockNumberFromFirstGround < 16){
+                        if(Math.random() > 0.6){
+                            return 2; // stone
+                        }
+                        else {
+                            return 1; // dirt
+                        }
+                    }
+                    else{
+                        if(ore > 0.4){
+                            return 8; // iron
+                        }else{
+                            return 2; // stone
                         }
                     }
                 }
-                return 1; // dirt
+                else{
+                    if(waterCalculate){
+                        waterCalculate = false;
+                        for (int j = 0; gm.blocks.get(new Point(i*25,(l - 1)*25)).Y + (j * 25) > 200 + 1000; j--){
+                            if(!Objects.equals(gm.blocks.get(new Point(i*25,(l + j - 1)*25)).getName(), "sand")){
+                                blockSelector(14,i,l + j - 1); // water
+                            }
+                        }
+                    }
+                    return 1; // dirt
+                }
             }
         }
-        else {
-            return 3; // air
-        }
+        return 3;
     }
     public void blockSelector(int blockNumber, int i, int l){
         Entity temporaryEntity = getNewBlockFromID(blockNumber);

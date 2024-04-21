@@ -1,6 +1,7 @@
 package game;
 
 import game.Entity.Entity;
+import game.Entity.Living.Living;
 
 import javax.swing.*;
 import java.awt.*;
@@ -214,12 +215,16 @@ public class UI extends JFrame {
             for (Integer[] ints : updateList) {
                 boolean foundDuplicate = false;
                 for (Integer[] existing : uniqueUpdateList) {
-                    if (ints[1].equals(existing[1]) && ints[2].equals(existing[2])) {
-                        uniqueUpdateList.add(new Integer[]{existing[0],existing[1],existing[2]});
-                        existing[0] = -1;
-                        foundDuplicate = true;
-                        break;
-                    }
+                        if (ints[1].equals(existing[1]) && ints[2].equals(existing[2])) {
+                            if(existing.length > 3) {
+                                if (ints[5].equals(existing[5])) {
+                                    uniqueUpdateList.add(new Integer[]{existing[0], existing[1], existing[2]});
+                                    existing[0] = -1;
+                                }
+                            }
+                            foundDuplicate = true;
+                            break;
+                        }
                 }
                 if (!foundDuplicate) {
                     uniqueUpdateList.add(ints);
@@ -355,5 +360,16 @@ public class UI extends JFrame {
         imageG.drawString("Player Coordinates: [X:" + (gm.p.X - gm.p.offsetX) + " Y:" + (gm.p.Y + gm.p.offsetY) + "]" ,10,150);
         imageG.drawString("Draw Grid [F2]: " + gm.map.vertices,10,175);
         imageG.drawString("Specific Block [F4]" + gm.map.specificBlockShown, 10, 200);
+        imageG.drawString("Biome: " + getBiome(gm.p),10,225);
+    }
+    private String getBiome(Living person){
+
+        double Biome = (PerlinNoise1D.perlinNoise((((double) person.blockMiddle.X / 25) * gm.intervalOfSeed / 10),gm.seed));
+        if(Biome > 5){
+            return "Desert";
+        }
+        else{
+            return "Plains";
+        }
     }
 }
