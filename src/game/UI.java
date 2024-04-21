@@ -268,7 +268,7 @@ public class UI extends JFrame {
     private void drawAnyInventory(Inventory inv, int height, int width){
         int spacing = 3;
         imageG.setColor(Color.gray);
-        imageG.fillRect(width,height,((gm.map.tileSize + spacing) * inv.width/gm.map.tileSize),((gm.map.tileSize + spacing) * inv.height/gm.map.tileSize));
+        imageG.fillRect(width + spacing,height,((gm.map.tileSize + spacing) * inv.width/gm.map.tileSize),((gm.map.tileSize + spacing) * inv.height/gm.map.tileSize));
         imageG.setColor(Color.black);
         for (int i = 0; i < inv.width/gm.map.tileSize; i++){
             for (int l = 0; l < inv.height/gm.map.tileSize; l++) {
@@ -291,7 +291,7 @@ public class UI extends JFrame {
                 for (java.util.Map.Entry<Entity, Integer> entry : inv.inventory.entrySet()) {
                     if(entry.getKey() != null){
                         if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
-                            imageG.drawImage(gm.map.getPictureForID(entry.getKey().id),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),null);
+                            imageG.drawImage(gm.ah.getPictureForID(entry.getKey().id),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),null);
                             if(entry.getValue() > 1){
                                 imageG.drawString(String.valueOf(entry.getValue()),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)) + gm.map.tileSize);
                             }

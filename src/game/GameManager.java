@@ -36,7 +36,7 @@ public class GameManager {
     public KeyListener kl;
     public MouseListener ml;
     public MouseMotionListener mml;
-    AssetHandler ah;
+    public AssetHandler ah;
     public Player p;
     public Map map;
     LIV_ZOMBIE zombie;
@@ -60,6 +60,7 @@ public class GameManager {
         lastTime = System.currentTimeMillis();
         ah = new AssetHandler();
         ah.loadImages();
+        ah.loadInventory();
         ah.loadHearts();
         ah.loadOxygen();
         loopSound("HomeScreen.wav");

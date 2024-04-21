@@ -4,9 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Add Biome Desert and more">
+      <change afterPath="$PROJECT_DIR$/assets/android.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/android_sitting.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/tiles/ecken.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/tiles/leave.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/tiles/oak_wood.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/tiles/straight one.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_LEAVE.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_OAK_WOOD.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/AssetHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/AssetHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_IRON_BAR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_IRON_BAR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_BEDROCK.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_BEDROCK.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_FEATHER.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_FEATHER.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_WOOD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_PICKAXE_WOOD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/GameManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
     </list>
@@ -74,11 +89,11 @@
       <recent name="F:\Java\_2D_Miner\assets\tiles" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Java\2D_Miner\assets\tiles" />
+      <recent name="F:\Java\2D_Miner\assets" />
       <recent name="F:\Java\2D_Miner\assets\sounds" />
       <recent name="D:\1_Dateien-BiCT\2.Lehrjahr\Java\2D_Miner\assets" />
-      <recent name="F:\Java\2D_Miner\assets\tiles" />
       <recent name="F:\Java\2D_Miner\assets\items" />
-      <recent name="D:\1_Dateien-BiCT\2.Lehrjahr\Java\2D_Miner\assets\tiles" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="game.Entity.Blocks" />
@@ -181,15 +196,8 @@
       <workItem from="1713423005445" duration="10010000" />
       <workItem from="1713461041352" duration="1715000" />
       <workItem from="1713629680314" duration="7630000" />
-      <workItem from="1713681663540" duration="10705000" />
-    </task>
-    <task id="LOCAL-00004" summary="camera now functions correctly">
-      <option name="closed" value="true" />
-      <created>1704041042334</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1704041042334</updated>
+      <workItem from="1713681663540" duration="13554000" />
+      <workItem from="1713705578075" duration="5325000" />
     </task>
     <task id="LOCAL-00005" summary="change in y axis now works as intended, add debug menu with (F3)">
       <option name="closed" value="true" />
@@ -575,14 +583,21 @@
       <option name="project" value="LOCAL" />
       <updated>1713637496958</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Add Biome Desert and more">
+      <option name="closed" value="true" />
+      <created>1713698749648</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1713698749648</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="cleaned up code a bit" />
     <MESSAGE value="made #11 Items in the Inventory can now be swapped, changed Inventory to LinkedHashmap" />
     <MESSAGE value="made #12 Items can now be transferred between hotbar and Inventory." />
     <MESSAGE value="made code prettier" />
@@ -607,7 +622,8 @@
     <MESSAGE value="Water won't disappear in each other anymore." />
     <MESSAGE value="Fix transparent png + add Sound System" />
     <MESSAGE value="Add Cave generation and improved Code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Cave generation and improved Code" />
+    <MESSAGE value="Add Biome Desert and more" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Biome Desert and more" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

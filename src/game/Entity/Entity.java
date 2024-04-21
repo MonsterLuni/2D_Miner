@@ -31,6 +31,7 @@ public abstract class Entity implements Serializable{
     public int hardness = 0;
     public int stackSize = 64;
     public boolean breakable;
+    public boolean isPlacable = true;
     public boolean penetrable;
     public int health;
     public void interact(GameManager gm){};
@@ -63,7 +64,7 @@ public abstract class Entity implements Serializable{
         map.updateHitBoxes();
     }
     public void drawBlock(Graphics g, Player p, GameManager gm) {
-        g.drawImage(gm.map.getPictureForID(id),(X + p.offsetX),(Y - p.offsetY),null);
+        g.drawImage(gm.ah.getPictureForID(id),(X + p.offsetX),(Y - p.offsetY),null);
     }
     public void drawBlockVertices(Graphics g, Player p){
         g.setColor(Color.BLUE);

@@ -10,6 +10,7 @@ public class ITM_PICKAXE_FEATHER extends Entity {
         this.id = 11;
         this.miningDamage = 0;
         this.hardness = 0;
+        this.isPlacable = false;
     }
     @Override
     public String getName() {

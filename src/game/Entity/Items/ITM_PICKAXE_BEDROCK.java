@@ -10,6 +10,7 @@ public class ITM_PICKAXE_BEDROCK extends Entity {
         this.id = 10;
         this.miningDamage = 100;
         this.hardness = 5;
+        this.isPlacable = false;
     }
     @Override
     public String getName() {

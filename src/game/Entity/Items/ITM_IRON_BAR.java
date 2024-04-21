@@ -10,6 +10,7 @@ public class ITM_IRON_BAR extends Entity {
         this.id = 9;
         this.miningDamage = 5;
         this.hardness = 3;
+        this.isPlacable = false;
     }
     @Override
     public String getName() {

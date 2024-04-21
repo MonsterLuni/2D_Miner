@@ -9,6 +9,7 @@ public class ITM_PICKAXE_WOOD extends Entity {
         this.id = 12;
         this.miningDamage = 5;
         this.hardness = 2;
+        this.isPlacable = false;
     }
     @Override
     public String getName() {

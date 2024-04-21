@@ -5,7 +5,9 @@ import game.Entity.Entity;
 import game.Entity.Items.ITM_IRON_BAR;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class Map {
@@ -17,9 +19,10 @@ public class Map {
     public int worldHeight;
     public int tileSize = 25;
     public int blockNumberFromFirstGround;
+    List<Integer[]> List = new ArrayList<>();
     public Map(GameManager gm) {
         this.gm = gm;
-        worldWidth = gm.ui.screenWidth*30;
+        worldWidth = gm.ui.screenWidth*20;
         worldHeight = gm.ui.screenHeight*10;
         gm.blocks = new HashMap<>((worldWidth / tileSize) * (worldHeight / tileSize));
     }
@@ -33,13 +36,14 @@ public class Map {
                 blockSelector(blockSelectingMechanism(i,l),i,l);
             }
         }
+        addPostWorldCreation();
     }
     private int blockSelectingMechanism(int i, int l) {
         double Biome = (PerlinNoise1D.perlinNoise((i * gm.intervalOfSeed / 10),gm.seed));
         double height = (PerlinNoise1D.perlinNoise((i * gm.intervalOfSeed),gm.seed));
         double cave = (PerlinNoise2D.perlinNoise(i * gm.intervalOfSeed/3,l * gm.intervalOfSeed,gm.seed));
         double ore = (PerlinNoise2D.perlinNoise(i * gm.intervalOfSeed,l * gm.intervalOfSeed/3,gm.seed));
-        if(Biome > 5){
+        if(Biome > 5){ // DESERT
             if(i + 1 == worldWidth / 25 || i == 0){
                 return 5; // barrier
             }
@@ -63,7 +67,8 @@ public class Map {
                 }
             }
         }
-        else{
+        else{ // PLAINS
+            double tree = (PerlinNoise1D.perlinNoise((i * gm.intervalOfSeed * 5),gm.seed));
             if(i + 1 == worldWidth / 25 || i == 0){
                 return 5; // barrier
             }
@@ -72,6 +77,18 @@ public class Map {
                 if (first) {
                     first = false;
                     if((height * 25) + 1000 < 200 + 1000){
+                        if(tree > 3){
+                            boolean toNear = false;
+                            for (Integer[] ints: List){
+                                if (i < ints[1] + 4 && i > ints[1] - 4) {
+                                    toNear = true;
+                                    break;
+                                }
+                            }
+                            if(!toNear){
+                                List.add(new Integer[]{0,i,l});
+                            }
+                        }
                         return 0; // grass
                     }
                     else{
@@ -95,7 +112,7 @@ public class Map {
                     }
                     else{
                         if(ore > 0.4){
-                            return 8; // iron
+                            return 8; // coal
                         }else{
                             return 2; // stone
                         }
@@ -122,56 +139,6 @@ public class Map {
         temporaryEntity.Y = l*25;
         temporaryEntity.point = new Point(temporaryEntity.X,temporaryEntity.Y);
         gm.blocks.put(temporaryEntity.point,temporaryEntity);
-    }
-    public Image getPictureForID(int blockNumber) {
-            switch (blockNumber) {
-                case 0 -> {
-                    return AssetHandler.grass;
-                }
-                case 1 -> {
-                    return AssetHandler.dirt;
-                }
-                case 2 -> {
-                    return AssetHandler.stone;
-                }
-                case 3 -> {
-                    return null;
-                }
-                case 4 -> {
-                    return AssetHandler.bedrock;
-                }
-                case 5 -> {
-                    return AssetHandler.barrier;
-                }
-                case 6 -> {
-                    return AssetHandler.iron_ore;
-                }
-                case 7 -> {
-                    return AssetHandler.furnace;
-                }
-                case 8 -> {
-                    return AssetHandler.coal_ore;
-                }
-                case 9 -> {
-                    return AssetHandler.iron_bar;
-                }
-                case 10 -> {
-                    return AssetHandler.pickaxe_bedrock;
-                }
-                case 11 -> {
-                    return AssetHandler.pickaxe_feather;
-                }
-                case 12 -> {
-                    return AssetHandler.pickaxe_wood;
-                }
-                case 13 -> {
-                    return AssetHandler.sand;
-                }
-                case 14 -> {
-                    return AssetHandler.water;
-                }
-            }
-        return null;
     }
     public Entity getNewBlockFromID(int blockNumber){
         switch (blockNumber){
@@ -211,8 +178,30 @@ public class Map {
             case 14 -> {
                 return new BLK_WATER();
             }
+            case 15 -> {
+                return new BLK_OAK_WOOD();
+            }
+            case 16 -> {
+                return new BLK_LEAVE();
+            }
         }
         return null;
+    }
+    public void addPostWorldCreation(){
+        for (Integer[] ints: List){
+            switch (ints[0]){
+                case 0 -> buildTree(ints[1],ints[2]);
+            }
+        }
+    }
+    public void buildTree(int x, int y){
+        blockSelector(15,x,y - 1);
+        blockSelector(15,x,y - 2);
+        blockSelector(15,x,y - 3);
+        blockSelector(16,x,y - 4);
+        blockSelector(16,x,y - 5);
+        blockSelector(16,x - 1,y - 4);
+        blockSelector(16,x + 1,y - 4);
     }
     public void updateHitBoxes(){
         for (Entity block: gm.p.getOnlyVisibleBlocks()) {
@@ -301,7 +290,6 @@ public class Map {
         Point mouseC = gm.mml.getMouseBlockHover(mouseCoordinates);
         if(gm.p.hotbar.getKeyFromCoordinates(gm.p.hotbar.inventorySpaceX,0) != null){
             placeBlock(mouseC,entity);
-            gm.playSound("place.wav");
         }
         else{
             interactBlock(mouseC);
@@ -316,22 +304,25 @@ public class Map {
         }
     }
     public void placeBlock(Point mouseC, Entity entity){
-        updateHitBoxes();
-        for (Entity block: gm.p.getOnlyVisibleBlocks()) {
-            if(block != null){
-                if(mouseC.x == block.point.x && mouseC.y == block.point.y){
-                    if(Objects.equals(block.getName(), "air")){
-                        gm.blocks.remove(block.point);
-                        entity.X = 0;
-                        entity.Y = 0;
-                        blockSelector(entity.id,(mouseC.x) / 25,(mouseC.y)/25);
-                        for (java.util.Map.Entry<Entity, Integer> entry : gm.p.hotbar.inventory.entrySet()) {
-                            if(entry.getKey().inventoryX == gm.p.hotbar.inventorySpaceX){
-                                if(entry.getValue() - 1 <= 0){
-                                    gm.p.hotbar.inventory.remove(entry.getKey());
-                                }
-                                else{
-                                    entry.setValue(entry.getValue() - 1);
+        if(entity.isPlacable){
+            updateHitBoxes();
+            for (Entity block: gm.p.getOnlyVisibleBlocks()) {
+                if(block != null){
+                    if(mouseC.x == block.point.x && mouseC.y == block.point.y){
+                        if(Objects.equals(block.getName(), "air")){
+                            gm.blocks.remove(block.point);
+                            entity.X = 0;
+                            entity.Y = 0;
+                            blockSelector(entity.id,(mouseC.x) / 25,(mouseC.y)/25);
+                            gm.playSound("place.wav");
+                            for (java.util.Map.Entry<Entity, Integer> entry : gm.p.hotbar.inventory.entrySet()) {
+                                if(entry.getKey().inventoryX == gm.p.hotbar.inventorySpaceX){
+                                    if(entry.getValue() - 1 <= 0){
+                                        gm.p.hotbar.inventory.remove(entry.getKey());
+                                    }
+                                    else{
+                                        entry.setValue(entry.getValue() - 1);
+                                    }
                                 }
                             }
                         }

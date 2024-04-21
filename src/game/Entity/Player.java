@@ -46,21 +46,6 @@ public class Player extends Living {
         hotbar.inventory.put(new ITM_PICKAXE_BEDROCK(),1);
         inv = new Inventory(10,10);
         inv.inventory.put(new ITM_PICKAXE_FEATHER(),1);
-        Entity entity = new BLK_COAL_ORE();
-        entity.inventoryX = 3;
-        inv.inventory.put(entity,1);
-        entity = new BLK_IRON_ORE();
-        entity.inventoryX = 2;
-        inv.inventory.put(entity,1);
-        entity = new BLK_INTERACTIVE_FURNACE(gm);
-        entity.inventoryX = 1;
-        inv.inventory.put(entity,1);
-        entity = new BLK_INTERACTIVE_FURNACE(gm);
-        entity.inventoryX = 4;
-        inv.inventory.put(entity,1);
-        entity = new BLK_WATER();
-        entity.inventoryX = 5;
-        inv.inventory.put(entity,10);
         switchHotbar(hotbar.inventorySpaceX);
     }
     public static BufferedImage flipHorizontal(Image image) {
@@ -90,14 +75,14 @@ public class Player extends Living {
         Entity hotbarElement = hotbar.getKeyFromCoordinates(hotbar.inventorySpaceX,0);
         if(hotbarElement != null){
             if (lookDirection) {
-                spriteSelected = gm.map.getPictureForID(hotbarElement.id);
+                spriteSelected = gm.ah.getPictureForID(hotbarElement.id);
                 if (gm.ml.leftButtonPressed) {
                     g2d.rotate(Math.toRadians(35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
                 } else {
                     g2d.rotate(Math.toRadians(25), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
                 }
             } else {
-                spriteSelected = flipHorizontal(gm.map.getPictureForID(hotbarElement.id));
+                spriteSelected = flipHorizontal(gm.ah.getPictureForID(hotbarElement.id));
                 spriteY += 10;
                 if (gm.ml.leftButtonPressed) {
                     g2d.rotate(Math.toRadians(-35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
@@ -166,7 +151,12 @@ public class Player extends Living {
     }
     public void draw(Graphics g, Player p){
         g.setColor(color);
-        g.fillRect(X,Y,width,height);
+        if(height < defaultHeight){
+            g.drawImage(gm.ah.getPictureForID(-2),X,Y,null);
+        }
+        else{
+            g.drawImage(gm.ah.getPictureForID(-1),X,Y,null);
+        }
     }
     @Override
     public String getName() {
