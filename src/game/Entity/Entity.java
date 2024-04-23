@@ -9,32 +9,22 @@ import java.io.Serializable;
 public abstract class Entity implements Serializable{
     public Point point;
     public Color color = Color.BLUE;
-    public boolean hitLeft = false;
-    public boolean hitRight = false;
-    public boolean hitTop = false;
-    public boolean hitBottom = false;
+    public String name;
+    public boolean hitLeft,hitRight,hitTop,hitBottom;
+    public boolean isInteractive,isSmeltable,isFalling,isLiquid,isFuel,isBreakable = true,isPenetrable,isPlacable = true;
     public int X;
     public int Y;
     public int inventoryX;
     public int inventoryY;
-    public boolean interactive;
-    public boolean smeltable;
-    public boolean isFalling;
-    public boolean isLiquid;
-    public boolean fuel;
     public int id;
     public int width;
     public int height;
-    public String name;
     public int dropAmount = 1;
     public int miningDamage = 0;
     public int hardness = 0;
     public int stackSize = 64;
-    public boolean breakable;
-    public boolean isPlacable = true;
-    public boolean penetrable;
     public int health;
-    public void interact(GameManager gm){};
+    public void interact(GameManager gm){}
     public boolean harvestable(Player p) {
         return p.currentHardness >= hardness;
     }
@@ -57,9 +47,9 @@ public abstract class Entity implements Serializable{
         hitBottom = false;
         hitRight = false;
         hitLeft = false;
-        penetrable = true;
+        isPenetrable = true;
         id = 3;
-        breakable = false;
+        isBreakable = false;
         name = blockName;
         map.updateHitBoxes();
     }

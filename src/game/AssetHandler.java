@@ -6,8 +6,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class AssetHandler {
-    public Image player,player_sitting,heart_full, heart_half, heart_empty,oxygen_full,oxygen_half,oxygen_empty,ecken;
-    public static Image grass, dirt,stone,barrier,bedrock, air,iron_ore, furnace,coal_ore,iron_bar,pickaxe_bedrock,pickaxe_feather,pickaxe_wood,sand,water,oak_wood,leave;
+    public Image zombie,player,player_sitting,heart_full, heart_half, heart_empty,oxygen_full,oxygen_half,oxygen_empty,ecken;
+    public static Image grass, dirt,stone,barrier,bedrock, air,iron_ore, furnace,coal_ore,iron_bar,pickaxe_bedrock,pickaxe_feather,pickaxe_wood,sand,water,oak_wood,leave,crafting_bench;
     public void loadHearts(){
         try {
             this.heart_full = ImageIO.read(new File("assets/heart_full.png"));
@@ -30,6 +30,7 @@ public class AssetHandler {
     }
     public void loadImages(){
         try {
+            zombie = ImageIO.read(new File("assets/zombie.png"));
             player_sitting = ImageIO.read(new File("assets/android_sitting.png"));
             player = ImageIO.read(new File("assets/android.png"));
             grass = ImageIO.read(new File("assets/tiles/grass.png"));
@@ -49,6 +50,7 @@ public class AssetHandler {
             water = ImageIO.read(new File("assets/tiles/water.png"));
             oak_wood = ImageIO.read(new File("assets/tiles/oak_wood.png"));
             leave = ImageIO.read(new File("assets/tiles/leave.png"));
+            crafting_bench = ImageIO.read(new File("assets/tiles/crafting_bench.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -62,6 +64,9 @@ public class AssetHandler {
     }
     public Image getPictureForID(int blockNumber) {
         switch (blockNumber) {
+            case -3 -> {
+                return zombie;
+            }
             case -2 -> {
                 return player_sitting;
             }
@@ -118,6 +123,9 @@ public class AssetHandler {
             }
             case 16 -> {
                 return leave;
+            }
+            case 17 -> {
+                return crafting_bench;
             }
         }
         return null;

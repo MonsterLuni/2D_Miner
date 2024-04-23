@@ -7,8 +7,7 @@ public class BLK_OAK_WOOD extends Entity {
         this.height = 25;
         this.width = 25;
         this.id = 15;
-        this.breakable = true;
-        this.penetrable = false;
+        this.isPenetrable = true;
         this.hardness = 1;
         this.health = 15;
         this.name = "oak_wood";

@@ -3,6 +3,7 @@ package game;
 public class Wait {
     int counterFrames = 0;
     int counterSeconds = 0;
+    int counterStop = 0;
     public boolean waitForFrames(int frames){
         if(counterFrames >= frames){
             counterFrames = 0;
@@ -19,5 +20,12 @@ public class Wait {
         }
         counterSeconds++;
         return false;
+    }
+    public boolean stopAfterFrames(int frames){
+        if(counterStop >= frames){
+            return false;
+        }
+        counterStop++;
+        return true;
     }
 }

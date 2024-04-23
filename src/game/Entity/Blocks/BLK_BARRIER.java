@@ -7,8 +7,8 @@ public class BLK_BARRIER extends Entity {
         this.height = 25;
         this.width = 25;
         this.id = 5;
-        this.breakable = false;
-        this.penetrable = false;
+        this.isBreakable = false;
+        this.isPenetrable = false;
         this.hardness = 10;
         this.health = 100;
         this.name = "barrier";

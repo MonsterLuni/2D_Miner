@@ -7,10 +7,9 @@ public class BLK_LEAVE extends Entity {
         this.height = 25;
         this.width = 25;
         this.id = 16;
-        this.breakable = true;
-        this.penetrable = false;
         this.hardness = 0;
         this.health = 1;
+        this.isPenetrable = true;
         this.name = "leave";
     }
 }

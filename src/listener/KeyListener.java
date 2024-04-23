@@ -2,16 +2,16 @@ package listener;
 
 import game.GameManager;
 import game.Inventory;
-import game.UI;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KeyListener implements java.awt.event.KeyListener {
     public GameManager gm;
     public Inventory primaryInv;
     public Inventory secondaryInv;
-    public Inventory[] choosableInventories = new Inventory[4];
+    public Inventory[] choosableInventories;
     public int chosenOne = 0;
     public KeyListener(GameManager gm){
         this.gm = gm;
@@ -47,15 +47,25 @@ public class KeyListener implements java.awt.event.KeyListener {
     private void menuActivate() {
         switch (gm.menuSelected){
             case 0 -> gm.startGame();
-            case 3 -> gm.running = false;
+            case 3 -> gm.isRunning = false;
         }
     }
     private void interactStateSelector(int keyCode) {
         switch(gm.currentInteractState){
             case GameManager.furnaceInteractState -> interactStateFurnace(keyCode);
+            case GameManager.craftingTableInteractState -> interactStateCraftingTable(keyCode);
         }
     }
+    private void interactStateCraftingTable(int e) {
+        choosableInventories = new Inventory[3];
+        primaryInv = gm.p.inv;
+        choosableInventories[0] = gm.interactStateCraftingTable.inventory;
+        choosableInventories[1] = gm.interactStateCraftingTable.output;
+        choosableInventories[2] = gm.p.hotbar;
+        inventoryToInventory(e);
+    }
     private void interactStateFurnace(int e) {
+        choosableInventories = new Inventory[4];
         primaryInv = gm.p.inv;
         choosableInventories[0] = gm.interactStateFurnace.invTop;
         choosableInventories[1] = gm.interactStateFurnace.invFuel;
@@ -83,8 +93,9 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_RIGHT -> changeInventoryPlace(secondaryInv,1,0);
             // --------------
             case KeyEvent.VK_TAB -> changeSecondaryInventory();
-            case KeyEvent.VK_SPACE -> selectInventoryPlace(primaryInv);
-            case KeyEvent.VK_ENTER -> selectInventoryPlace(secondaryInv);
+            case KeyEvent.VK_SPACE -> selectInventoryPlace(primaryInv,true);
+            case KeyEvent.VK_ENTER -> selectInventoryPlace(secondaryInv,true);
+            case KeyEvent.VK_SHIFT -> selectInventoryPlace(primaryInv,false);
             case KeyEvent.VK_F -> primaryInv.swapInventories(secondaryInv);
         }
     }
@@ -124,23 +135,23 @@ public class KeyListener implements java.awt.event.KeyListener {
                 }
             }
             case KeyEvent.VK_F2 -> {
-                if(gm.debug){
+                if(gm.isDebug){
                     gm.map.vertices = !gm.map.vertices;
                 }
             }
             case KeyEvent.VK_F6 -> {
-                if(gm.debug){
+                if(gm.isDebug){
                     gm.p.health -= 1;
                 }
             }
             case KeyEvent.VK_F5 -> {
-                if(gm.debug){
+                if(gm.isDebug){
                     gm.map.specificBlockShown = !gm.map.specificBlockShown;
                 }
             }
             case KeyEvent.VK_A -> {
                 gm.p.left = true;
-                gm.p.lookDirection = false;
+                gm.p.isLookingRight = false;
             }
             case KeyEvent.VK_S -> {
                 if(gm.p.height == gm.p.defaultHeight) {
@@ -152,12 +163,12 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_F9 -> gm.loadGame(1);
             case KeyEvent.VK_D -> {
                 gm.p.right = true;
-                gm.p.lookDirection = true;
+                gm.p.isLookingRight = true;
             }
             case KeyEvent.VK_E -> gm.currentState = GameManager.inventoryState;
-            case KeyEvent.VK_F3 -> gm.debug = !gm.debug;
+            case KeyEvent.VK_F3 -> gm.isDebug = !gm.isDebug;
             case KeyEvent.VK_F11 -> gm.ui.toggleFullscreen();
-            case KeyEvent.VK_SPACE -> gm.p.jumping = true;
+            case KeyEvent.VK_SPACE -> gm.p.isJumping = true;
         }
     }
     @Override
@@ -171,14 +182,14 @@ public class KeyListener implements java.awt.event.KeyListener {
         switch (e){
             case KeyEvent.VK_A -> gm.p.left = false;
             case KeyEvent.VK_D -> gm.p.right = false;
-            case KeyEvent.VK_SPACE -> gm.p.jumping = false;
+            case KeyEvent.VK_SPACE -> gm.p.isJumping = false;
             case KeyEvent.VK_S -> {
                 gm.p.Y -= 25;
                 gm.p.height = gm.p.defaultHeight;
             }
         }
     }
-    private void selectInventoryPlace(Inventory inv) {
+    private void selectInventoryPlace(Inventory inv,boolean swap) {
         if(inv.activeInventorySpace.x == -1){
             inv.activeInventorySpace.x = inv.inventorySpaceX;
             inv.activeInventorySpace.y = inv.inventorySpaceY;
@@ -186,7 +197,11 @@ public class KeyListener implements java.awt.event.KeyListener {
         else{
             inv.activeInventorySpaceTwo.x = inv.inventorySpaceX;
             inv.activeInventorySpaceTwo.y = inv.inventorySpaceY;
-            inv.changeItemInInventory();
+            if(swap){
+                inv.changeItemInInventory();
+            }else{
+                inv.splitItemInInventory();
+            }
             resetActiveInventorySpace(inv);
         }
     }

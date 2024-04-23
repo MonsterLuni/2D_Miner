@@ -1,15 +1,13 @@
 package game.Entity;
 
-import game.Entity.Blocks.BLK_COAL_ORE;
-import game.Entity.Blocks.BLK_INTERACTIVE_FURNACE;
-import game.Entity.Blocks.BLK_IRON_ORE;
-import game.Entity.Blocks.BLK_WATER;
+import game.Entity.Blocks.BLK_INTERACTIVE_CRAFTING_BENCH;
 import game.Entity.Items.ITM_PICKAXE_BEDROCK;
 import game.Entity.Items.ITM_PICKAXE_FEATHER;
 import game.Entity.Living.Living;
 import game.GameManager;
 import game.Inventory;
 import game.PerlinNoise1D;
+import game.Wait;
 import listener.KeyListener;
 
 import java.awt.*;
@@ -25,8 +23,8 @@ public class Player extends Living {
     public int miningDamage = 2;
     public int currentHardness = hardness;
     public int currentMiningDamage = miningDamage;
-    /* true == right, false == left */
-    public boolean lookDirection = true;
+    public boolean isLookingRight = true;
+    Wait jumpTimer = new Wait();
     public Player(GameManager gm, KeyListener kh){
         this.kh = kh;
         this.offsetY = (int) (((PerlinNoise1D.perlinNoise(((((double) gm.map.worldWidth /2) + ((double) gm.ui.screenWidth /2)) * gm.intervalOfSeed),gm.seed)) * 25) + 950) - (gm.ui.screenHeight/2);
@@ -45,7 +43,7 @@ public class Player extends Living {
         Y = gm.ui.screenHeight/2 - defaultHeight;
         hotbar.inventory.put(new ITM_PICKAXE_BEDROCK(),1);
         inv = new Inventory(10,10);
-        inv.inventory.put(new ITM_PICKAXE_FEATHER(),1);
+        inv.inventory.put(new BLK_INTERACTIVE_CRAFTING_BENCH(gm),1);
         switchHotbar(hotbar.inventorySpaceX);
     }
     public static BufferedImage flipHorizontal(Image image) {
@@ -74,7 +72,7 @@ public class Player extends Living {
         int spriteX = X;
         Entity hotbarElement = hotbar.getKeyFromCoordinates(hotbar.inventorySpaceX,0);
         if(hotbarElement != null){
-            if (lookDirection) {
+            if (isLookingRight) {
                 spriteSelected = gm.ah.getPictureForID(hotbarElement.id);
                 if (gm.ml.leftButtonPressed) {
                     g2d.rotate(Math.toRadians(35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
@@ -105,22 +103,24 @@ public class Player extends Living {
         }
     }
     public void jump(){
-        if(jumping){
-            Entity index = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - 50));
-            if(index != null && index.hitBottom){
-                if(Y - offsetY + 1 + height <= index.Y){
-                    if(height == defaultHeight){
-                        offsetY = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 6;
-                    }else {
-                        offsetY = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 5;
+        if(isJumping){
+            if(jumpTimer.stopAfterFrames(10)){
+                Entity index = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - 50));
+                if(index != null && index.hitBottom){
+                    if(Y - offsetY + 1 + height <= index.Y){
+                        if(height == defaultHeight){
+                            offsetY = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 6;
+                        }else {
+                            offsetY = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 5;
+                        }
+                    }
+                    else {
+                        offsetY -= jumpSpeed;
                     }
                 }
                 else {
                     offsetY -= jumpSpeed;
                 }
-            }
-            else {
-                offsetY -= jumpSpeed;
             }
         }
     }
@@ -161,5 +161,21 @@ public class Player extends Living {
     @Override
     public String getName() {
         return "Player";
+    }
+    @Override
+    public void gravity(){
+        updateIndex();
+        if(blockMiddle != null && blockMiddle.hitTop || blockRight != null && blockRight.hitTop){
+            if(blockMiddle != null){
+                offsetY = blockMiddle.Y - (height + Y);
+            }
+            else{
+                offsetY = blockRight.Y - (height + Y);
+            }
+            jumpTimer = new Wait();
+        }
+        else{
+            offsetY += gravitySpeed;
+        }
     }
 }

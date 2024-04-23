@@ -17,9 +17,7 @@ public abstract class Living extends Entity {
     public int offsetX, offsetY;
     public int walkSpeed = 5;
     public int defaultHeight = 50;
-    public boolean jumping, left, right;
-    private final int renderHeight = 34;
-    private final int renderWidth = 52;
+    public boolean isJumping, left, right;
     public abstract void draw(Graphics g, Player p);
     public void gravity(){
         updateIndex();
@@ -42,10 +40,12 @@ public abstract class Living extends Entity {
     public Entity[] getOnlyVisibleBlocks(){
         int positionPlayer = Math.round(((X - (float) offsetX)) / gm.map.tileSize) * gm.map.tileSize;
         int positionPlayerY = Math.round(((Y + (float) offsetY)) / gm.map.tileSize) * gm.map.tileSize;
-        Entity[] visibleBlockList = new Entity[(renderHeight*renderWidth)];
+        int renderHeight = 34;
+        int renderWidth = 52;
+        Entity[] visibleBlockList = new Entity[(renderHeight * renderWidth)];
         for (int i = 0; i < renderWidth; i++){
             for (int l = 0; l < renderHeight; l++){
-                Entity block = gm.blocks.get(new Point(((i - (renderWidth/2)) * gm.map.tileSize) + positionPlayer,((l - (renderHeight/2)) * gm.map.tileSize) + positionPlayerY));
+                Entity block = gm.blocks.get(new Point(((i - (renderWidth /2)) * gm.map.tileSize) + positionPlayer,((l - (renderHeight /2)) * gm.map.tileSize) + positionPlayerY));
                 visibleBlockList[(i * renderHeight) + l] = block;
             }
         }

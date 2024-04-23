@@ -7,8 +7,8 @@ public class BLK_DIRT extends Entity {
         this.height = 25;
         this.width = 25;
         this.id = 1;
-        this.breakable = true;
-        this.penetrable = false;
+        this.isBreakable = true;
+        this.isPenetrable = false;
         this.hardness = 1;
         this.health = 10;
         this.name = "dirt";

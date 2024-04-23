@@ -76,6 +76,29 @@ public class Inventory implements Serializable{
             firstEntry.inventoryY = activeInventorySpaceTwo.y;
         }
     }
+    public void splitItemInInventory(){
+        Entity firstEntry = null;
+        Entity secondEntry = null;
+        for (java.util.Map.Entry<Entity, Integer> entry : inventory.entrySet()) {
+            if(entry.getKey().inventoryX == activeInventorySpace.x && entry.getKey().inventoryY == activeInventorySpace.y){
+                firstEntry = entry.getKey();
+            } else if (entry.getKey().inventoryX == activeInventorySpaceTwo.x && entry.getKey().inventoryY == activeInventorySpaceTwo.y) {
+                secondEntry = entry.getKey();
+            }
+        }
+        if(firstEntry != null && secondEntry == null){
+            if(inventory.get(firstEntry) % 2 == 0){
+                inventory.replace(firstEntry,inventory.get(firstEntry),inventory.get(firstEntry)/2);
+                inventory.put(firstEntry,inventory.get(firstEntry)/2);
+                System.out.println("Gerade");
+            }
+            else{
+                inventory.replace(firstEntry,inventory.get(firstEntry),inventory.get(firstEntry)/2 - 1);
+                inventory.put(secondEntry,inventory.get(firstEntry)/2 + 1);
+                System.out.println("Ungerade");
+            }
+        }
+    }
     public void swapInventories(Inventory inventory2){
         Entity entityInv = null;
         Entity entityInv2 = null;

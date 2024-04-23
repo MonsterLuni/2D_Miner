@@ -7,8 +7,8 @@ public class BLK_WATER extends Entity {
         this.height = 25;
         this.width = 25;
         this.id = 14;
-        this.breakable = false;
-        this.penetrable = true;
+        this.isBreakable = false;
+        this.isPenetrable = true;
         this.hardness = 0;
         this.isLiquid = true;
         this.health = 0;

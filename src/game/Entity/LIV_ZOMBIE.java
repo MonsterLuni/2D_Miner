@@ -2,7 +2,6 @@ package game.Entity;
 
 import game.Entity.Living.Living;
 import game.GameManager;
-import game.UI;
 import game.Wait;
 
 import java.awt.*;
@@ -20,7 +19,7 @@ public class LIV_ZOMBIE extends Living {
         this.walkSpeed = 1;
         width = defaultWidth;
         height = defaultHeight;
-        X = 350;
+        X = gm.map.worldWidth/2;
         Y = 950;
     }
     @Override
@@ -28,7 +27,7 @@ public class LIV_ZOMBIE extends Living {
         if(walkCounter.waitforSeconds(4)){
             rand = Math.random();
         }
-        if(walkCounter.waitforSeconds(2)){
+        if(walkCounter.waitForFrames(1)){
             Entity index = gm.getBlock((((X - offsetX) / gm.map.tileSize) * p.gm.map.tileSize),(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
             if(rand > 0.5){
                 Entity index2 = gm.getBlock((((X - offsetX) / p.gm.map.tileSize) * p.gm.map.tileSize) - p.gm.map.tileSize,(((Y + offsetY) / p.gm.map.tileSize) * p.gm.map.tileSize) + (height - p.gm.map.tileSize));
@@ -57,7 +56,7 @@ public class LIV_ZOMBIE extends Living {
     public void draw(Graphics g, Player p) {
         this.p = p;
         g.setColor(color);
-        g.fillRect((X + p.offsetX) - offsetX,(Y - p.offsetY) + offsetY,width,height);
+        g.drawImage(gm.ah.getPictureForID(-3),(X + p.offsetX) - offsetX,(Y - p.offsetY) + offsetY,null);
     }
     @Override
     public String getName() {

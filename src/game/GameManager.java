@@ -1,5 +1,6 @@
 package game;
 
+import game.Entity.Blocks.BLK_INTERACTIVE_CRAFTING_BENCH;
 import game.Entity.Blocks.BLK_INTERACTIVE_FURNACE;
 import game.Entity.Entity;
 import game.Entity.LIV_ZOMBIE;
@@ -8,7 +9,6 @@ import listener.KeyListener;
 import listener.MouseListener;
 import listener.MouseMotionListener;
 
-import javax.print.attribute.standard.Media;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -20,12 +20,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class GameManager {
+
     public UI ui;
+
     private long lastTime;
     public int maxFps = 60;
     public double fps = 0;
-    public boolean running = true;
-    public boolean debug = false;
+    public boolean isRunning = true;
+    public boolean isDebug = false;
     public final static int menuState = 0;
     public final static int loadingState = 1;
     public final static int gameState = 2;
@@ -46,7 +48,9 @@ public class GameManager {
     public double intervalOfSeed = 0.07;
     public int menuSelected = 0;
     public BLK_INTERACTIVE_FURNACE interactStateFurnace;
+    public BLK_INTERACTIVE_CRAFTING_BENCH interactStateCraftingTable;
     public final static int furnaceInteractState = 1;
+    public final static int craftingTableInteractState = 2;
     public int currentInteractState = 0;
 
     public HashMap<Point, Entity> blocks;
@@ -77,7 +81,7 @@ public class GameManager {
     }
     public void fpsLimiter() {
         long targetTime = System.currentTimeMillis() + (long) (1000 / maxFps);
-        while (running) {
+        while (isRunning) {
             long now = System.currentTimeMillis();
             fps = 1000 / (double)(now - lastTime);
             update();

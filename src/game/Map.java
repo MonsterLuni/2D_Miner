@@ -184,6 +184,9 @@ public class Map {
             case 16 -> {
                 return new BLK_LEAVE();
             }
+            case 17 -> {
+                return new BLK_INTERACTIVE_CRAFTING_BENCH(gm);
+            }
         }
         return null;
     }
@@ -191,8 +194,11 @@ public class Map {
         for (Integer[] ints: List){
             switch (ints[0]){
                 case 0 -> buildTree(ints[1],ints[2]);
+                case 1 -> buildMineshaft();
             }
         }
+    }
+    private void buildMineshaft() {
     }
     public void buildTree(int x, int y){
         blockSelector(15,x,y - 1);
@@ -206,7 +212,7 @@ public class Map {
     public void updateHitBoxes(){
         for (Entity block: gm.p.getOnlyVisibleBlocks()) {
             if(block != null){
-                if(!block.penetrable){
+                if(!block.isPenetrable){
                     checkHitBoxFromBlock(block.point);
                 }
             }
@@ -214,22 +220,22 @@ public class Map {
     }
     public void checkHitBoxFromBlock(Point i){
         if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25) != null){
-            if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).penetrable){
+            if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).isPenetrable){
                 gm.blocks.get(i).hitTop = true;
             }
         }
         if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25) != null){
-            if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).penetrable){
+            if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).isPenetrable){
                 gm.blocks.get(i).hitBottom = true;
             }
         }
         if(gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y) != null){
-            if(gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).penetrable){
+            if(gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).isPenetrable){
                 gm.blocks.get(i).hitRight = true;
             }
         }
         if(gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y) != null){
-            if(gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).penetrable){
+            if(gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).isPenetrable){
                 gm.blocks.get(i).hitLeft = true;
             }
         }
@@ -239,7 +245,7 @@ public class Map {
             if(block != null){
                 g.setColor(Color.blue);
                 block.drawBlock(g,gm.p,gm);
-                if(gm.debug){
+                if(gm.isDebug){
                     g.setColor(Color.red);
                     block.drawHitBox(g,gm.p);
                     g.setColor(Color.blue);
@@ -262,7 +268,7 @@ public class Map {
         Point mouseC = gm.mml.getMouseBlockHover(mouseCoordinates);
         Entity block = gm.blocks.get(mouseC);
         if(block != null){
-            if (block.breakable) {
+            if (block.isBreakable) {
                 if (block.health - gm.p.currentMiningDamage <= 0) {
                     if (block.harvestable(gm.p)) {
                         gm.addMessage("Harvested " + block.getName(), 120);
@@ -289,7 +295,13 @@ public class Map {
     public void interactWorld(Point mouseCoordinates, Entity entity){
         Point mouseC = gm.mml.getMouseBlockHover(mouseCoordinates);
         if(gm.p.hotbar.getKeyFromCoordinates(gm.p.hotbar.inventorySpaceX,0) != null){
-            placeBlock(mouseC,entity);
+            if(gm.p.hotbar.getKeyFromCoordinates(gm.p.hotbar.inventorySpaceX,0).isPlacable){
+                placeBlock(mouseC,entity);
+            }
+            else{
+                interactBlock(mouseC);
+            }
+
         }
         else{
             interactBlock(mouseC);
@@ -298,13 +310,12 @@ public class Map {
     public void interactBlock(Point mouseC){
         Entity block = gm.blocks.get(mouseC);
         if(block != null){
-            if(block.interactive){
+            if(block.isInteractive){
                 block.interact(gm);
             }
         }
     }
     public void placeBlock(Point mouseC, Entity entity){
-        if(entity.isPlacable){
             updateHitBoxes();
             for (Entity block: gm.p.getOnlyVisibleBlocks()) {
                 if(block != null){
@@ -329,6 +340,5 @@ public class Map {
                     }
                 }
             }
-        }
     }
 }
