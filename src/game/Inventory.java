@@ -1,10 +1,12 @@
 package game;
 
 import game.Entity.Entity;
+import game.Entity.InventoryItem;
 
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Inventory implements Serializable{
@@ -21,18 +23,18 @@ public class Inventory implements Serializable{
         this.maxSize = height*width;
         inventory = new LinkedHashMap<>(maxSize);
     }
-    public LinkedHashMap<Entity, Integer> inventory;
-    public void sortInventory(Entity current) {
-        for (java.util.Map.Entry<Entity, Integer> entry : inventory.entrySet()) {
-            if(Objects.equals(entry.getKey().getName(), current.getName()) && entry.getKey() != current){
-                if(entry.getValue() + inventory.get(current) <= entry.getKey().stackSize){
-                    entry.setValue(entry.getValue() + inventory.get(current));
+    public LinkedHashMap<Point, InventoryItem> inventory;
+    public void sortInventory(Point current) {
+        for (java.util.Map.Entry<Point, InventoryItem> entry : inventory.entrySet()) {
+            if(Objects.equals(entry.getValue().entity.getName(), inventory.get(current).entity.getName()) && entry.getKey() != current){
+                if(entry.getValue().amount + inventory.get(current).amount <= entry.getValue().entity.stackSize){
+                    entry.setValue(new InventoryItem(inventory.get(current).entity, entry.getValue().amount + inventory.get(current).amount));
                     inventory.remove(current);
                     break;
                 }
                 else{
-                    inventory.replace(current, (entry.getValue() - entry.getKey().stackSize) + inventory.get(current));
-                    entry.setValue(entry.getKey().stackSize);
+                    inventory.replace(new Point(1,1),new InventoryItem(inventory.get(current).entity, (entry.getValue().amount - entry.getValue().entity.stackSize) + inventory.get(current).amount));
+                    entry.setValue(new InventoryItem(entry.getValue().entity,entry.getValue().entity.stackSize));
                 }
             }
         }
@@ -41,8 +43,8 @@ public class Inventory implements Serializable{
         int lastX = 0;
         int lastY = 0;
         Point point = new Point(lastX,lastY);
-        for (java.util.Map.Entry<Entity, Integer> entry : inventory.entrySet()) {
-            if(entry.getKey().inventoryX == lastX && entry.getKey().inventoryY == lastY){
+        for (java.util.Map.Entry<Point, InventoryItem> entry : inventory.entrySet()) {
+            if(entry.getKey().x == lastX && entry.getKey().y == lastY){
                 lastX++;
             }
             if(lastX >= 10){
@@ -54,47 +56,44 @@ public class Inventory implements Serializable{
         return point;
     }
     public void changeItemInInventory(){
-        Entity firstEntry = null;
-        Entity secondEntry = null;
-        for (java.util.Map.Entry<Entity, Integer> entry : inventory.entrySet()) {
-            if(entry.getKey().inventoryX == activeInventorySpace.x && entry.getKey().inventoryY == activeInventorySpace.y){
-                firstEntry = entry.getKey();
-            } else if (entry.getKey().inventoryX == activeInventorySpaceTwo.x && entry.getKey().inventoryY == activeInventorySpaceTwo.y) {
-                secondEntry = entry.getKey();
+        Map.Entry<Point, InventoryItem> firstEntry = null;
+        Map.Entry<Point, InventoryItem> secondEntry = null;
+        for (java.util.Map.Entry<Point, InventoryItem> entry : inventory.entrySet()) {
+            if(entry.getKey().x == activeInventorySpace.x && entry.getKey().y == activeInventorySpace.y){
+                firstEntry = entry;
+            } else if (entry.getKey().x == activeInventorySpaceTwo.x && entry.getKey().y == activeInventorySpaceTwo.y) {
+                secondEntry = entry;
             }
         }
         if(firstEntry != null && secondEntry != null){
-            int swapX = firstEntry.inventoryX;
-            int swapY = firstEntry.inventoryY;
-            firstEntry.inventoryX = secondEntry.inventoryX;
-            firstEntry.inventoryY = secondEntry.inventoryY;
-            secondEntry.inventoryX = swapX;
-            secondEntry.inventoryY= swapY;
+            InventoryItem swap = firstEntry.getValue();
+            inventory.replace(firstEntry.getKey(),secondEntry.getValue());
+            inventory.replace(secondEntry.getKey(),swap);
         }
         else if (firstEntry != null){
-            firstEntry.inventoryX = activeInventorySpaceTwo.x;
-            firstEntry.inventoryY = activeInventorySpaceTwo.y;
+            inventory.replace(activeInventorySpaceTwo,firstEntry.getValue());
+            inventory.remove(firstEntry.getKey());
         }
     }
     public void splitItemInInventory(){
-        Entity firstEntry = null;
-        Entity secondEntry = null;
-        for (java.util.Map.Entry<Entity, Integer> entry : inventory.entrySet()) {
-            if(entry.getKey().inventoryX == activeInventorySpace.x && entry.getKey().inventoryY == activeInventorySpace.y){
-                firstEntry = entry.getKey();
-            } else if (entry.getKey().inventoryX == activeInventorySpaceTwo.x && entry.getKey().inventoryY == activeInventorySpaceTwo.y) {
-                secondEntry = entry.getKey();
+        Map.Entry<Point, InventoryItem> firstEntry = null;
+        Map.Entry<Point, InventoryItem> secondEntry = null;
+        for (java.util.Map.Entry<Point, InventoryItem> entry : inventory.entrySet()) {
+            if(entry.getKey().x == activeInventorySpace.x && entry.getKey().y == activeInventorySpace.y){
+                firstEntry = entry;
+            } else if (entry.getKey().x == activeInventorySpaceTwo.x && entry.getKey().y == activeInventorySpaceTwo.y) {
+                secondEntry = entry;
             }
         }
         if(firstEntry != null && secondEntry == null){
-            if(inventory.get(firstEntry) % 2 == 0){
-                inventory.replace(firstEntry,inventory.get(firstEntry),inventory.get(firstEntry)/2);
-                inventory.put(firstEntry,inventory.get(firstEntry)/2);
+            if(firstEntry.getValue().amount % 2 == 0){
+                inventory.replace(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, firstEntry.getValue().amount/2));
+                inventory.put(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, firstEntry.getValue().amount/2));
                 System.out.println("Gerade");
             }
             else{
-                inventory.replace(firstEntry,inventory.get(firstEntry),inventory.get(firstEntry)/2 - 1);
-                inventory.put(secondEntry,inventory.get(firstEntry)/2 + 1);
+                inventory.replace(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, firstEntry.getValue().amount/2 - 1));
+                inventory.put(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, firstEntry.getValue().amount/2 + 1));
                 System.out.println("Ungerade");
             }
         }
@@ -104,13 +103,13 @@ public class Inventory implements Serializable{
         Entity entityInv2 = null;
         int inventoryInt = 0;
         int inventoryInt2 = 0;
-        for (java.util.Map.Entry<Entity, Integer> entry : inventory.entrySet()) {
+        for (java.util.Map.Entry<Point, InventoryItem> entry : inventory.entrySet()) {
             if(entry.getKey().inventoryX == inventorySpaceX && entry.getKey().inventoryY == inventorySpaceY){
                 entityInv = entry.getKey();
                 inventoryInt = entry.getValue();
             }
         }
-        for (java.util.Map.Entry<Entity, Integer> entry : inventory2.inventory.entrySet()) {
+        for (java.util.Map.Entry<Point, InventoryItem> entry : inventory2.inventory.entrySet()) {
             if(entry.getKey().inventoryX == inventory2.inventorySpaceX && entry.getKey().inventoryY == inventory2.inventorySpaceY){
                 entityInv2 = entry.getKey();
                 inventoryInt2 = entry.getValue();

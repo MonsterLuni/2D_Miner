@@ -2,6 +2,7 @@ package game;
 
 import game.Entity.Blocks.*;
 import game.Entity.Entity;
+import game.Entity.InventoryItem;
 import game.Entity.Items.ITM_IRON_BAR;
 
 import java.awt.*;
@@ -274,10 +275,10 @@ public class Map {
                         gm.addMessage("Harvested " + block.getName(), 120);
                         Entity currentEntity = getNewBlockFromID(block.id);
                         if (currentEntity != null) {
-                            currentEntity.inventoryX = gm.p.inv.getFirstFreeInventorySpace().x;
-                            currentEntity.inventoryY = gm.p.inv.getFirstFreeInventorySpace().y;
-                            gm.p.inv.inventory.put(currentEntity, currentEntity.dropAmount);
-                            gm.p.inv.sortInventory(currentEntity);
+                            // nimm point und amch halt sachen bitte geh nachher bitte niifgzvbwuioevfziufvudf9wefvwez
+                            Point point = gm.p.inv.getFirstFreeInventorySpace();
+                            gm.p.inv.inventory.put(point,new InventoryItem(currentEntity, currentEntity.dropAmount));
+                            gm.p.inv.sortInventory(point);
                         }
                     }
                     gm.playSound("attackBlock.wav");
@@ -326,13 +327,14 @@ public class Map {
                             entity.Y = 0;
                             blockSelector(entity.id,(mouseC.x) / 25,(mouseC.y)/25);
                             gm.playSound("place.wav");
-                            for (java.util.Map.Entry<Entity, Integer> entry : gm.p.hotbar.inventory.entrySet()) {
-                                if(entry.getKey().inventoryX == gm.p.hotbar.inventorySpaceX){
-                                    if(entry.getValue() - 1 <= 0){
+                            for (java.util.Map.Entry<Point, InventoryItem> entry : gm.p.hotbar.inventory.entrySet()) {
+                                if(entry.getKey().x == gm.p.hotbar.inventorySpaceX){
+                                    if(entry.getValue().amount - 1 <= 0){
                                         gm.p.hotbar.inventory.remove(entry.getKey());
                                     }
                                     else{
-                                        entry.setValue(entry.getValue() - 1);
+                                        entry.getValue().amount = entry.getValue().amount - 1;
+                                        entry.setValue(new InventoryItem(entry.getValue().entity, entry.getValue().amount));
                                     }
                                 }
                             }
