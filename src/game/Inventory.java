@@ -64,15 +64,28 @@ public class Inventory implements Serializable{
                 secondEntry = entry;
             }
         }
-        if(firstEntry != null && secondEntry != null){
-            InventoryItem swap = firstEntry.getValue();
-            inventory.replace(firstEntry.getKey(),secondEntry.getValue());
-            inventory.replace(secondEntry.getKey(),swap);
-        }
-        else if (firstEntry != null){
-            // warum??
-            inventory.put(new Point(activeInventorySpaceTwo.x,activeInventorySpaceTwo.y),firstEntry.getValue());
-            inventory.remove(firstEntry.getKey());
+        if(!activeInventorySpace.equals(activeInventorySpaceTwo)){
+            if(firstEntry != null && secondEntry != null){
+                if(firstEntry.getValue().entity.id == secondEntry.getValue().entity.id){
+                    if(firstEntry.getValue().amount + secondEntry.getValue().amount <= firstEntry.getValue().entity.stackSize){
+                        inventory.replace(secondEntry.getKey(),new InventoryItem(secondEntry.getValue().entity,secondEntry.getValue().amount + firstEntry.getValue().amount));
+                        inventory.remove(firstEntry.getKey());
+                    }
+                    else{
+                        inventory.replace(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity,(secondEntry.getValue().amount - secondEntry.getValue().entity.stackSize) + firstEntry.getValue().amount));
+                        inventory.replace(secondEntry.getKey(),new InventoryItem(secondEntry.getValue().entity,secondEntry.getValue().entity.stackSize));
+                    }
+                } else{
+                    InventoryItem swap = firstEntry.getValue();
+                    inventory.replace(firstEntry.getKey(),secondEntry.getValue());
+                    inventory.replace(secondEntry.getKey(),swap);
+                }
+            }
+            else if (firstEntry != null){
+                // warum??
+                inventory.put(new Point(activeInventorySpaceTwo.x,activeInventorySpaceTwo.y),firstEntry.getValue());
+                inventory.remove(firstEntry.getKey());
+            }
         }
     }
     public void splitItemInInventory(){
@@ -87,14 +100,20 @@ public class Inventory implements Serializable{
         }
         if(firstEntry != null && secondEntry == null){
             if(firstEntry.getValue().amount % 2 == 0){
-                inventory.replace(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, firstEntry.getValue().amount/2));
-                inventory.put(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, firstEntry.getValue().amount/2));
-                System.out.println("Gerade");
+                int amount = firstEntry.getValue().amount/2;
+                inventory.replace(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, amount));
+                inventory.put(new Point(activeInventorySpaceTwo.x,activeInventorySpaceTwo.y),new InventoryItem(firstEntry.getValue().entity, amount));
             }
             else{
-                inventory.replace(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, firstEntry.getValue().amount/2 - 1));
-                inventory.put(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, firstEntry.getValue().amount/2 + 1));
-                System.out.println("Ungerade");
+                if(firstEntry.getValue().amount == 1){
+                    inventory.remove(firstEntry.getKey());
+                    inventory.put(new Point(activeInventorySpaceTwo.x,activeInventorySpaceTwo.y),new InventoryItem(firstEntry.getValue().entity, 1));
+                }
+                else{
+                    int amount = firstEntry.getValue().amount/2;
+                    inventory.replace(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, amount));
+                    inventory.put(new Point(activeInventorySpaceTwo.x,activeInventorySpaceTwo.y),new InventoryItem(firstEntry.getValue().entity, amount + 1));
+                }
             }
         }
     }

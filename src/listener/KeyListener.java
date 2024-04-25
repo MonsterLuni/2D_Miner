@@ -4,13 +4,12 @@ import game.GameManager;
 import game.Inventory;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class KeyListener implements java.awt.event.KeyListener {
     public GameManager gm;
     public Inventory primaryInv;
     public Inventory secondaryInv;
+    public Inventory currentInventory;
     public Inventory[] choosableInventories;
     public int chosenOne = 0;
     public KeyListener(GameManager gm){
@@ -93,9 +92,8 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_RIGHT -> changeInventoryPlace(secondaryInv,1,0);
             // --------------
             case KeyEvent.VK_TAB -> changeSecondaryInventory();
-            case KeyEvent.VK_SPACE -> selectInventoryPlace(primaryInv,true);
-            case KeyEvent.VK_ENTER -> selectInventoryPlace(secondaryInv,true);
-            case KeyEvent.VK_SHIFT -> selectInventoryPlace(primaryInv,false);
+            case KeyEvent.VK_SPACE -> selectInventoryPlace(currentInventory,true);
+            case KeyEvent.VK_SHIFT -> selectInventoryPlace(currentInventory,false);
             case KeyEvent.VK_F -> primaryInv.swapInventories(secondaryInv);
         }
     }
@@ -110,6 +108,7 @@ public class KeyListener implements java.awt.event.KeyListener {
         inv.activeInventorySpaceTwo.y = -1;
     }
     private void changeInventoryPlace(Inventory inv, int x, int y) {
+        currentInventory = inv;
         if(inv.inventorySpaceX + x >= 0 && inv.inventorySpaceX + x <= (inv.width/25) - 1){
             inv.inventorySpaceX += x;
         }

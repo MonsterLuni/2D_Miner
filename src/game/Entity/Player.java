@@ -40,7 +40,7 @@ public class Player extends Living {
         height = defaultHeight;
         X = gm.ui.screenWidth/2;
         Y = gm.ui.screenHeight/2 - defaultHeight;
-        hotbar.inventory.put(new Point(3,3),new InventoryItem(new ITM_PICKAXE_BEDROCK(),1));
+        hotbar.inventory.put(new Point(0,0),new InventoryItem(new ITM_PICKAXE_BEDROCK(),1));
         inv = new Inventory(10,10);
         inv.inventory.put(new Point(3,4),new InventoryItem(new BLK_INTERACTIVE_CRAFTING_BENCH(gm),1));
         switchHotbar(hotbar.inventorySpaceX);

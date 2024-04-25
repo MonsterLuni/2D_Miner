@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="Add Inventory split + error while doing so :D">
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_CRAFTING_BENCH.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_CRAFTING_BENCH.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/GameManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,14 +184,6 @@
       <workItem from="1713681663540" duration="13554000" />
       <workItem from="1713705578075" duration="5325000" />
       <workItem from="1713850623563" duration="16888000" />
-    </task>
-    <task id="LOCAL-00006" summary="hitboxes now show properly to all sides. hitbox top works fine&#10;every other not.">
-      <option name="closed" value="true" />
-      <created>1704308953424</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1704308953424</updated>
     </task>
     <task id="LOCAL-00007" summary="hitbox top, left and right work fine now. Only bottom one is left.">
       <option name="closed" value="true" />
@@ -584,14 +569,21 @@
       <option name="project" value="LOCAL" />
       <updated>1713875493786</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Inventory now probably completely altered to use HashMap&lt;Point, InventoryItem&gt;">
+      <option name="closed" value="true" />
+      <created>1714065186036</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1714065186037</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="made #12 Items can now be transferred between hotbar and Inventory." />
     <MESSAGE value="made code prettier" />
     <MESSAGE value="add id to every block so that they are easier to place. Made blocks value display in hotbar +" />
     <MESSAGE value="Changed how Inventory works, now it's a class and can easily transfer items between them." />
@@ -616,7 +608,8 @@
     <MESSAGE value="Add Cave generation and improved Code" />
     <MESSAGE value="Add Biome Desert and more" />
     <MESSAGE value="Add Inventory split + error while doing so :D" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Inventory split + error while doing so :D" />
+    <MESSAGE value="Inventory now probably completely altered to use HashMap&lt;Point, InventoryItem&gt;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Inventory now probably completely altered to use HashMap&lt;Point, InventoryItem&gt;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
