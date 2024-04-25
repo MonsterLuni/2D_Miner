@@ -1,11 +1,11 @@
 package game.Entity.Blocks;
 
 import game.Entity.Entity;
+import game.Entity.InventoryItem;
 import game.GameManager;
 import game.Inventory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.*;
 
 public class BLK_INTERACTIVE_CRAFTING_BENCH extends Entity {
     GameManager gm;
@@ -43,9 +43,9 @@ public class BLK_INTERACTIVE_CRAFTING_BENCH extends Entity {
                 for (int j = 0; j < 3; j++) {
                     System.out.println((i * 3) + j);
                     if (!fault) {
-                        if (inventory.getKeyFromCoordinates(i, j) == null && recipe[(i * 3) + j] != -1) {
+                        if (inventory.getEntryFromCoordinates(i, j) == null && recipe[(i * 3) + j] != -1) {
                             fault = true;
-                        } else if (inventory.getKeyFromCoordinates(i, j) != null && recipe[(i * 3) + j] != inventory.getKeyFromCoordinates(i, j).id) {
+                        } else if (inventory.getEntryFromCoordinates(i, j) != null && recipe[(i * 3) + j] != inventory.getEntryFromCoordinates(i, j).getValue().entity.id) {
                             fault = true;
                         }
                     }
@@ -53,7 +53,7 @@ public class BLK_INTERACTIVE_CRAFTING_BENCH extends Entity {
             }
             if (!fault) {
                 inventory.inventory.clear();
-                output.inventory.put(gm.map.getNewBlockFromID(recipe[9]), 1);
+                output.inventory.put(new Point(0,0),new InventoryItem(gm.map.getNewBlockFromID(recipe[9]), 1));
                 break;
             }
         }

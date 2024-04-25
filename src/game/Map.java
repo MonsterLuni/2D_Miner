@@ -293,11 +293,11 @@ public class Map {
             }
         }
     }
-    public void interactWorld(Point mouseCoordinates, Entity entity){
+    public void interactWorld(Point mouseCoordinates){
         Point mouseC = gm.mml.getMouseBlockHover(mouseCoordinates);
-        if(gm.p.hotbar.getKeyFromCoordinates(gm.p.hotbar.inventorySpaceX,0) != null){
-            if(gm.p.hotbar.getKeyFromCoordinates(gm.p.hotbar.inventorySpaceX,0).isPlacable){
-                placeBlock(mouseC,entity);
+        if(gm.p.hotbar.getEntryFromCoordinates(gm.p.hotbar.inventorySpaceX,0) != null){
+            if(gm.p.hotbar.getEntryFromCoordinates(gm.p.hotbar.inventorySpaceX,0).getValue().entity.isPlacable){
+                placeBlock(mouseC,gm.p.hotbar.getEntryFromCoordinates(gm.p.hotbar.inventorySpaceX,0).getValue().entity);
             }
             else{
                 interactBlock(mouseC);

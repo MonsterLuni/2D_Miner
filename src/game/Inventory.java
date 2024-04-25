@@ -1,6 +1,5 @@
 package game;
 
-import game.Entity.Entity;
 import game.Entity.InventoryItem;
 
 import java.awt.Point;
@@ -59,9 +58,9 @@ public class Inventory implements Serializable{
         Map.Entry<Point, InventoryItem> firstEntry = null;
         Map.Entry<Point, InventoryItem> secondEntry = null;
         for (java.util.Map.Entry<Point, InventoryItem> entry : inventory.entrySet()) {
-            if(entry.getKey().x == activeInventorySpace.x && entry.getKey().y == activeInventorySpace.y){
+            if(entry.getKey().equals(activeInventorySpace)){
                 firstEntry = entry;
-            } else if (entry.getKey().x == activeInventorySpaceTwo.x && entry.getKey().y == activeInventorySpaceTwo.y) {
+            } else if (entry.getKey().equals(activeInventorySpaceTwo)) {
                 secondEntry = entry;
             }
         }
@@ -71,7 +70,8 @@ public class Inventory implements Serializable{
             inventory.replace(secondEntry.getKey(),swap);
         }
         else if (firstEntry != null){
-            inventory.replace(activeInventorySpaceTwo,firstEntry.getValue());
+            // warum??
+            inventory.put(new Point(activeInventorySpaceTwo.x,activeInventorySpaceTwo.y),firstEntry.getValue());
             inventory.remove(firstEntry.getKey());
         }
     }
@@ -99,51 +99,37 @@ public class Inventory implements Serializable{
         }
     }
     public void swapInventories(Inventory inventory2){
-        Entity entityInv = null;
-        Entity entityInv2 = null;
-        int inventoryInt = 0;
-        int inventoryInt2 = 0;
+        Map.Entry<Point, InventoryItem> entityInv = null;
+        Map.Entry<Point, InventoryItem> entityInv2 = null;
         for (java.util.Map.Entry<Point, InventoryItem> entry : inventory.entrySet()) {
-            if(entry.getKey().inventoryX == inventorySpaceX && entry.getKey().inventoryY == inventorySpaceY){
-                entityInv = entry.getKey();
-                inventoryInt = entry.getValue();
+            if(entry.getKey().x == inventorySpaceX && entry.getKey().y == inventorySpaceY){
+                entityInv = entry;
             }
         }
         for (java.util.Map.Entry<Point, InventoryItem> entry : inventory2.inventory.entrySet()) {
-            if(entry.getKey().inventoryX == inventory2.inventorySpaceX && entry.getKey().inventoryY == inventory2.inventorySpaceY){
-                entityInv2 = entry.getKey();
-                inventoryInt2 = entry.getValue();
+            if(entry.getKey().x == inventory2.inventorySpaceX && entry.getKey().y == inventory2.inventorySpaceY){
+                entityInv2 = entry;
             }
         }
         if(entityInv != null && entityInv2 != null){
-            int invX = entityInv.inventoryX;
-            int invY = entityInv.inventoryY;
-            entityInv.inventoryX = entityInv2.inventoryX;
-            entityInv.inventoryY = entityInv2.inventoryY;
-            entityInv2.inventoryX = invX;
-            entityInv2.inventoryY = invY;
-            inventory.put(entityInv2,inventoryInt2);
-            inventory.remove(entityInv);
-            inventory2.inventory.put(entityInv,inventoryInt);
-            inventory2.inventory.remove(entityInv2);
+            InventoryItem invValue = entityInv.getValue();
+            entityInv.setValue(entityInv2.getValue());
+            entityInv2.setValue(invValue);
         }
         else if (entityInv != null){
-            entityInv.inventoryX = inventory2.inventorySpaceX;
-            entityInv.inventoryY = inventory2.inventorySpaceY;
-            inventory2.inventory.put(entityInv,inventoryInt);
-            inventory.remove(entityInv);
+            System.out.println(new Point(inventory2.inventorySpaceX,inventory2.inventorySpaceY));
+            inventory2.inventory.put(new Point(inventory2.inventorySpaceX,inventory2.inventorySpaceY),entityInv.getValue());
+            inventory.remove(entityInv.getKey());
         }
         else if(entityInv2 != null){
-            entityInv2.inventoryX = inventorySpaceX;
-            entityInv2.inventoryY = inventorySpaceY;
-            inventory.put(entityInv2,inventoryInt2);
-            inventory2.inventory.remove(entityInv2);
+            inventory.put(new Point(inventorySpaceX,inventorySpaceY),entityInv2.getValue());
+            inventory2.inventory.remove(entityInv2.getKey());
         }
     }
-    public Entity getKeyFromCoordinates(int x, int y) {
-        for (java.util.Map.Entry<Entity, Integer> entry : inventory.entrySet()) {
-            if(entry.getKey().inventoryX == x && entry.getKey().inventoryY == y){
-                return entry.getKey();
+    public Map.Entry<Point, InventoryItem> getEntryFromCoordinates(int x, int y) {
+        for (java.util.Map.Entry<Point, InventoryItem> entry : inventory.entrySet()) {
+            if(entry.getKey().x == x && entry.getKey().y == y){
+                return entry;
             }
         }
         return null;

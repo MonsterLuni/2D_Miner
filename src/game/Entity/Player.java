@@ -2,7 +2,6 @@ package game.Entity;
 
 import game.Entity.Blocks.BLK_INTERACTIVE_CRAFTING_BENCH;
 import game.Entity.Items.ITM_PICKAXE_BEDROCK;
-import game.Entity.Items.ITM_PICKAXE_FEATHER;
 import game.Entity.Living.Living;
 import game.GameManager;
 import game.Inventory;
@@ -41,9 +40,9 @@ public class Player extends Living {
         height = defaultHeight;
         X = gm.ui.screenWidth/2;
         Y = gm.ui.screenHeight/2 - defaultHeight;
-        hotbar.inventory.put(new ITM_PICKAXE_BEDROCK(),1);
+        hotbar.inventory.put(new Point(3,3),new InventoryItem(new ITM_PICKAXE_BEDROCK(),1));
         inv = new Inventory(10,10);
-        inv.inventory.put(new BLK_INTERACTIVE_CRAFTING_BENCH(gm),1);
+        inv.inventory.put(new Point(3,4),new InventoryItem(new BLK_INTERACTIVE_CRAFTING_BENCH(gm),1));
         switchHotbar(hotbar.inventorySpaceX);
     }
     public static BufferedImage flipHorizontal(Image image) {
@@ -70,31 +69,33 @@ public class Player extends Living {
         AffineTransform old = g2d.getTransform();
         int spriteY = Y;
         int spriteX = X;
-        Entity hotbarElement = hotbar.getKeyFromCoordinates(hotbar.inventorySpaceX,0);
-        if(hotbarElement != null){
-            if (isLookingRight) {
-                spriteSelected = gm.ah.getPictureForID(hotbarElement.id);
-                if (gm.ml.leftButtonPressed) {
-                    g2d.rotate(Math.toRadians(35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
+        try{
+            Entity hotbarElement = hotbar.getEntryFromCoordinates(hotbar.inventorySpaceX,0).getValue().entity;
+            if(hotbarElement != null){
+                if (isLookingRight) {
+                    spriteSelected = gm.ah.getPictureForID(hotbarElement.id);
+                    if (gm.ml.leftButtonPressed) {
+                        g2d.rotate(Math.toRadians(35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
+                    } else {
+                        g2d.rotate(Math.toRadians(25), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
+                    }
                 } else {
-                    g2d.rotate(Math.toRadians(25), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
+                    spriteSelected = flipHorizontal(gm.ah.getPictureForID(hotbarElement.id));
+                    spriteY += 10;
+                    if (gm.ml.leftButtonPressed) {
+                        g2d.rotate(Math.toRadians(-35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
+                    } else {
+                        g2d.rotate(Math.toRadians(-25), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
+                    }
                 }
-            } else {
-                spriteSelected = flipHorizontal(gm.ah.getPictureForID(hotbarElement.id));
-                spriteY += 10;
-                if (gm.ml.leftButtonPressed) {
-                    g2d.rotate(Math.toRadians(-35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
-                } else {
-                    g2d.rotate(Math.toRadians(-25), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
-                }
+                g2d.drawImage(spriteSelected,spriteX,spriteY,hotbarElement.width,hotbarElement.height,null);
             }
-            g2d.drawImage(spriteSelected,spriteX,spriteY,hotbarElement.width,hotbarElement.height,null);
-        }
-        g2d.setTransform(old);
+            g2d.setTransform(old);
+        }catch (NullPointerException ignored){}
     }
     public void switchHotbar(int i){
-        Entity hotbarElement = hotbar.getKeyFromCoordinates(i,0);
         try{
+            Entity hotbarElement = hotbar.getEntryFromCoordinates(i,0).getValue().entity;
             currentMiningDamage = hotbarElement.miningDamage;
             currentHardness = hotbarElement.hardness;
         }catch (NullPointerException e){

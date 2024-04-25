@@ -1,6 +1,7 @@
 package game;
 
 import game.Entity.Entity;
+import game.Entity.InventoryItem;
 import game.Entity.Living.Living;
 
 import javax.swing.*;
@@ -200,12 +201,12 @@ public class UI extends JFrame {
                     }
                 }
                 imageG.drawRect(width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),gm.map.tileSize,gm.map.tileSize);
-                for (java.util.Map.Entry<Entity, Integer> entry : inv.inventory.entrySet()) {
+                for (java.util.Map.Entry<Point, InventoryItem> entry : inv.inventory.entrySet()) {
                     if(entry.getKey() != null){
-                        if(entry.getKey().inventoryX == i && entry.getKey().inventoryY == l){
-                            imageG.drawImage(gm.ah.getPictureForID(entry.getKey().id),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),null);
-                            if(entry.getValue() > 1){
-                                imageG.drawString(String.valueOf(entry.getValue()),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)) + gm.map.tileSize);
+                        if(entry.getKey().x == i && entry.getKey().y == l){
+                            imageG.drawImage(gm.ah.getPictureForID(entry.getValue().entity.id),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),null);
+                            if(entry.getValue().amount > 1){
+                                imageG.drawString(String.valueOf(entry.getValue().amount),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)) + gm.map.tileSize);
                             }
                         }
                     }

@@ -14,8 +14,6 @@ public abstract class Entity implements Serializable{
     public boolean isInteractive,isSmeltable,isFalling,isLiquid,isFuel,isBreakable = true,isPenetrable,isPlacable = true;
     public int X;
     public int Y;
-    public int inventoryX;
-    public int inventoryY;
     public int id;
     public int width;
     public int height;

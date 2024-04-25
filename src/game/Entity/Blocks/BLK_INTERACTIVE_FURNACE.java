@@ -1,9 +1,12 @@
 package game.Entity.Blocks;
 
 import game.Entity.Entity;
+import game.Entity.InventoryItem;
 import game.GameManager;
 import game.Inventory;
 import game.Wait;
+
+import java.awt.*;
 
 public class BLK_INTERACTIVE_FURNACE extends Entity {
     GameManager gm;
@@ -36,8 +39,8 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
         gm.currentInteractState = GameManager.furnaceInteractState;
     }
     public void checkFurnace() {
-        if(invTop.getKeyFromCoordinates(0,0) != null && invFuel.getKeyFromCoordinates(0,0) != null) {
-            if (invTop.getKeyFromCoordinates(0, 0).isSmeltable && invFuel.getKeyFromCoordinates(0, 0).isFuel) {
+        if(invTop.getEntryFromCoordinates(0,0) != null && invFuel.getEntryFromCoordinates(0,0) != null) {
+            if (invTop.getEntryFromCoordinates(0, 0).getValue().entity.isSmeltable && invFuel.getEntryFromCoordinates(0, 0).getValue().entity.isFuel) {
                 System.out.println("AM SCHMELZEN");
                 if(oven.waitForFrames(60)){
                     checkRecipe();
@@ -48,14 +51,14 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
     private void checkRecipe() {
         Integer[][] recipes = {{6,9}};
         for (Integer[] recipe : recipes){
-            if(recipe[0] == invTop.getKeyFromCoordinates(0, 0).id){
-                if(invTop.inventory.get(invTop.getKeyFromCoordinates(0,0)) - 1 > 0){
-                    invTop.inventory.replace(invTop.getKeyFromCoordinates(0,0), invTop.inventory.get(invTop.getKeyFromCoordinates(0,0)) - 1);
+            if(recipe[0] == invTop.getEntryFromCoordinates(0, 0).getValue().entity.id){
+                if(invTop.getEntryFromCoordinates(0,0).getValue().amount - 1 > 0){
+                    invTop.inventory.replace(invTop.getEntryFromCoordinates(0,0).getKey(), new InventoryItem(invTop.getEntryFromCoordinates(0,0).getValue().entity,invTop.getEntryFromCoordinates(0,0).getValue().amount - 1));
                 }
                 else{
-                    invTop.inventory.remove(invTop.getKeyFromCoordinates(0, 0));
+                    invTop.inventory.remove(invTop.getEntryFromCoordinates(0, 0).getKey());
                 }
-                invOutput.inventory.put(gm.map.getNewBlockFromID(recipe[1]),2);
+                invOutput.inventory.put(new Point(0,0),new InventoryItem(gm.map.getNewBlockFromID(recipe[1]),2));
             }
         }
     }

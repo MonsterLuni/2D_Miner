@@ -175,7 +175,7 @@ public class KeyListener implements java.awt.event.KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (gm.currentState){
             case GameManager.gameState -> gameStateReleased(e.getKeyCode());
-            case GameManager.inventoryState -> System.out.println("Kommt noch");
+            //case GameManager.inventoryState -> System.out.println("Kommt noch");
         }
     }
     private void gameStateReleased(int e) {

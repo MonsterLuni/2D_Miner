@@ -67,7 +67,7 @@ public class GameManager {
         ah.loadInventory();
         ah.loadHearts();
         ah.loadOxygen();
-        loopSound("HomeScreen.wav");
+        //loopSound("HomeScreen.wav");
         fpsLimiter();
     }
     public Entity getBlock(int x, int y){
