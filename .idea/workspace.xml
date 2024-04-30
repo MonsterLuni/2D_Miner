@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/GameManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,6 +183,7 @@
       <workItem from="1713681663540" duration="13554000" />
       <workItem from="1713705578075" duration="5325000" />
       <workItem from="1713850623563" duration="16888000" />
+      <workItem from="1714482047022" duration="2051000" />
     </task>
     <task id="LOCAL-00007" summary="hitbox top, left and right work fine now. Only bottom one is left.">
       <option name="closed" value="true" />

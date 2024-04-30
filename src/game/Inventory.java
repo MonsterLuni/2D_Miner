@@ -98,21 +98,21 @@ public class Inventory implements Serializable{
                 secondEntry = entry;
             }
         }
-        if(firstEntry != null && secondEntry == null){
-            if(firstEntry.getValue().amount % 2 == 0){
-                int amount = firstEntry.getValue().amount/2;
-                inventory.replace(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, amount));
-                inventory.put(new Point(activeInventorySpaceTwo.x,activeInventorySpaceTwo.y),new InventoryItem(firstEntry.getValue().entity, amount));
-            }
-            else{
-                if(firstEntry.getValue().amount == 1){
-                    inventory.remove(firstEntry.getKey());
-                    inventory.put(new Point(activeInventorySpaceTwo.x,activeInventorySpaceTwo.y),new InventoryItem(firstEntry.getValue().entity, 1));
-                }
-                else{
-                    int amount = firstEntry.getValue().amount/2;
-                    inventory.replace(firstEntry.getKey(),new InventoryItem(firstEntry.getValue().entity, amount));
-                    inventory.put(new Point(activeInventorySpaceTwo.x,activeInventorySpaceTwo.y),new InventoryItem(firstEntry.getValue().entity, amount + 1));
+        if(!activeInventorySpace.equals(activeInventorySpaceTwo)) {
+            if (firstEntry != null && secondEntry == null) {
+                if (firstEntry.getValue().amount % 2 == 0) {
+                    int amount = firstEntry.getValue().amount / 2;
+                    inventory.replace(firstEntry.getKey(), new InventoryItem(firstEntry.getValue().entity, amount));
+                    inventory.put(new Point(activeInventorySpaceTwo.x, activeInventorySpaceTwo.y), new InventoryItem(firstEntry.getValue().entity, amount));
+                } else {
+                    if (firstEntry.getValue().amount == 1) {
+                        inventory.remove(firstEntry.getKey());
+                        inventory.put(new Point(activeInventorySpaceTwo.x, activeInventorySpaceTwo.y), new InventoryItem(firstEntry.getValue().entity, 1));
+                    } else {
+                        int amount = firstEntry.getValue().amount / 2;
+                        inventory.replace(firstEntry.getKey(), new InventoryItem(firstEntry.getValue().entity, amount));
+                        inventory.put(new Point(activeInventorySpaceTwo.x, activeInventorySpaceTwo.y), new InventoryItem(firstEntry.getValue().entity, amount + 1));
+                    }
                 }
             }
         }

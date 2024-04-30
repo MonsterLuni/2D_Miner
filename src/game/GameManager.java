@@ -20,9 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class GameManager {
-
     public UI ui;
-
     private long lastTime;
     public int maxFps = 60;
     public double fps = 0;
