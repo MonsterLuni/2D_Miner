@@ -220,6 +220,10 @@ public class Map {
         }
     }
     public void checkHitBoxFromBlock(Point i){
+        gm.blocks.get(i).hitTop = false;
+        gm.blocks.get(i).hitLeft = false;
+        gm.blocks.get(i).hitRight = false;
+        gm.blocks.get(i).hitBottom = false;
         if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25) != null){
             if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).isPenetrable){
                 gm.blocks.get(i).hitTop = true;
