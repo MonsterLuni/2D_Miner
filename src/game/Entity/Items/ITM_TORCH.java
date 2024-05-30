@@ -11,7 +11,7 @@ public class ITM_TORCH extends Entity {
         this.hardness = 0;
         this.isPlacable = true;
         this.lightEmission = true;
-        this.lightLevel = 10;
+        this.lightLevel = 14;
     }
     @Override
     public String getName() {

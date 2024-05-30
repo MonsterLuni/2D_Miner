@@ -221,13 +221,16 @@ public class Map {
                     checkHitBoxFromBlock(block.point);
                 }
                 if(!block.lightEmission){
-                    block.lightLevel = checkLightLevelFromBlock(block.point) - 1;
-                    if(block.lightLevel > 15){
-                        block.lightLevel = 15;
-                    }
-                    else if(block.lightLevel < 0){
-                        block.lightLevel = 0;
-                    }
+                        block.lightLevel = checkLightLevelFromBlock(block.point) - 1;
+                        if(block.lightLevel > 15){
+                            block.lightLevel = 15;
+                        }
+                        else if(block.lightLevel < 0){
+                            block.lightLevel = 0;
+                        }
+                }
+                if(Objects.equals(block.getName(), "air") && block.lightLevel < gm.daytime){
+                    block.lightLevel = gm.daytime;
                 }
             }
         }

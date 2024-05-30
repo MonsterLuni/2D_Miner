@@ -31,6 +31,8 @@ public class UI extends JFrame {
     private final Wait wfFTwo = new Wait();
     private final Wait wfFThree = new Wait();
     private final Wait wfFFour = new Wait();
+    private final Wait dayTimer = new Wait();
+    boolean sunrise;
     public UI(GameManager gm){
         this.gm = gm;
         setSize(screenWidth, screenHeight);
@@ -147,6 +149,7 @@ public class UI extends JFrame {
         if(gm.isDebug){
             drawDebug();
         }
+        updateTime();
         updateGravity();
         updatePlayer();
         updateMonsters();
@@ -154,6 +157,29 @@ public class UI extends JFrame {
         drawAnyInventory(gm.p.hotbar,screenHeight - 50,(screenWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
         drawToImage();
     }
+
+    private void updateTime() {
+        if(dayTimer.waitforSeconds(5)){
+            System.out.println("TIME CHANGED");
+            if(sunrise){
+                if(gm.daytime + 1 <= 15){
+                    gm.daytime++;
+                }else{
+                    sunrise = false;
+                }
+            }
+            else{
+                if(gm.daytime - 1 >= 0){
+                    gm.daytime--;
+                }else{
+                    sunrise = true;
+                }
+            }
+            System.out.println(gm.daytime);
+            gm.map.updateHitBoxes();
+        }
+    }
+
     public void drawInteractiveState() {
         clearWindow(gameBackground);
         switch (gm.currentInteractState) {

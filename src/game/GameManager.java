@@ -24,6 +24,7 @@ public class GameManager {
     private long lastTime;
     public int maxFps = 60;
     public double fps = 0;
+    public int daytime = 0;
     public boolean isRunning = true;
     public boolean isDebug = false;
     public final static int menuState = 0;
