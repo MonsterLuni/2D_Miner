@@ -4,6 +4,7 @@ import game.Entity.Blocks.*;
 import game.Entity.Entity;
 import game.Entity.InventoryItem;
 import game.Entity.Items.ITM_IRON_BAR;
+import game.Entity.Items.ITM_TORCH;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -188,6 +189,9 @@ public class Map {
             case 17 -> {
                 return new BLK_INTERACTIVE_CRAFTING_BENCH(gm);
             }
+            case 18 -> {
+                return new ITM_TORCH();
+            }
         }
         return null;
     }
@@ -216,9 +220,44 @@ public class Map {
                 if(!block.isPenetrable){
                     checkHitBoxFromBlock(block.point);
                 }
+                if(!block.lightEmission){
+                    block.lightLevel = checkLightLevelFromBlock(block.point) - 1;
+                    if(block.lightLevel > 15){
+                        block.lightLevel = 15;
+                    }
+                    else if(block.lightLevel < 0){
+                        block.lightLevel = 0;
+                    }
+                }
             }
         }
     }
+
+    private int checkLightLevelFromBlock(Point i) {
+        int highest = 0;
+        if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25) != null){
+            if(highest < gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).lightLevel){
+                highest = gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).lightLevel;
+            }
+        }
+        if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25) != null){
+            if(highest < gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).lightLevel){
+                highest = gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).lightLevel;
+            }
+        }
+        if(gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y) != null){
+            if(highest < gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).lightLevel){
+                highest = gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).lightLevel;
+            }
+        }
+        if(gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y) != null){
+            if(highest < gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).lightLevel){
+                highest = gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).lightLevel;
+            }
+        }
+        return highest;
+    }
+
     public void checkHitBoxFromBlock(Point i){
         gm.blocks.get(i).hitTop = false;
         gm.blocks.get(i).hitLeft = false;

@@ -2,6 +2,7 @@ package game.Entity;
 
 import game.Entity.Blocks.BLK_INTERACTIVE_CRAFTING_BENCH;
 import game.Entity.Items.ITM_PICKAXE_BEDROCK;
+import game.Entity.Items.ITM_TORCH;
 import game.Entity.Living.Living;
 import game.GameManager;
 import game.Inventory;
@@ -41,6 +42,7 @@ public class Player extends Living {
         X = gm.ui.screenWidth/2;
         Y = gm.ui.screenHeight/2 - defaultHeight;
         hotbar.inventory.put(new Point(0,0),new InventoryItem(new ITM_PICKAXE_BEDROCK(),1));
+        hotbar.inventory.put(new Point(1,0),new InventoryItem(new ITM_TORCH(),5));
         inv = new Inventory(10,10);
         inv.inventory.put(new Point(3,4),new InventoryItem(new BLK_INTERACTIVE_CRAFTING_BENCH(gm),1));
         switchHotbar(hotbar.inventorySpaceX);

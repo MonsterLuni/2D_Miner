@@ -5,6 +5,7 @@ import game.Map;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 public abstract class Entity implements Serializable{
     public Point point;
@@ -17,6 +18,9 @@ public abstract class Entity implements Serializable{
     public int id;
     public int width;
     public int height;
+    // min 0 max 15
+    public int lightLevel = 0;
+    public boolean lightEmission;
     public int dropAmount = 1;
     public int miningDamage = 0;
     public int hardness = 0;
@@ -46,13 +50,18 @@ public abstract class Entity implements Serializable{
         hitRight = false;
         hitLeft = false;
         isPenetrable = true;
+        lightEmission = false;
         id = 3;
         isBreakable = false;
         name = blockName;
         map.updateHitBoxes();
     }
     public void drawBlock(Graphics g, Player p, GameManager gm) {
-        g.drawImage(gm.ah.getPictureForID(id),(X + p.offsetX),(Y - p.offsetY),null);
+        if(!Objects.equals(getName(), "air")){
+            g.drawImage(gm.ah.getPictureForID(id),(X + p.offsetX),(Y - p.offsetY),null);
+            g.setColor(new Color(0, 0, 0, 255 - (17 * lightLevel)));
+            g.fillRect((X + p.offsetX),(Y - p.offsetY),25,25);
+        }
     }
     public void drawBlockVertices(Graphics g, Player p){
         g.setColor(Color.BLUE);

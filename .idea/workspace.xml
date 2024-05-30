@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="inventory tweaks">
+      <change afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_TORCH.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/AssetHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/AssetHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

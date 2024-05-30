@@ -121,7 +121,7 @@ public class AssetHandler {
             case 15 -> {
                 return oak_wood;
             }
-            case 16 -> {
+            case 16, 18 -> {
                 return leave;
             }
             case 17 -> {
