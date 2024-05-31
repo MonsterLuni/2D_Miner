@@ -296,14 +296,14 @@ public class UI extends JFrame {
         imageG.drawString("Loaded Blocks: " + gm.blocks.size(),10,75);
         imageG.drawString("Updated Blocks: " + gm.p.getOnlyVisibleBlocks().length,10,100);
         imageG.drawString("Updated [Flow & Gravity] Blocks: " +  waterUpdateCount ,10,125);
-        imageG.drawString("Player Coordinates: [X:" + (gm.p.X - gm.p.offsetX) + " Y:" + (gm.p.Y + gm.p.offsetY) + "]" ,10,150);
+        imageG.drawString("Player Coordinates: [X:" + (gm.p.point.x - gm.p.offsetX) + " Y:" + (gm.p.point.y + gm.p.offsetY) + "]" ,10,150);
         imageG.drawString("Draw Grid [F2]: " + gm.map.vertices,10,175);
         imageG.drawString("Specific Block [F4]" + gm.map.specificBlockShown, 10, 200);
         imageG.drawString("Biome: " + getBiome(gm.p),10,225);
     }
     private String getBiome(Living person){
 
-        double Biome = (PerlinNoise1D.perlinNoise((((double) person.blockMiddle.X / 25) * gm.intervalOfSeed / 10),gm.seed));
+        double Biome = (PerlinNoise1D.perlinNoise((((double) person.blockMiddle.point.x / 25) * gm.intervalOfSeed / 10),gm.seed));
         if(Biome > 5){
             return "Desert";
         }
@@ -319,8 +319,8 @@ public class UI extends JFrame {
         gm.p.gravity();
         drawPlayerHealth();
 
-        if(gm.getBlock((((gm.p.X - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.Y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize)) != null){
-            if(gm.getBlock((((gm.p.X - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.Y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize)).isLiquid){
+        if(gm.getBlock((((gm.p.point.x - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.point.y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize)) != null){
+            if(gm.getBlock((((gm.p.point.x - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.point.y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize)).isLiquid){
                 if(!soundPlayed){
                     gm.playSound("water_entry.wav");
                     soundPlayed = true;
@@ -348,33 +348,33 @@ public class UI extends JFrame {
         if(wfFOne.waitForFrames(5)){
             for (Entity block: gm.p.getOnlyVisibleBlocks()){
                 if (block != null && block.isLiquid) {
-                    if (gm.getBlock(block.X, block.Y + 25) != null && !gm.getBlock(block.X, block.Y + 25).isLiquid && gm.getBlock(block.X, block.Y + 25).isPenetrable) {
-                        updateList.add(new Integer[]{block.id, block.X / 25, (block.Y / 25) + 1, 3, block.X / 25, block.Y / 25});
+                    if (gm.getBlock(block.point.x, block.point.y + 25) != null && !gm.getBlock(block.point.x, block.point.y + 25).isLiquid && gm.getBlock(block.point.x, block.point.y + 25).isPenetrable) {
+                        updateList.add(new Integer[]{block.id, block.point.x / 25, (block.point.y / 25) + 1, 3, block.point.x / 25, block.point.y / 25});
                     }
-                    else if(gm.getBlock(block.X + 25, block.Y) != null
-                            && gm.getBlock(block.X - 25, block.Y) != null
-                            && gm.getBlock(block.X + 25, block.Y).isPenetrable
-                            && !gm.getBlock(block.X+ 25, block.Y).isLiquid
-                            && gm.getBlock(block.X - 25, block.Y).isPenetrable
-                            && !gm.getBlock(block.X - 25, block.Y).isLiquid){
+                    else if(gm.getBlock(block.point.x + 25, block.point.y) != null
+                            && gm.getBlock(block.point.x - 25, block.point.y) != null
+                            && gm.getBlock(block.point.x + 25, block.point.y).isPenetrable
+                            && !gm.getBlock(block.point.x + 25, block.point.y).isLiquid
+                            && gm.getBlock(block.point.x - 25, block.point.y).isPenetrable
+                            && !gm.getBlock(block.point.x - 25, block.point.y).isLiquid){
                         double random = Math.random();
                         if(random < 0.5){
-                            updateList.add(new Integer[]{block.id, (block.X / 25) + 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
+                            updateList.add(new Integer[]{block.id, (block.point.x / 25) + 1, block.point.y / 25, 3, block.point.x / 25, block.point.y / 25});
                         }
                         else{
-                            updateList.add(new Integer[]{block.id, (block.X / 25) - 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
+                            updateList.add(new Integer[]{block.id, (block.point.x / 25) - 1, block.point.y / 25, 3, block.point.x / 25, block.point.y / 25});
                         }
                     }
-                    else if (gm.getBlock(block.X + 25, block.Y) != null && gm.getBlock(block.X + 25, block.Y).isPenetrable && !gm.getBlock(block.X+ 25, block.Y).isLiquid) {
-                        updateList.add(new Integer[]{block.id, (block.X / 25) + 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
+                    else if (gm.getBlock(block.point.x + 25, block.point.y) != null && gm.getBlock(block.point.x + 25, block.point.y).isPenetrable && !gm.getBlock(block.point.x + 25, block.point.y).isLiquid) {
+                        updateList.add(new Integer[]{block.id, (block.point.x / 25) + 1, block.point.y / 25, 3, block.point.x / 25, block.point.y / 25});
                     }
-                    else if (gm.getBlock(block.X - 25, block.Y) != null && gm.getBlock(block.X - 25, block.Y).isPenetrable && !gm.getBlock(block.X - 25, block.Y).isLiquid) {
-                        updateList.add(new Integer[]{block.id, (block.X / 25) - 1, block.Y / 25, 3, block.X / 25, block.Y / 25});
+                    else if (gm.getBlock(block.point.x - 25, block.point.y) != null && gm.getBlock(block.point.x - 25, block.point.y).isPenetrable && !gm.getBlock(block.point.x - 25, block.point.y).isLiquid) {
+                        updateList.add(new Integer[]{block.id, (block.point.x / 25) - 1, block.point.y / 25, 3, block.point.x / 25, block.point.y / 25});
                     }
                 } else if (block != null && block.isFalling) {
-                    if (gm.getBlock(block.X, block.Y + 25) != null) {
-                        if (gm.getBlock(block.X, block.Y + 25).isPenetrable) {
-                            updateList.add(new Integer[]{block.id, block.X / 25, (block.Y / 25) + 1, 3, block.X / 25, block.Y / 25});
+                    if (gm.getBlock(block.point.x, block.point.y + 25) != null) {
+                        if (gm.getBlock(block.point.x, block.point.y + 25).isPenetrable) {
+                            updateList.add(new Integer[]{block.id, block.point.x / 25, (block.point.y / 25) + 1, 3, block.point.x / 25, block.point.y / 25});
                         }
                     }
                 }

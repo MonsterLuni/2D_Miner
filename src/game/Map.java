@@ -123,7 +123,7 @@ public class Map {
                 else{
                     if(waterCalculate){
                         waterCalculate = false;
-                        for (int j = 0; gm.blocks.get(new Point(i*25,(l - 1)*25)).Y + (j * 25) > 200 + 1000; j--){
+                        for (int j = 0; gm.blocks.get(new Point(i*25,(l - 1)*25)).point.y + (j * 25) > 200 + 1000; j--){
                             if(!Objects.equals(gm.blocks.get(new Point(i*25,(l + j - 1)*25)).getName(), "sand")){
                                 blockSelector(14,i,l + j - 1); // water
                             }
@@ -137,9 +137,9 @@ public class Map {
     }
     public void blockSelector(int blockNumber, int i, int l){
         Entity temporaryEntity = getNewBlockFromID(blockNumber);
-        temporaryEntity.X = i*25;
-        temporaryEntity.Y = l*25;
-        temporaryEntity.point = new Point(temporaryEntity.X,temporaryEntity.Y);
+        temporaryEntity.point.x = i*25;
+        temporaryEntity.point.y = l*25;
+        temporaryEntity.point = new Point(temporaryEntity.point.x,temporaryEntity.point.y);
         gm.blocks.put(temporaryEntity.point,temporaryEntity);
     }
     public Entity getNewBlockFromID(int blockNumber){
@@ -235,54 +235,52 @@ public class Map {
             }
         }
     }
-
     private int checkLightLevelFromBlock(Point i) {
         int highest = 0;
-        if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25) != null){
-            if(highest < gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).lightLevel){
-                highest = gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).lightLevel;
+        if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25) != null){
+            if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel){
+                highest = gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel;
             }
         }
-        if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25) != null){
-            if(highest < gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).lightLevel){
-                highest = gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).lightLevel;
+        if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25) != null){
+            if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel){
+                highest = gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel;
             }
         }
-        if(gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y) != null){
-            if(highest < gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).lightLevel){
-                highest = gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).lightLevel;
+        if(gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y) != null){
+            if(highest < gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel){
+                highest = gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel;
             }
         }
-        if(gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y) != null){
-            if(highest < gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).lightLevel){
-                highest = gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).lightLevel;
+        if(gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y) != null){
+            if(highest < gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel){
+                highest = gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel;
             }
         }
         return highest;
     }
-
     public void checkHitBoxFromBlock(Point i){
         gm.blocks.get(i).hitTop = false;
         gm.blocks.get(i).hitLeft = false;
         gm.blocks.get(i).hitRight = false;
         gm.blocks.get(i).hitBottom = false;
-        if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25) != null){
-            if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y - 25).isPenetrable){
+        if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25) != null){
+            if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).isPenetrable){
                 gm.blocks.get(i).hitTop = true;
             }
         }
-        if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25) != null){
-            if(gm.getBlock(gm.blocks.get(i).X,gm.blocks.get(i).Y + 25).isPenetrable){
+        if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25) != null){
+            if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).isPenetrable){
                 gm.blocks.get(i).hitBottom = true;
             }
         }
-        if(gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y) != null){
-            if(gm.getBlock(gm.blocks.get(i).X + 25,gm.blocks.get(i).Y).isPenetrable){
+        if(gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y) != null){
+            if(gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).isPenetrable){
                 gm.blocks.get(i).hitRight = true;
             }
         }
-        if(gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y) != null){
-            if(gm.getBlock(gm.blocks.get(i).X - 25,gm.blocks.get(i).Y).isPenetrable){
+        if(gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y) != null){
+            if(gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).isPenetrable){
                 gm.blocks.get(i).hitLeft = true;
             }
         }
@@ -301,7 +299,7 @@ public class Map {
                     }
                     if(specificBlockShown){
                         try {
-                            gm.getBlock((((gm.p.X - gm.p.offsetX) / 25) * 25),(((gm.p.Y + gm.p.offsetY) / 25) * 25) + (gm.p.height - 25)).drawBlockSpecial(g,gm.p);
+                            gm.getBlock((((gm.p.point.x - gm.p.offsetX) / 25) * 25),(((gm.p.point.y + gm.p.offsetY) / 25) * 25) + (gm.p.height - 25)).drawBlockSpecial(g,gm.p);
                         }
                         catch (Exception e){
                             System.out.println("Out of Bounds");
@@ -328,7 +326,12 @@ public class Map {
                         }
                     }
                     gm.playSound("attackBlock.wav");
-                    block.breakBlock(this, "air");
+                    Entity newBlock = getNewBlockFromID(3);
+                    newBlock.point.x = block.point.x;
+                    newBlock.point.y = block.point.y;
+                    newBlock.point = block.point;
+                    gm.blocks.replace(block.point,newBlock);
+                    gm.map.updateHitBoxes();
                 } else {
                     block.health -= gm.p.currentMiningDamage;
                     gm.playSound("click.wav");
@@ -369,8 +372,8 @@ public class Map {
                     if(mouseC.x == block.point.x && mouseC.y == block.point.y){
                         if(Objects.equals(block.getName(), "air")){
                             gm.blocks.remove(block.point);
-                            entity.X = 0;
-                            entity.Y = 0;
+                            entity.point.x = 0;
+                            entity.point.y = 0;
                             blockSelector(entity.id,(mouseC.x) / 25,(mouseC.y)/25);
                             gm.playSound("place.wav");
                             for (java.util.Map.Entry<Point, InventoryItem> entry : gm.p.hotbar.inventory.entrySet()) {

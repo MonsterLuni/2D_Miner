@@ -4,12 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="day / night cycle now works (momentarily the ticks are every 5s) light behaves as it's supposed to">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Items/ITM_TORCH.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Items/ITM_TORCH.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/LIV_ZOMBIE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/LIV_ZOMBIE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Living/Living.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Living/Living.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,14 +191,7 @@
       <workItem from="1714482047022" duration="2427000" />
       <workItem from="1714719780582" duration="1107000" />
       <workItem from="1715582177975" duration="494000" />
-    </task>
-    <task id="LOCAL-00009" summary="Not Drawing stuff that's out of screen is now working in X and Y axis">
-      <option name="closed" value="true" />
-      <created>1704393259357</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1704393259357</updated>
+      <workItem from="1717173165830" duration="3311000" />
     </task>
     <task id="LOCAL-00010" summary="Made Code Prettier">
       <option name="closed" value="true" />
@@ -581,14 +577,21 @@
       <option name="project" value="LOCAL" />
       <updated>1717084654615</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="day / night cycle now works (momentarily the ticks are every 5s) light behaves as it's supposed to">
+      <option name="closed" value="true" />
+      <created>1717086538188</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1717086538188</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changed how Inventory works, now it's a class and can easily transfer items between them." />
     <MESSAGE value="cleaned up code" />
     <MESSAGE value="#15 add interactive block furnace." />
     <MESSAGE value="#15 add interactive block furnace + add new UI drawing System for Inventory" />
@@ -613,7 +616,8 @@
     <MESSAGE value="Inventory now probably completely altered to use HashMap&lt;Point, InventoryItem&gt;" />
     <MESSAGE value="inventory tweaks" />
     <MESSAGE value="add Light mechanic with torch" />
-    <option name="LAST_COMMIT_MESSAGE" value="add Light mechanic with torch" />
+    <MESSAGE value="day / night cycle now works (momentarily the ticks are every 5s) light behaves as it's supposed to" />
+    <option name="LAST_COMMIT_MESSAGE" value="day / night cycle now works (momentarily the ticks are every 5s) light behaves as it's supposed to" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

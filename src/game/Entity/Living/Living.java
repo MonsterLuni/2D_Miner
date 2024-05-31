@@ -23,10 +23,10 @@ public abstract class Living extends Entity {
         updateIndex();
         if(blockMiddle != null && blockMiddle.hitTop || blockRight != null && blockRight.hitTop){
             if(blockMiddle != null){
-                offsetY = blockMiddle.Y - (height + Y);
+                offsetY = blockMiddle.point.y - (height + point.y);
             }
             else{
-                offsetY = blockRight.Y - (height + Y);
+                offsetY = blockRight.point.y - (height + point.y);
             }
         }
         else{
@@ -34,12 +34,12 @@ public abstract class Living extends Entity {
         }
     }
     public void updateIndex(){
-        blockRight = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) + gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + height);
-        blockMiddle = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + height);
+        blockRight = gm.getBlock((((point.x - offsetX) / gm.map.tileSize) * gm.map.tileSize) + gm.map.tileSize,(((point.y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + height);
+        blockMiddle = gm.getBlock((((point.x - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((point.y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + height);
     }
     public Entity[] getOnlyVisibleBlocks(){
-        int positionPlayer = Math.round(((X - (float) offsetX)) / gm.map.tileSize) * gm.map.tileSize;
-        int positionPlayerY = Math.round(((Y + (float) offsetY)) / gm.map.tileSize) * gm.map.tileSize;
+        int positionPlayer = Math.round(((point.x - (float) offsetX)) / gm.map.tileSize) * gm.map.tileSize;
+        int positionPlayerY = Math.round(((point.y + (float) offsetY)) / gm.map.tileSize) * gm.map.tileSize;
         int renderHeight = 34;
         int renderWidth = 52;
         Entity[] visibleBlockList = new Entity[(renderHeight * renderWidth)];
@@ -53,10 +53,10 @@ public abstract class Living extends Entity {
     }
     public boolean checkOverlapX(Entity index, int overlap, boolean right){
         if(right){
-            return X - offsetX - overlap + 5 <= index.X;
+            return point.x - offsetX - overlap + 5 <= index.point.x;
         }
         else {
-            return X - offsetX - overlap >= index.X;
+            return point.x - offsetX - overlap >= index.point.x;
         }
     }
     public abstract void walk();

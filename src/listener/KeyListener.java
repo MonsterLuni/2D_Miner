@@ -154,7 +154,7 @@ public class KeyListener implements java.awt.event.KeyListener {
             }
             case KeyEvent.VK_S -> {
                 if(gm.p.height == gm.p.defaultHeight) {
-                    gm.p.Y += 25;
+                    gm.p.point.y += 25;
                     gm.p.height = 25;
                 }
             }
@@ -183,7 +183,7 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_D -> gm.p.right = false;
             case KeyEvent.VK_SPACE -> gm.p.isJumping = false;
             case KeyEvent.VK_S -> {
-                gm.p.Y -= 25;
+                gm.p.point.y -= 25;
                 gm.p.height = gm.p.defaultHeight;
             }
         }

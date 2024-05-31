@@ -39,8 +39,8 @@ public class Player extends Living {
         this.oxygen = maxOxygen;
         width = defaultWidth;
         height = defaultHeight;
-        X = gm.ui.screenWidth/2;
-        Y = gm.ui.screenHeight/2 - defaultHeight;
+        point.x = gm.ui.screenWidth/2;
+        point.y = gm.ui.screenHeight/2 - defaultHeight;
         hotbar.inventory.put(new Point(0,0),new InventoryItem(new ITM_PICKAXE_BEDROCK(),1));
         hotbar.inventory.put(new Point(1,0),new InventoryItem(new ITM_TORCH(),5));
         inv = new Inventory(10,10);
@@ -69,8 +69,8 @@ public class Player extends Living {
         Image spriteSelected;
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
-        int spriteY = Y;
-        int spriteX = X;
+        int spriteY = point.y;
+        int spriteX = point.x;
         try{
             Entity hotbarElement = hotbar.getEntryFromCoordinates(hotbar.inventorySpaceX,0).getValue().entity;
             if(hotbarElement != null){
@@ -108,13 +108,13 @@ public class Player extends Living {
     public void jump(){
         if(isJumping){
             if(jumpTimer.stopAfterFrames(10)){
-                Entity index = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - 50));
+                Entity index = gm.getBlock((((point.x - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((point.y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - 50));
                 if(index != null && index.hitBottom){
-                    if(Y - offsetY + 1 + height <= index.Y){
+                    if(point.y - offsetY + 1 + height <= index.point.y){
                         if(height == defaultHeight){
-                            offsetY = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 6;
+                            offsetY = gm.getBlock((((point.x - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((point.y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).point.y - point.y - 6;
                         }else {
-                            offsetY = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).Y - Y - 5;
+                            offsetY = gm.getBlock((((point.x - offsetX) / gm.map.tileSize) * gm.map.tileSize),(((point.y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize)).point.y - point.y - 5;
                         }
                     }
                     else {
@@ -129,9 +129,9 @@ public class Player extends Living {
     }
     public void walk(){
         gm.map.updateHitBoxes();
-        Entity index = gm.getBlock((((gm.p.X - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.Y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize));
+        Entity index = gm.getBlock((((gm.p.point.x - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize),(((gm.p.point.y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize));
         if(left){
-            Entity index2 = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) - gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
+            Entity index2 = gm.getBlock((((point.x - offsetX) / gm.map.tileSize) * gm.map.tileSize) - gm.map.tileSize,(((point.y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
             if(index2 != null && index2.hitRight){
                 if(checkOverlapX(index,1,false)){
                     offsetX += walkSpeed;
@@ -141,7 +141,7 @@ public class Player extends Living {
                 offsetX += walkSpeed;
             }
         } else if (right) {
-            Entity index2 = gm.getBlock((((X - offsetX) / gm.map.tileSize) * gm.map.tileSize) + gm.map.tileSize,(((Y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
+            Entity index2 = gm.getBlock((((point.x - offsetX) / gm.map.tileSize) * gm.map.tileSize) + gm.map.tileSize,(((point.y + offsetY) / gm.map.tileSize) * gm.map.tileSize) + (height - gm.map.tileSize));
             if(index != null && index2.hitLeft){
                 if(checkOverlapX(index,0,true)){
                     offsetX -= walkSpeed;
@@ -155,10 +155,10 @@ public class Player extends Living {
     public void draw(Graphics g, Player p){
         g.setColor(color);
         if(height < defaultHeight){
-            g.drawImage(gm.ah.getPictureForID(-2),X,Y,null);
+            g.drawImage(gm.ah.getPictureForID(-2),point.x,point.y,null);
         }
         else{
-            g.drawImage(gm.ah.getPictureForID(-1),X,Y,null);
+            g.drawImage(gm.ah.getPictureForID(-1),point.x,point.y,null);
         }
     }
     @Override
@@ -170,10 +170,10 @@ public class Player extends Living {
         updateIndex();
         if(blockMiddle != null && blockMiddle.hitTop || blockRight != null && blockRight.hitTop){
             if(blockMiddle != null){
-                offsetY = blockMiddle.Y - (height + Y);
+                offsetY = blockMiddle.point.y - (height + point.y);
             }
             else{
-                offsetY = blockRight.Y - (height + Y);
+                offsetY = blockRight.point.y - (height + point.y);
             }
             jumpTimer = new Wait();
         }
