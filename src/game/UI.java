@@ -45,7 +45,6 @@ public class UI extends JFrame {
         addKeyListener(gm.kl);
         setFocusTraversalKeysEnabled(false);
     }
-
     private int calculateCenterX(String text, Font font) {
         FontMetrics fontMetrics = imageG.getFontMetrics(font);
         int stringWidth = fontMetrics.stringWidth(text);
@@ -157,10 +156,8 @@ public class UI extends JFrame {
         drawAnyInventory(gm.p.hotbar,screenHeight - 50,(screenWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
         drawToImage();
     }
-
     private void updateTime() {
-        if(dayTimer.waitforSeconds(5)){
-            System.out.println("TIME CHANGED");
+        if(dayTimer.waitforSeconds(60)){
             if(sunrise){
                 if(gm.daytime + 1 <= 15){
                     gm.daytime++;
@@ -179,7 +176,6 @@ public class UI extends JFrame {
             gm.map.updateHitBoxes();
         }
     }
-
     public void drawInteractiveState() {
         clearWindow(gameBackground);
         switch (gm.currentInteractState) {

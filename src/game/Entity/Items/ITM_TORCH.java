@@ -11,10 +11,12 @@ public class ITM_TORCH extends Entity {
         this.hardness = 0;
         this.isPlacable = true;
         this.lightEmission = true;
-        this.lightLevel = 14;
+        this.minLightLevel = 13;
+        this.lightLevel = this.minLightLevel;
+        this.isPenetrable = true;
     }
     @Override
     public String getName() {
-        return "Pickaxe_bedrock";
+        return "torch";
     }
 }

@@ -217,17 +217,29 @@ public class Map {
     public void updateHitBoxes(){
         for (Entity block: gm.p.getOnlyVisibleBlocks()) {
             if(block != null){
+                block.hitTop = false;
+                block.hitLeft = false;
+                block.hitRight = false;
+                block.hitBottom = false;
                 if(!block.isPenetrable){
                     checkHitBoxFromBlock(block.point);
                 }
                 if(!block.lightEmission){
-                        block.lightLevel = checkLightLevelFromBlock(block.point) - 1;
+                        block.lightLevel = updateLightLevelFromBlock(block.point);
                         if(block.lightLevel > 15){
                             block.lightLevel = 15;
                         }
                         else if(block.lightLevel < 0){
                             block.lightLevel = 0;
                         }
+                }else{
+                    block.lightLevel = updateLightLevelFromBlock(block.point) + 1;
+                    if(block.lightLevel > 15){
+                        block.lightLevel = 15;
+                    }
+                    else if(block.lightLevel < block.minLightLevel){
+                        block.lightLevel = block.minLightLevel;
+                    }
                 }
                 if(Objects.equals(block.getName(), "air") && block.lightLevel < gm.daytime){
                     block.lightLevel = gm.daytime;
@@ -235,35 +247,31 @@ public class Map {
             }
         }
     }
-    private int checkLightLevelFromBlock(Point i) {
+    private int updateLightLevelFromBlock(Point i) {
         int highest = 0;
         if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25) != null){
             if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel){
-                highest = gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel;
+                highest = gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightDampness;
             }
         }
         if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25) != null){
             if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel){
-                highest = gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel;
+                highest = gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightDampness;
             }
         }
         if(gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y) != null){
             if(highest < gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel){
-                highest = gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel;
+                highest = gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightDampness;
             }
         }
         if(gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y) != null){
             if(highest < gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel){
-                highest = gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel;
+                highest = gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightDampness;
             }
         }
         return highest;
     }
     public void checkHitBoxFromBlock(Point i){
-        gm.blocks.get(i).hitTop = false;
-        gm.blocks.get(i).hitLeft = false;
-        gm.blocks.get(i).hitRight = false;
-        gm.blocks.get(i).hitBottom = false;
         if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25) != null){
             if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).isPenetrable){
                 gm.blocks.get(i).hitTop = true;

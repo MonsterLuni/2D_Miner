@@ -18,7 +18,9 @@ public abstract class Entity implements Serializable{
     public int height;
     // min 0 max 15
     public int lightLevel = 0;
+    public int minLightLevel = 0;
     public boolean lightEmission;
+    public int lightDampness = 1;
     public int dropAmount = 1;
     public int miningDamage = 0;
     public int hardness = 0;
@@ -43,8 +45,15 @@ public abstract class Entity implements Serializable{
         }
     }
     public void drawBlock(Graphics g, Player p, GameManager gm) {
-        if(!Objects.equals(getName(), "air")){
-            g.drawImage(gm.ah.getPictureForID(id),(point.x + p.offsetX),(point.y - p.offsetY),null);
+        g.drawImage(gm.ah.getPictureForID(id),(point.x + p.offsetX),(point.y - p.offsetY),null);
+        if(Objects.equals(getName(), "air")){
+            if(gm.daytime != 15){
+                g.setColor(new Color(0, 0, 0, 255 - (17 * lightLevel) - 17));
+            }else{
+                g.setColor(new Color(0, 0, 0, 255 - (17 * lightLevel)));
+            }
+            g.fillRect((point.x + p.offsetX),(point.y - p.offsetY),25,25);
+        }else{
             g.setColor(new Color(0, 0, 0, 255 - (17 * lightLevel)));
             g.fillRect((point.x + p.offsetX),(point.y - p.offsetY),25,25);
         }

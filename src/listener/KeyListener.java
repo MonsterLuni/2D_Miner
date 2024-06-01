@@ -158,6 +158,9 @@ public class KeyListener implements java.awt.event.KeyListener {
                     gm.p.height = 25;
                 }
             }
+            case KeyEvent.VK_T -> {
+                gm.currentState = GameManager.consoleState;
+            }
             case KeyEvent.VK_F8 -> gm.saveGame(1);
             case KeyEvent.VK_F9 -> gm.loadGame(1);
             case KeyEvent.VK_D -> {

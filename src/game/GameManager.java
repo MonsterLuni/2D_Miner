@@ -20,11 +20,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class GameManager {
+
     public UI ui;
     private long lastTime;
     public int maxFps = 60;
     public double fps = 0;
-    public int daytime = 0;
+    public int daytime = 8;
     public boolean isRunning = true;
     public boolean isDebug = false;
     public final static int menuState = 0;
@@ -33,6 +34,8 @@ public class GameManager {
     public final static int inventoryState = 3;
     public final static int interactState = 4;
     public final static int deathState = 5;
+    public final static int consoleState = 6;
+
     public int currentState = menuState;
     public KeyListener kl;
     public MouseListener ml;

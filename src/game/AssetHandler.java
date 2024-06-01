@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class AssetHandler {
-    public Image zombie,player,player_sitting,heart_full, heart_half, heart_empty,oxygen_full,oxygen_half,oxygen_empty,ecken;
+    public Image zombie,player,player_sitting,heart_full, heart_half, heart_empty,oxygen_full,oxygen_half,oxygen_empty,ecken,torch;
     public static Image grass, dirt,stone,barrier,bedrock, air,iron_ore, furnace,coal_ore,iron_bar,pickaxe_bedrock,pickaxe_feather,pickaxe_wood,sand,water,oak_wood,leave,crafting_bench;
     public void loadHearts(){
         try {
@@ -51,6 +51,7 @@ public class AssetHandler {
             oak_wood = ImageIO.read(new File("assets/tiles/oak_wood.png"));
             leave = ImageIO.read(new File("assets/tiles/leave.png"));
             crafting_bench = ImageIO.read(new File("assets/tiles/crafting_bench.png"));
+            torch = ImageIO.read(new File("assets/items/torch.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -121,11 +122,14 @@ public class AssetHandler {
             case 15 -> {
                 return oak_wood;
             }
-            case 16, 18 -> {
+            case 16 -> {
                 return leave;
             }
             case 17 -> {
                 return crafting_bench;
+            }
+            case 18 -> {
+                return torch;
             }
         }
         return null;
