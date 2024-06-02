@@ -16,6 +16,7 @@ public abstract class Entity implements Serializable{
     public int id;
     public int width;
     public int height;
+    public int layer = 1;
     // min 0 max 15
     public int lightLevel = 0;
     public int minLightLevel = 0;
@@ -26,6 +27,8 @@ public abstract class Entity implements Serializable{
     public int hardness = 0;
     public int stackSize = 64;
     public int health;
+    public boolean isSky;
+
     public void interact(GameManager gm){}
     public boolean harvestable(Player p) {
         return p.currentHardness >= hardness;

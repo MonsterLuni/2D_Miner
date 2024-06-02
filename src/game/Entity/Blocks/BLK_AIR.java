@@ -13,6 +13,7 @@ public class BLK_AIR extends Entity {
         this.hardness = 0;
         this.health = 0;
         this.name = "air";
+        this.isSky = true;
     }
     @Override
     public void interact(GameManager gm) {

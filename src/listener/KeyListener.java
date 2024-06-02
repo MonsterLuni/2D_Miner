@@ -129,7 +129,6 @@ public class KeyListener implements java.awt.event.KeyListener {
             default -> addInputAsString(e);
         }
     }
-
     private void checkCommand() {
         try{
             if(gm.ui.userInputCommand.contains("GIVE")){
@@ -145,7 +144,8 @@ public class KeyListener implements java.awt.event.KeyListener {
                 }
                 gm.map.updateHitBoxes();
             }
-            if(gm.ui.userInputCommand.contains("TIME SET TICK")){
+            if(gm.ui.userInputCommand.contains("TIME TICK SET")){
+                System.out.println(gm.ui.userInputCommand.substring(14));
                 gm.ui.dayTickLength = Integer.parseInt(gm.ui.userInputCommand.substring(14));
             }
             if(gm.ui.userInputCommand.contains("TIME STOP")){
@@ -158,7 +158,6 @@ public class KeyListener implements java.awt.event.KeyListener {
             System.out.println("NumberFormatException");
         }
     }
-
     public void removeLastInput() {
         if (gm.ui.userInputCommand.length() != 0) {
             gm.ui.userInputCommand = gm.ui.userInputCommand.substring(0, gm.ui.userInputCommand.length() - 1);

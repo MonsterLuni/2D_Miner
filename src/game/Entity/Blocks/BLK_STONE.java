@@ -10,7 +10,7 @@ public class BLK_STONE extends Entity {
         this.id = 2;
         this.isPenetrable = false;
         this.hardness = 2;
-        this.lightDampness = 3;
+        this.lightDampness = 10;
         this.health = 30;
         this.name = "stone";
     }

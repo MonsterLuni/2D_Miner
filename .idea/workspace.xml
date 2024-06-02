@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_AIR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_AIR.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_STONE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_STONE.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/GameManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,9 +77,9 @@
       <recent name="F:\Java\_2D_Miner\assets\tiles" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Java\2D_Miner\assets\tiles" />
       <recent name="D:\1_Dateien-BiCT\2.Lehrjahr\Java\2D_Miner\assets\tiles" />
       <recent name="D:\1_Dateien-BiCT\2.Lehrjahr\Java\2D_Miner\assets" />
-      <recent name="F:\Java\2D_Miner\assets\tiles" />
       <recent name="F:\Java\2D_Miner\assets" />
       <recent name="F:\Java\2D_Miner\assets\sounds" />
     </key>
@@ -194,15 +193,7 @@
       <workItem from="1717173165830" duration="4076000" />
       <workItem from="1717230063799" duration="713000" />
       <workItem from="1717232272889" duration="10073000" />
-      <workItem from="1717307074680" duration="2201000" />
-    </task>
-    <task id="LOCAL-00012" summary="Add Iron_ore (not spawning at the moment) + try to add an Inventory System (very bad at the moment)">
-      <option name="closed" value="true" />
-      <created>1704644302503</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1704644302503</updated>
+      <workItem from="1717307074680" duration="6512000" />
     </task>
     <task id="LOCAL-00013" summary="Improved the mouse block finding system">
       <option name="closed" value="true" />
@@ -588,14 +579,21 @@
       <option name="project" value="LOCAL" />
       <updated>1717263681975</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="add Console interface (access with &quot;t&quot;) commands such as TIME SET, TIME STOP / START, GIVE implemented">
+      <option name="closed" value="true" />
+      <created>1717311065181</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1717311065181</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="#15 add interactive block furnace + add new UI drawing System for Inventory" />
     <MESSAGE value="smelting now actually works and you can place Iron_ore into furnace and get iron_bar" />
     <MESSAGE value="deleted class BloCk for easier code reading. Now Everything block related is a Entity" />
     <MESSAGE value="add Health System #17 + Add Menu Screen" />
@@ -620,7 +618,8 @@
     <MESSAGE value="day / night cycle now works (momentarily the ticks are every 5s) light behaves as it's supposed to" />
     <MESSAGE value="lights can now be placed and also destroyed + add new way of handling destroyed blocks. + deleted x and y of Entity because point was already there" />
     <MESSAGE value="add torch png, sky changes color with time, also time now ticks every minute" />
-    <option name="LAST_COMMIT_MESSAGE" value="add torch png, sky changes color with time, also time now ticks every minute" />
+    <MESSAGE value="add Console interface (access with &quot;t&quot;) commands such as TIME SET, TIME STOP / START, GIVE implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="add Console interface (access with &quot;t&quot;) commands such as TIME SET, TIME STOP / START, GIVE implemented" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
