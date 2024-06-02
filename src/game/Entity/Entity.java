@@ -48,7 +48,7 @@ public abstract class Entity implements Serializable{
         g.drawImage(gm.ah.getPictureForID(id),(point.x + p.offsetX),(point.y - p.offsetY),null);
         if(Objects.equals(getName(), "air")){
             if(gm.daytime != 15){
-                g.setColor(new Color(0, 0, 0, 255 - (17 * lightLevel) - 17));
+                g.setColor(new Color(0, 0, 0, 238 - (17 * lightLevel)));
             }else{
                 g.setColor(new Color(0, 0, 0, 255 - (17 * lightLevel)));
             }

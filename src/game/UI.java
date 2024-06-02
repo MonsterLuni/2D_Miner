@@ -19,12 +19,14 @@ public class UI extends JFrame {
     private int waterUpdateCount = 0;
     public int screenHeight = defaultHeight;
     public int screenWidth = defaultWidth;
+    public int dayTickLength = 60;
     public BufferedImage bufferedImage = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
     public BufferedImage fullscreenBuffer;
     public Graphics imageG = bufferedImage.getGraphics();
     private static final DecimalFormat df = new DecimalFormat("0.00");
     public boolean isFullscreen = false;
     public boolean soundPlayed = false;
+    public boolean isTimeRunning = true;
     public final Color gameBackground = new Color(173, 240, 240);
     public final Color menuBackground = new Color(0,0,0);
     private final Wait wfFOne = new Wait();
@@ -32,6 +34,7 @@ public class UI extends JFrame {
     private final Wait wfFThree = new Wait();
     private final Wait wfFFour = new Wait();
     private final Wait dayTimer = new Wait();
+    public String userInputCommand = "";
     boolean sunrise;
     public UI(GameManager gm){
         this.gm = gm;
@@ -154,10 +157,13 @@ public class UI extends JFrame {
         updateMonsters();
         drawMessage();
         drawAnyInventory(gm.p.hotbar,screenHeight - 50,(screenWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
+        if(gm.currentState == GameManager.consoleState){
+            drawConsoleState();
+        }
         drawToImage();
     }
     private void updateTime() {
-        if(dayTimer.waitforSeconds(60)){
+        if(dayTimer.waitforSeconds(dayTickLength) && isTimeRunning){
             if(sunrise){
                 if(gm.daytime + 1 <= 15){
                     gm.daytime++;
@@ -405,5 +411,8 @@ public class UI extends JFrame {
                 }
             }
         }
+    }
+    public void drawConsoleState() {
+        imageG.drawString("Command: " + userInputCommand,100,screenHeight / 4);
     }
 }

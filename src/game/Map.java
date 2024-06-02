@@ -247,7 +247,7 @@ public class Map {
             }
         }
     }
-    private int updateLightLevelFromBlock(Point i) {
+    public int updateLightLevelFromBlock(Point i) {
         int highest = 0;
         if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25) != null){
             if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel){

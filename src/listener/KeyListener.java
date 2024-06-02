@@ -1,8 +1,11 @@
 package listener;
 
+import game.Entity.Blocks.BLK_INTERACTIVE_CRAFTING_BENCH;
+import game.Entity.InventoryItem;
 import game.GameManager;
 import game.Inventory;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class KeyListener implements java.awt.event.KeyListener {
@@ -26,6 +29,7 @@ public class KeyListener implements java.awt.event.KeyListener {
             case GameManager.gameState -> gameState(e.getKeyCode());
             case GameManager.inventoryState -> inventoryState(e.getKeyCode());
             case GameManager.interactState -> interactStateSelector(e.getKeyCode());
+            case GameManager.consoleState -> consoleState(e);
         }
     }
     private void menuState(int e) {
@@ -116,6 +120,54 @@ public class KeyListener implements java.awt.event.KeyListener {
             inv.inventorySpaceY += y;
         }
         gm.p.switchHotbar(gm.p.hotbar.inventorySpaceX);
+    }
+    private void consoleState(KeyEvent e){
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_ESCAPE -> gm.currentState = GameManager.gameState;
+            case KeyEvent.VK_BACK_SPACE -> removeLastInput();
+            case KeyEvent.VK_ENTER -> checkCommand();
+            default -> addInputAsString(e);
+        }
+    }
+
+    private void checkCommand() {
+        try{
+            if(gm.ui.userInputCommand.contains("GIVE")){
+                gm.p.inv.inventory.put(new Point(3,4),new InventoryItem(gm.map.getNewBlockFromID(Integer.parseInt(gm.ui.userInputCommand.substring(5))),1));
+            }
+            // TIME ----------
+            if(gm.ui.userInputCommand.contains("TIME SET")){
+                gm.daytime = Integer.parseInt(gm.ui.userInputCommand.substring(9));
+                if(gm.daytime > 15){
+                    gm.daytime = 15;
+                } else if(gm.daytime < 0){
+                    gm.daytime = 0;
+                }
+                gm.map.updateHitBoxes();
+            }
+            if(gm.ui.userInputCommand.contains("TIME SET TICK")){
+                gm.ui.dayTickLength = Integer.parseInt(gm.ui.userInputCommand.substring(14));
+            }
+            if(gm.ui.userInputCommand.contains("TIME STOP")){
+                gm.ui.isTimeRunning = false;
+            }
+            if(gm.ui.userInputCommand.contains("TIME START")){
+                gm.ui.isTimeRunning = true;
+            }
+        }catch (NumberFormatException e){
+            System.out.println("NumberFormatException");
+        }
+    }
+
+    public void removeLastInput() {
+        if (gm.ui.userInputCommand.length() != 0) {
+            gm.ui.userInputCommand = gm.ui.userInputCommand.substring(0, gm.ui.userInputCommand.length() - 1);
+        }
+    }
+    private void addInputAsString(KeyEvent e) {
+        if(e.getKeyCode() != KeyEvent.VK_SHIFT){
+            gm.ui.userInputCommand = gm.ui.userInputCommand + e.getKeyChar();
+        }
     }
     private void gameState(int e) {
         primaryInv = gm.p.inv;

@@ -129,7 +129,7 @@ public class GameManager {
         switch (currentState){
             case menuState -> ui.drawMenuState();
             case loadingState -> ui.drawLoadingState();
-            case gameState -> ui.drawGameState();
+            case gameState, consoleState -> ui.drawGameState();
             case inventoryState -> ui.drawInventoryState();
             case interactState -> ui.drawInteractiveState();
             case deathState -> ui.drawDeathState();
