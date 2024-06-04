@@ -258,22 +258,22 @@ public class Map {
     public int updateLightLevelFromBlock(Point i) {
         int highest = 0;
         if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25) != null){
-            if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel){
+            if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightDampness){
                 highest = (int) (gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightDampness);
             }
         }
         if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25) != null){
-            if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel){
+            if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightDampness){
                 highest = (int) (gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightDampness);
             }
         }
         if(gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y) != null){
-            if(highest < gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel){
+            if(highest < gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightDampness){
                 highest = (int) (gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightDampness);
             }
         }
         if(gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y) != null){
-            if(highest < gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel){
+            if(highest < gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightDampness){
                 highest = (int) (gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightDampness);
             }
         }
