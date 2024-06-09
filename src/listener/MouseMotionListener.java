@@ -16,8 +16,8 @@ public class MouseMotionListener implements java.awt.event.MouseMotionListener {
     @Override
     public void mouseDragged(MouseEvent e) {}
     public Point getMouseBlockHover(Point coordinates){
-        coordinates.x = coordinates.x / gm.ui.stretchingFactor;
-        coordinates.y = coordinates.y / gm.ui.stretchingFactor;
+        coordinates.x = (int) (coordinates.x / gm.ui.stretchingFactor);
+        coordinates.y = (int) (coordinates.y / gm.ui.stretchingFactor);
         int x = (((coordinates.x - gm.p.offsetX) / gm.map.tileSize) * gm.map.tileSize) ;
         int y = (((coordinates.y + gm.p.offsetY) / gm.map.tileSize) * gm.map.tileSize) ;
         return new Point(x,y);

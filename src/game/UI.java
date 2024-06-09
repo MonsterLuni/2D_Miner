@@ -24,7 +24,7 @@ public class UI extends JFrame {
     public Graphics imageG = bufferedImage.getGraphics();
     private static final DecimalFormat df = new DecimalFormat("0.00");
     public boolean isFullscreen = false;
-    public int stretchingFactor = 1;
+    public float stretchingFactor = 1;
     public boolean soundPlayed = false;
     public boolean isTimeRunning = true;
     public final Color gameBackground = new Color(173, 240, 240);
@@ -186,36 +186,30 @@ public class UI extends JFrame {
         }
     }
     private void drawAnyInventory(Inventory inv, int height, int width){
-        int spacing = 5;
-        imageG.setColor(Color.gray);
-        imageG.fillRect(width - spacing,height - spacing,((gm.map.tileSize + spacing) * inv.width/gm.map.tileSize) + spacing + 1,((gm.map.tileSize + spacing) * inv.height/gm.map.tileSize) + spacing + 1);
+        int spacing = 10;
         imageG.setColor(Color.black);
         for (int i = 0; i < inv.width/gm.map.tileSize; i++){
             for (int l = 0; l < inv.height/gm.map.tileSize; l++) {
+                imageG.drawImage(gm.ah.inventory_full,width + (i*(gm.map.tileSize + spacing)) - spacing,height + (l*(gm.map.tileSize + spacing)) - spacing,null);
+                for (java.util.Map.Entry<Point, InventoryItem> entry : inv.inventory.entrySet()) {
+                    if(entry.getKey() != null){
+                        if(entry.getKey().x == i && entry.getKey().y == l){
+                            imageG.drawImage(gm.ah.getPictureForID(entry.getValue().entity.id),width + (i*(gm.map.tileSize + spacing)) - spacing/2,height + (l*(gm.map.tileSize + spacing)) - spacing/2,null);
+                            if(entry.getValue().amount > 1){
+                                imageG.drawString(String.valueOf(entry.getValue().amount),width + (i*(gm.map.tileSize + spacing)) - spacing/2,height + (l*(gm.map.tileSize + spacing)) + gm.map.tileSize - spacing/2);
+                            }
+                        }
+                    }
+                }
                 if(inv == gm.kl.primaryInv || inv == gm.kl.secondaryInv){
                     if(inv.activeInventorySpace != null && inv.activeInventorySpace.x == i && inv.activeInventorySpace.y == l){
                         imageG.setColor(Color.yellow);
-                        imageG.fillRect(width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),gm.map.tileSize,gm.map.tileSize);
-                        imageG.drawRect(width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),gm.map.tileSize,gm.map.tileSize);
+                        imageG.drawRect(width + (i*(gm.map.tileSize + spacing)) - spacing/2,height + (l*(gm.map.tileSize + spacing)) - spacing/2,gm.map.tileSize,gm.map.tileSize);
                     }
                     else{
                         if(inv.inventorySpaceX == i && inv.inventorySpaceY == l){
                             imageG.setColor(Color.yellow);
-                        }
-                        else{
-                            imageG.setColor(Color.black);
-                            imageG.drawImage(gm.ah.inventory_full,width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),null);
-                        }
-                    }
-                }
-                imageG.drawRect(width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),gm.map.tileSize,gm.map.tileSize);
-                for (java.util.Map.Entry<Point, InventoryItem> entry : inv.inventory.entrySet()) {
-                    if(entry.getKey() != null){
-                        if(entry.getKey().x == i && entry.getKey().y == l){
-                            imageG.drawImage(gm.ah.getPictureForID(entry.getValue().entity.id),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),null);
-                            if(entry.getValue().amount > 1){
-                                imageG.drawString(String.valueOf(entry.getValue().amount),width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)) + gm.map.tileSize);
-                            }
+                            imageG.drawRect(width + (i*(gm.map.tileSize + spacing)) - spacing/2,height + (l*(gm.map.tileSize + spacing)) - spacing/2,gm.map.tileSize,gm.map.tileSize);
                         }
                     }
                 }
@@ -406,7 +400,7 @@ public class UI extends JFrame {
             setSize(currentWidth, currentHeight);
             setExtendedState(JFrame.MAXIMIZED_BOTH);
             System.out.println(currentWidth + " " + defaultWidth);
-            stretchingFactor = currentWidth / defaultWidth;
+            stretchingFactor = (float) currentWidth / defaultWidth;
         }
 
         isFullscreen = !isFullscreen;

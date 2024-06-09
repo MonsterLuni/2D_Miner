@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="add Console interface (access with &quot;t&quot;) commands such as TIME SET, TIME STOP / START, GIVE implemented">
-      <change afterPath="$PROJECT_DIR$/assets/inventory/one.png" afterDir="false" />
+    <list default="true" id="053893a7-0a8d-4868-881c-6b47684a8b58" name="Changes" comment="toggling Fullscreen now works. Screen now just gets stretched.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/tiles/ecken.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/AssetHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/AssetHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_CRAFTING_BENCH.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_CRAFTING_BENCH.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Blocks/BLK_INTERACTIVE_FURNACE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/GameManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/listener/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/KeyListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listener/MouseMotionListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -211,15 +202,7 @@
       <workItem from="1717783377719" duration="1413000" />
       <workItem from="1717830108723" duration="1543000" />
       <workItem from="1717862126584" duration="594000" />
-      <workItem from="1717945732648" duration="4862000" />
-    </task>
-    <task id="LOCAL-00013" summary="Improved the mouse block finding system">
-      <option name="closed" value="true" />
-      <created>1705851347314</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1705851347314</updated>
+      <workItem from="1717945732648" duration="6262000" />
     </task>
     <task id="LOCAL-00014" summary="fix: Issue #2 hitbox with gravity now works as expected">
       <option name="closed" value="true" />
@@ -605,14 +588,21 @@
       <option name="project" value="LOCAL" />
       <updated>1717311065181</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="toggling Fullscreen now works. Screen now just gets stretched.">
+      <option name="closed" value="true" />
+      <created>1717953918524</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1717953918525</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="smelting now actually works and you can place Iron_ore into furnace and get iron_bar" />
     <MESSAGE value="deleted class BloCk for easier code reading. Now Everything block related is a Entity" />
     <MESSAGE value="add Health System #17 + Add Menu Screen" />
     <MESSAGE value="Made map loading about 10 times faster by removing the sprite from the entity" />
@@ -637,7 +627,8 @@
     <MESSAGE value="lights can now be placed and also destroyed + add new way of handling destroyed blocks. + deleted x and y of Entity because point was already there" />
     <MESSAGE value="add torch png, sky changes color with time, also time now ticks every minute" />
     <MESSAGE value="add Console interface (access with &quot;t&quot;) commands such as TIME SET, TIME STOP / START, GIVE implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="add Console interface (access with &quot;t&quot;) commands such as TIME SET, TIME STOP / START, GIVE implemented" />
+    <MESSAGE value="toggling Fullscreen now works. Screen now just gets stretched." />
+    <option name="LAST_COMMIT_MESSAGE" value="toggling Fullscreen now works. Screen now just gets stretched." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
