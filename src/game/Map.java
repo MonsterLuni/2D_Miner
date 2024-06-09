@@ -1,10 +1,7 @@
 package game;
 
-import game.Entity.Blocks.*;
 import game.Entity.Entity;
 import game.Entity.InventoryItem;
-import game.Entity.Items.ITM_IRON_BAR;
-import game.Entity.Items.ITM_TORCH;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,8 +21,8 @@ public class Map {
     List<Integer[]> List = new ArrayList<>();
     public Map(GameManager gm) {
         this.gm = gm;
-        worldWidth = gm.ui.screenWidth*20;
-        worldHeight = gm.ui.screenHeight*10;
+        worldWidth = gm.ui.defaultWidth *20;
+        worldHeight = gm.ui.defaultHeight *10;
         gm.blocks = new HashMap<>((worldWidth / tileSize) * (worldHeight / tileSize));
     }
     public void loadMap() {
@@ -136,64 +133,11 @@ public class Map {
         return 3;
     }
     public void blockSelector(int blockNumber, int i, int l){
-        Entity temporaryEntity = getNewBlockFromID(blockNumber);
+        Entity temporaryEntity = gm.ah.getNewBlockFromID(blockNumber,gm);
         temporaryEntity.point.x = i*25;
         temporaryEntity.point.y = l*25;
         temporaryEntity.point = new Point(temporaryEntity.point.x,temporaryEntity.point.y);
         gm.blocks.put(temporaryEntity.point,temporaryEntity);
-    }
-    public Entity getNewBlockFromID(int blockNumber){
-        switch (blockNumber){
-            case 0 -> {
-                return new BLK_GRASS();
-            }
-            case 1 -> {
-                return new BLK_DIRT();
-            }
-            case 2 -> {
-                return new BLK_STONE();
-            }
-            case 3 -> {
-                return new BLK_AIR();
-            }
-            case 4 -> {
-                return new BLK_BEDROCK();
-            }
-            case 5 -> {
-                return new BLK_BARRIER();
-            }
-            case 6 -> {
-                return new BLK_IRON_ORE();
-            }
-            case 7 -> {
-                return new BLK_INTERACTIVE_FURNACE(gm);
-            }
-            case 8 -> {
-                return new BLK_COAL_ORE();
-            }
-            case 9 -> {
-                return new ITM_IRON_BAR();
-            }
-            case 13 -> {
-                return new BLK_SAND();
-            }
-            case 14 -> {
-                return new BLK_WATER();
-            }
-            case 15 -> {
-                return new BLK_OAK_WOOD();
-            }
-            case 16 -> {
-                return new BLK_LEAVE();
-            }
-            case 17 -> {
-                return new BLK_INTERACTIVE_CRAFTING_BENCH(gm);
-            }
-            case 18 -> {
-                return new ITM_TORCH();
-            }
-        }
-        return null;
     }
     public void addPostWorldCreation(){
         for (Integer[] ints: List){
@@ -259,22 +203,22 @@ public class Map {
         int highest = 0;
         if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25) != null){
             if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightDampness){
-                highest = (int) (gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightDampness);
+                highest = (gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y - 25).lightDampness);
             }
         }
         if(gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25) != null){
             if(highest < gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightDampness){
-                highest = (int) (gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightDampness);
+                highest = (gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightLevel - gm.getBlock(gm.blocks.get(i).point.x,gm.blocks.get(i).point.y + 25).lightDampness);
             }
         }
         if(gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y) != null){
             if(highest < gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightDampness){
-                highest = (int) (gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightDampness);
+                highest = (gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x + 25,gm.blocks.get(i).point.y).lightDampness);
             }
         }
         if(gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y) != null){
             if(highest < gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightDampness){
-                highest = (int) (gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightDampness);
+                highest = (gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightLevel - gm.getBlock(gm.blocks.get(i).point.x - 25,gm.blocks.get(i).point.y).lightDampness);
             }
         }
         return highest;
@@ -333,7 +277,7 @@ public class Map {
                 if (block.health - gm.p.currentMiningDamage <= 0) {
                     if (block.harvestable(gm.p)) {
                         gm.addMessage("Harvested " + block.getName(), 120);
-                        Entity currentEntity = getNewBlockFromID(block.id);
+                        Entity currentEntity = gm.ah.getNewBlockFromID(block.id,gm);
                         if (currentEntity != null) {
                             // nimm point und amch halt sachen bitte geh nachher bitte niifgzvbwuioevfziufvudf9wefvwez
                             Point point = gm.p.inv.getFirstFreeInventorySpace();
@@ -342,7 +286,7 @@ public class Map {
                         }
                     }
                     gm.playSound("attackBlock.wav");
-                    Entity newBlock = getNewBlockFromID(3);
+                    Entity newBlock = gm.ah.getNewBlockFromID(3,gm);
                     newBlock.point.x = block.point.x;
                     newBlock.point.y = block.point.y;
                     newBlock.point = block.point;

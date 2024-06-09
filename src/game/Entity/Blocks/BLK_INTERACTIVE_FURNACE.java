@@ -58,7 +58,7 @@ public class BLK_INTERACTIVE_FURNACE extends Entity {
                 else{
                     invTop.inventory.remove(invTop.getEntryFromCoordinates(0, 0).getKey());
                 }
-                invOutput.inventory.put(new Point(0,0),new InventoryItem(gm.map.getNewBlockFromID(recipe[1]),2));
+                invOutput.inventory.put(new Point(0,0),new InventoryItem(gm.ah.getNewBlockFromID(recipe[1],gm),2));
             }
         }
     }

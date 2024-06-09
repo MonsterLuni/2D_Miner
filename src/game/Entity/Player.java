@@ -27,8 +27,8 @@ public class Player extends Living {
     Wait jumpTimer = new Wait();
     public Player(GameManager gm, KeyListener kh){
         this.kh = kh;
-        this.offsetY = (int) (((PerlinNoise1D.perlinNoise(((((double) gm.map.worldWidth /2) + ((double) gm.ui.screenWidth /2)) * gm.intervalOfSeed),gm.seed)) * 25) + 950) - (gm.ui.screenHeight/2);
-        this.offsetX = -(gm.map.worldWidth/2) + (gm.ui.screenWidth/2);
+        this.offsetY = (int) (((PerlinNoise1D.perlinNoise(((((double) gm.map.worldWidth /2) + ((double) gm.ui.defaultWidth /2)) * gm.intervalOfSeed),gm.seed)) * 25) + 950) - (gm.ui.defaultHeight /2);
+        this.offsetX = -(gm.map.worldWidth/2) + (gm.ui.defaultWidth /2);
         this.gm = gm;
         defaultWidth = gm.map.tileSize;
         hotbar = new Inventory(1,5);
@@ -39,8 +39,8 @@ public class Player extends Living {
         this.oxygen = maxOxygen;
         width = defaultWidth;
         height = defaultHeight;
-        point.x = gm.ui.screenWidth/2;
-        point.y = gm.ui.screenHeight/2 - defaultHeight;
+        point.x = gm.ui.defaultWidth /2;
+        point.y = gm.ui.defaultHeight /2 - defaultHeight;
         hotbar.inventory.put(new Point(0,0),new InventoryItem(new ITM_PICKAXE_BEDROCK(),1));
         hotbar.inventory.put(new Point(1,0),new InventoryItem(new ITM_TORCH(),5));
         inv = new Inventory(10,10);
@@ -77,17 +77,17 @@ public class Player extends Living {
                 if (isLookingRight) {
                     spriteSelected = gm.ah.getPictureForID(hotbarElement.id);
                     if (gm.ml.leftButtonPressed) {
-                        g2d.rotate(Math.toRadians(35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
+                        g2d.rotate(Math.toRadians(35), (double) gm.ui.defaultWidth / 2, (double) gm.ui.defaultHeight / 2);
                     } else {
-                        g2d.rotate(Math.toRadians(25), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
+                        g2d.rotate(Math.toRadians(25), (double) gm.ui.defaultWidth / 2, (double) gm.ui.defaultHeight / 2);
                     }
                 } else {
                     spriteSelected = flipHorizontal(gm.ah.getPictureForID(hotbarElement.id));
                     spriteY += 10;
                     if (gm.ml.leftButtonPressed) {
-                        g2d.rotate(Math.toRadians(-35), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
+                        g2d.rotate(Math.toRadians(-35), (double) gm.ui.defaultWidth / 2, (double) gm.ui.defaultHeight / 2);
                     } else {
-                        g2d.rotate(Math.toRadians(-25), (double) gm.ui.screenWidth / 2, (double) gm.ui.screenHeight / 2);
+                        g2d.rotate(Math.toRadians(-25), (double) gm.ui.defaultWidth / 2, (double) gm.ui.defaultHeight / 2);
                     }
                 }
                 g2d.drawImage(spriteSelected,spriteX,spriteY,hotbarElement.width,hotbarElement.height,null);

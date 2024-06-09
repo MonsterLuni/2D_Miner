@@ -132,7 +132,7 @@ public class KeyListener implements java.awt.event.KeyListener {
     private void checkCommand() {
         try{
             if(gm.ui.userInputCommand.contains("GIVE")){
-                gm.p.inv.inventory.put(new Point(3,4),new InventoryItem(gm.map.getNewBlockFromID(Integer.parseInt(gm.ui.userInputCommand.substring(5))),1));
+                gm.p.inv.inventory.put(new Point(3,4),new InventoryItem(gm.ah.getNewBlockFromID(Integer.parseInt(gm.ui.userInputCommand.substring(5)),gm),1));
             }
             // TIME ----------
             if(gm.ui.userInputCommand.contains("TIME SET")){

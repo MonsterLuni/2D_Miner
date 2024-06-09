@@ -1,12 +1,17 @@
 package game;
 
+import game.Entity.Blocks.*;
+import game.Entity.Entity;
+import game.Entity.Items.ITM_IRON_BAR;
+import game.Entity.Items.ITM_TORCH;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
 public class AssetHandler {
-    public Image zombie,player,player_sitting,heart_full, heart_half, heart_empty,oxygen_full,oxygen_half,oxygen_empty,ecken,torch;
+    public Image zombie,player,player_sitting,heart_full, heart_half, heart_empty,oxygen_full,oxygen_half,oxygen_empty,inventory_full,torch;
     public static Image grass, dirt,stone,barrier,bedrock, air,iron_ore, furnace,coal_ore,iron_bar,pickaxe_bedrock,pickaxe_feather,pickaxe_wood,sand,water,oak_wood,leave,crafting_bench;
     public void loadHearts(){
         try {
@@ -58,7 +63,7 @@ public class AssetHandler {
     }
     public void loadInventory(){
         try {
-            ecken = ImageIO.read(new File("assets/tiles/ecken.png"));
+            inventory_full = ImageIO.read(new File("assets/inventory/one.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -130,6 +135,59 @@ public class AssetHandler {
             }
             case 18 -> {
                 return torch;
+            }
+        }
+        return null;
+    }
+    public Entity getNewBlockFromID(int blockNumber, GameManager gm){
+        switch (blockNumber){
+            case 0 -> {
+                return new BLK_GRASS();
+            }
+            case 1 -> {
+                return new BLK_DIRT();
+            }
+            case 2 -> {
+                return new BLK_STONE();
+            }
+            case 3 -> {
+                return new BLK_AIR();
+            }
+            case 4 -> {
+                return new BLK_BEDROCK();
+            }
+            case 5 -> {
+                return new BLK_BARRIER();
+            }
+            case 6 -> {
+                return new BLK_IRON_ORE();
+            }
+            case 7 -> {
+                return new BLK_INTERACTIVE_FURNACE(gm);
+            }
+            case 8 -> {
+                return new BLK_COAL_ORE();
+            }
+            case 9 -> {
+                return new ITM_IRON_BAR();
+            }
+            case 13 -> {
+                return new BLK_SAND();
+            }
+            case 14 -> {
+                return new BLK_WATER();
+            }
+            case 15 -> {
+                return new BLK_OAK_WOOD();
+            }
+            case 16 -> {
+                return new BLK_LEAVE();
+            }
+            case 17 -> {
+                return new BLK_INTERACTIVE_CRAFTING_BENCH(gm);
+            }
+            case 18 -> {
+                return new ITM_TORCH();
             }
         }
         return null;

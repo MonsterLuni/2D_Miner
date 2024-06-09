@@ -53,7 +53,7 @@ public class BLK_INTERACTIVE_CRAFTING_BENCH extends Entity {
             }
             if (!fault) {
                 inventory.inventory.clear();
-                output.inventory.put(new Point(0,0),new InventoryItem(gm.map.getNewBlockFromID(recipe[9]), 1));
+                output.inventory.put(new Point(0,0),new InventoryItem(gm.ah.getNewBlockFromID(recipe[9],gm), 1));
                 break;
             }
         }

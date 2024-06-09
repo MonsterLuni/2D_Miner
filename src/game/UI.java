@@ -14,17 +14,17 @@ import java.util.List;
 
 public class UI extends JFrame {
     GameManager gm;
-    private final int defaultHeight = 720;
-    private final int defaultWidth = 1280;
+    public final int defaultHeight = 720;
+    public final int defaultWidth = 1280;
     private int waterUpdateCount = 0;
-    public int screenHeight = defaultHeight;
-    public int screenWidth = defaultWidth;
+    public int currentHeight = defaultHeight;
+    public int currentWidth = defaultWidth;
     public int dayTickLength = 60;
-    public BufferedImage bufferedImage = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
-    public BufferedImage fullscreenBuffer;
+    public BufferedImage bufferedImage = new BufferedImage(defaultWidth, defaultHeight,BufferedImage.TYPE_INT_RGB);
     public Graphics imageG = bufferedImage.getGraphics();
     private static final DecimalFormat df = new DecimalFormat("0.00");
     public boolean isFullscreen = false;
+    public int stretchingFactor = 1;
     public boolean soundPlayed = false;
     public boolean isTimeRunning = true;
     public final Color gameBackground = new Color(173, 240, 240);
@@ -38,7 +38,7 @@ public class UI extends JFrame {
     boolean sunrise;
     public UI(GameManager gm){
         this.gm = gm;
-        setSize(screenWidth, screenHeight);
+        setSize(currentWidth, currentHeight);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -51,50 +51,29 @@ public class UI extends JFrame {
     private int calculateCenterX(String text, Font font) {
         FontMetrics fontMetrics = imageG.getFontMetrics(font);
         int stringWidth = fontMetrics.stringWidth(text);
-        return (screenWidth - stringWidth) / 2;
-    }
-    public void toggleFullscreen() {
-        if(isFullscreen){
-            screenHeight = defaultHeight;
-            screenWidth = defaultWidth;
-            setSize(screenWidth, screenHeight);
-            setExtendedState(JFrame.NORMAL);
-            setLocationRelativeTo(null);
-            imageG = bufferedImage.getGraphics();
-        }
-        else{
-            GraphicsDevice currentMonitor = MouseInfo.getPointerInfo().getDevice();
-            screenWidth = currentMonitor.getDisplayMode().getWidth();
-            screenHeight = currentMonitor.getDisplayMode().getHeight();
-            fullscreenBuffer = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_RGB);
-            imageG = fullscreenBuffer.getGraphics();
-            setSize(screenWidth, screenHeight);
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
-            gm.map.loadMap();
-        }
-        isFullscreen = !isFullscreen;
+        return (defaultWidth - stringWidth) / 2;
     }
     void clearWindow(Color col){
         if(imageG != null){
-            imageG.clearRect(0,0,screenWidth,screenHeight);
+            imageG.clearRect(0,0,currentWidth,currentHeight);
             imageG.setColor(col);
-            imageG.fillRect(0,0,screenWidth,screenHeight);
+            imageG.fillRect(0,0,currentWidth,currentHeight);
         }
     }
     private void furnaceInteractiveState() {
-        drawAnyInventory(gm.p.inv,(screenHeight - 250)/2,100);
-        drawAnyInventory(gm.p.hotbar,screenHeight - 50,(screenWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
-        drawAnyInventory(gm.interactStateFurnace.invTop,(screenHeight - 250)/2,900);
-        drawAnyInventory(gm.interactStateFurnace.invFuel,(screenHeight - 250)/2 + 50,900);
-        drawAnyInventory(gm.interactStateFurnace.invOutput,(screenHeight - 250)/2 + 25,950);
+        drawAnyInventory(gm.p.inv,(defaultHeight - 250)/2,100);
+        drawAnyInventory(gm.p.hotbar,defaultHeight - 50,(defaultWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
+        drawAnyInventory(gm.interactStateFurnace.invTop,(defaultHeight - 250)/2,900);
+        drawAnyInventory(gm.interactStateFurnace.invFuel,(defaultHeight - 250)/2 + 50,900);
+        drawAnyInventory(gm.interactStateFurnace.invOutput,(defaultHeight - 250)/2 + 25,950);
         drawToImage();
         gm.interactStateFurnace.checkFurnace();
     }
     private void craftingTableInteractiveState() {
-        drawAnyInventory(gm.p.inv,(screenHeight - 250)/2,100);
-        drawAnyInventory(gm.p.hotbar,screenHeight - 50,(screenWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
-        drawAnyInventory(gm.interactStateCraftingTable.inventory,screenHeight/2,500);
-        drawAnyInventory(gm.interactStateCraftingTable.output,screenHeight/2,600);
+        drawAnyInventory(gm.p.inv,(defaultHeight - 250)/2,100);
+        drawAnyInventory(gm.p.hotbar,defaultHeight - 50,(defaultWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
+        drawAnyInventory(gm.interactStateCraftingTable.inventory,defaultHeight/2,500);
+        drawAnyInventory(gm.interactStateCraftingTable.output,defaultHeight/2,600);
         drawToImage();
         gm.interactStateCraftingTable.checkRecipe();
     }
@@ -112,7 +91,7 @@ public class UI extends JFrame {
     public void drawDeathState() {
         clearWindow(gameBackground);
         imageG.setColor(Color.black);
-        imageG.drawString("DU BIST TOT",screenWidth/2,screenHeight/2);
+        imageG.drawString("DU BIST TOT",defaultWidth/2,defaultHeight/2);
         drawToImage();
     }
     public void drawMenuState(){
@@ -156,7 +135,7 @@ public class UI extends JFrame {
         updatePlayer();
         updateMonsters();
         drawMessage();
-        drawAnyInventory(gm.p.hotbar,screenHeight - 50,(screenWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
+        drawAnyInventory(gm.p.hotbar,defaultHeight - 50,(defaultWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
         if(gm.currentState == GameManager.consoleState){
             drawConsoleState();
         }
@@ -195,7 +174,7 @@ public class UI extends JFrame {
         imageG.setColor(Color.black);
         for(int i = 0; i < gm.messages.size(); i++){
             if(gm.messages.get(i) != null){
-                imageG.drawString(gm.messages.get(i),50,screenHeight-100 + (i*20));
+                imageG.drawString(gm.messages.get(i),50,defaultHeight-100 + (i*20));
                 if(gm.liveTime.get(i) - 1 == 0){
                     gm.liveTime.remove(i);
                     gm.messages.remove(i);
@@ -225,6 +204,7 @@ public class UI extends JFrame {
                         }
                         else{
                             imageG.setColor(Color.black);
+                            imageG.drawImage(gm.ah.inventory_full,width + (i*(gm.map.tileSize + spacing)),height + (l*(gm.map.tileSize + spacing)),null);
                         }
                     }
                 }
@@ -245,13 +225,13 @@ public class UI extends JFrame {
     private void drawPlayerHealth(){
         for (double i = 2; i <= gm.p.maxHealth; i += 2){
             if(i <= gm.p.health){
-                imageG.drawImage(gm.ah.heart_full, (int) (screenWidth - 300 + (i*12.5)),50,new Color(0,0,0,0),null);
+                imageG.drawImage(gm.ah.heart_full, (int) (defaultWidth - 300 + (i*12.5)),50,new Color(0,0,0,0),null);
             }
             else if(i - 1 == gm.p.health){
-                imageG.drawImage(gm.ah.heart_half, (int) (screenWidth - 300 + (i*12.5)),50,new Color(0,0,0,0),null);
+                imageG.drawImage(gm.ah.heart_half, (int) (defaultWidth - 300 + (i*12.5)),50,new Color(0,0,0,0),null);
             }
             else{
-                imageG.drawImage(gm.ah.heart_empty, (int) (screenWidth - 300 + (i*12.5)),50,new Color(0,0,0,0),null);
+                imageG.drawImage(gm.ah.heart_empty, (int) (defaultWidth - 300 + (i*12.5)),50,new Color(0,0,0,0),null);
             }
         }
         if(gm.p.health <= 0){
@@ -261,13 +241,13 @@ public class UI extends JFrame {
     private void drawPlayerBreath(){
         for (double i = 2; i <= gm.p.maxOxygen; i += 2){
             if(i <= gm.p.oxygen){
-                imageG.drawImage(gm.ah.oxygen_full, (int) (screenWidth - 300 + (i*12.5)),100,new Color(0,0,0,0),null);
+                imageG.drawImage(gm.ah.oxygen_full, (int) (defaultWidth - 300 + (i*12.5)),100,new Color(0,0,0,0),null);
             }
             else if(i - 1 == gm.p.oxygen){
-                imageG.drawImage(gm.ah.oxygen_half, (int) (screenWidth - 300 + (i*12.5)),100,new Color(0,0,0,0),null);
+                imageG.drawImage(gm.ah.oxygen_half, (int) (defaultWidth - 300 + (i*12.5)),100,new Color(0,0,0,0),null);
             }
             else{
-                imageG.drawImage(gm.ah.oxygen_empty, (int) (screenWidth - 300 + (i*12.5)),100,new Color(0,0,0,0),null);
+                imageG.drawImage(gm.ah.oxygen_empty, (int) (defaultWidth - 300 + (i*12.5)),100,new Color(0,0,0,0),null);
             }
         }
         if(gm.p.oxygen <= 0){
@@ -279,18 +259,11 @@ public class UI extends JFrame {
     }
     public void drawInventoryState(){
         clearWindow(gameBackground);
-        drawAnyInventory(gm.p.inv,(screenHeight - 250)/2,100);
-        drawAnyInventory(gm.p.hotbar,screenHeight - 50,(screenWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
+        drawAnyInventory(gm.p.inv,(defaultHeight - 250)/2,100);
+        drawAnyInventory(gm.p.hotbar,defaultHeight - 50,(defaultWidth/2 - (gm.p.hotbar.maxSize/2 * 28)));
         drawToImage();
     }
-    private void drawToImage(){
-        if(isFullscreen){
-            super.getGraphics().drawImage(fullscreenBuffer,0,0,null);
-        }
-        else{
-            super.getGraphics().drawImage(bufferedImage,0,0,null);
-        }
-    }
+
     private void drawDebug(){
         imageG.setColor(Color.black);
         imageG.setFont(getFont().deriveFont(Font.ITALIC,20f));
@@ -299,12 +272,13 @@ public class UI extends JFrame {
         imageG.drawString("Updated Blocks: " + gm.p.getOnlyVisibleBlocks().length,10,100);
         imageG.drawString("Updated [Flow & Gravity] Blocks: " +  waterUpdateCount ,10,125);
         imageG.drawString("Player Coordinates: [X:" + (gm.p.point.x - gm.p.offsetX) + " Y:" + (gm.p.point.y + gm.p.offsetY) + "]" ,10,150);
-        imageG.drawString("Draw Grid [F2]: " + gm.map.vertices,10,175);
-        imageG.drawString("Specific Block [F4]" + gm.map.specificBlockShown, 10, 200);
-        imageG.drawString("Biome: " + getBiome(gm.p),10,225);
+        imageG.drawString("Mouse Coordinates: [X:" + (gm.mml.mousepoint.x) + " Y:" + (gm.mml.mousepoint.y) + "]" ,10,175);
+        imageG.drawString("Draw Grid [F2]: " + gm.map.vertices,10,200);
+        imageG.drawString("Specific Block [F4]" + gm.map.specificBlockShown, 10, 225);
+        imageG.drawString("Biome: " + getBiome(gm.p),10,250);
+        imageG.drawString("Stretching Factor: " + stretchingFactor,10,275);
     }
     private String getBiome(Living person){
-
         double Biome = (PerlinNoise1D.perlinNoise((((double) person.blockMiddle.point.x / 25) * gm.intervalOfSeed / 10),gm.seed));
         if(Biome > 5){
             return "Desert";
@@ -413,6 +387,31 @@ public class UI extends JFrame {
         }
     }
     public void drawConsoleState() {
-        imageG.drawString("Command: " + userInputCommand,100,screenHeight / 4);
+        imageG.drawString("Command: " + userInputCommand,100,defaultHeight / 4);
+    }
+
+    public void toggleFullscreen() {
+        if(isFullscreen){
+            currentHeight = defaultHeight;
+            currentWidth = defaultWidth;
+            setSize(currentWidth, currentHeight);
+            setExtendedState(JFrame.NORMAL);
+            setLocationRelativeTo(null);
+            stretchingFactor = 1;
+        }
+        else{
+            GraphicsDevice currentMonitor = MouseInfo.getPointerInfo().getDevice();
+            currentWidth = currentMonitor.getDisplayMode().getWidth();
+            currentHeight = currentMonitor.getDisplayMode().getHeight();
+            setSize(currentWidth, currentHeight);
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+            System.out.println(currentWidth + " " + defaultWidth);
+            stretchingFactor = currentWidth / defaultWidth;
+        }
+
+        isFullscreen = !isFullscreen;
+    }
+    private void drawToImage(){
+        super.getGraphics().drawImage(bufferedImage,0,0,currentWidth,currentHeight,null);
     }
 }
