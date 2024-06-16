@@ -124,6 +124,13 @@ public class UI extends JFrame {
 
         drawToImage();
     }
+    public void drawParticles(Point position,int turbulenceFactor,int pixelSize,int particleAmount){
+        for (int i = 0; i < particleAmount; i++){
+            double x = Math.random() * turbulenceFactor;
+            double y = Math.random() * turbulenceFactor;
+            imageG.fillRect((int) ((position.x - (turbulenceFactor/2)) + x), (int) ((position.y - (turbulenceFactor/2)) + y),pixelSize,pixelSize);
+        }
+    }
     public void drawGameState(){
         clearWindow(gameBackground);
         gm.map.drawMap(imageG);
